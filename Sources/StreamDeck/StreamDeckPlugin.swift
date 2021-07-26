@@ -239,9 +239,10 @@ open class StreamDeckPlugin {
     ///   - title: The title to display. If there is no title parameter, the title is reset to the title set by the user.
     ///   - target: Specify if you want to display the title on hardware, software, or both.
     ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
-    public func setTitle(in context: String, to title: String, target: Target? = nil, state: Int? = nil) {
-        var payload: [String: Any] = ["title": title]
+    public func setTitle(in context: String, to title: String?, target: Target? = nil, state: Int? = nil) {
+        var payload: [String: Any] = [:]
         
+        payload["title"] = title
         payload["target"] = target?.rawValue
         payload["state"] = state
         
