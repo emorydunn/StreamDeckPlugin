@@ -259,10 +259,10 @@ open class StreamDeckPlugin {
     ///   - image: An image to display.
     ///   - target: Specify if you want to display the title on hardware, software, or both.
     ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
-    public func setImage(in context: String, to image: NSImage, target: Target? = nil, state: Int? = nil) {
+    public func setImage(in context: String, to image: NSImage?, target: Target? = nil, state: Int? = nil) {
         var payload: [String: Any] = [:]
         
-        payload["image"] = image.base64String
+        payload["image"] = image?.base64String
         payload["target"] = target?.rawValue
         payload["state"] = state
         

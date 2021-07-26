@@ -71,18 +71,16 @@ public struct ActionEvent: Decodable {
     /// An opaque value identifying the instance's action.
     public let context: String
     
-    
     /// An opaque value identifying the device.
     public let device: String
     
-    
+    /// The payload of the event.
     public let payload: Payload
 }
 
 extension ActionEvent {
 
     public struct Payload: Decodable {
-        
         
         /// This json object contains data that you can set and are stored persistently.
         public let settings: [String: String]
