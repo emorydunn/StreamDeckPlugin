@@ -63,6 +63,8 @@ open class StreamDeckPlugin {
     func monitorSocket() {
         NSLog("Beginning to monitor socket")
         
+        let decoder = JSONDecoder()
+        
         task
             .subscribe(on: backgroundQueue)
             .compactMap { message in
@@ -76,37 +78,35 @@ open class StreamDeckPlugin {
                 }
             }
             .tryMap { data in
-                (try JSONDecoder().decode(ReceivableEvent.self, from: data), data)
+                (try JSONDecoder().decode(ReceivableEvent.self, from: data).event, data)
             }
-            .catch { fail -> Just<(ReceivableEvent, Data)?> in
+            .catch { fail -> Just<(ReceivableEvent.EventKey, Data)?> in
                 NSLog("ERROR: \(fail.localizedDescription)")
                 
                 return Just(nil)
             }
             .compactMap { $0 }
             .sink { (event, data) in
-                let decoder = JSONDecoder()
+                
                 do {
-                    switch event.event {
+                    let action = try decoder.decode(ActionEvent.self, from: data)
+                    
+                    switch event {
                     case .keyDown:
-                        let key = try decoder.decode(ActionEvent.self, from: data)
-                        self.keyDown(action: key.action, context: key.context, device: key.context, payload: key.payload)
+                        self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
                     case .keyUp:
-                        let key = try decoder.decode(ActionEvent.self, from: data)
-                        self.keyUp(action: key.action, context: key.context, device: key.context, payload: key.payload)
+                        self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
                     case .willAppear:
-                        let action = try decoder.decode(ActionEvent.self, from: data)
                         self.knownContexts.insert(action.context)
                         self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
                     case .willDisappear:
-                        let action = try decoder.decode(ActionEvent.self, from: data)
                         self.knownContexts.remove(action.context)
                         self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
                     default:
-                        break
+                        NSLog("Unsupported action \(event.rawValue)")
                     }
                 } catch {
-                    NSLog("Failed to decode data for event \(event.event)")
+                    NSLog("Failed to decode data for event \(event)")
                     NSLog(error.localizedDescription)
                     NSLog("\(error)")
                     NSLog(String(data: data, encoding: .utf8)!)
