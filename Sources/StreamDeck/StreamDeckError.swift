@@ -8,13 +8,13 @@
 import Foundation
 
 enum StreamDeckError: LocalizedError {
-    case invlaidJSON(SendableEventKey, [String: Any])
+    case invlaidJSON(String, [String: Any])
     
     var errorDescription: String? {
         switch self {
         case let .invlaidJSON(event, json):
             return """
-                The JSON for \(event.rawValue) is invalid.
+                The JSON for \(event) is invalid.
 
                 \(json)
                 """

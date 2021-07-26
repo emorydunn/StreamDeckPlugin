@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  StreamDeckPlugin.swift
 //  
 //
 //  Created by Emory Dunn on 7/25/21.
@@ -89,10 +89,10 @@ open class StreamDeckPlugin {
                 do {
                     switch event.event {
                     case .keyDown:
-                        let key = try decoder.decode(KeyEventAction.self, from: data)
+                        let key = try decoder.decode(ActionEvent.self, from: data)
                         self.keyDown(action: key.action, context: key.context, device: key.context, payload: key.payload)
                     case .keyUp:
-                        let key = try decoder.decode(KeyEventAction.self, from: data)
+                        let key = try decoder.decode(ActionEvent.self, from: data)
                         self.keyUp(action: key.action, context: key.context, device: key.context, payload: key.payload)
                     case .willAppear:
                         let action = try decoder.decode(ActionEvent.self, from: data)
@@ -125,7 +125,7 @@ open class StreamDeckPlugin {
     ///   - context: The context token.
     ///   - payload: The payload for the action.
     /// - Throws: Errors while encoding the data to JSON.
-    func sendEvent(_ eventType: SendableEventKey, context: String?, payload: [String: Any]?) throws {
+    func sendEvent(_ eventType: SendableEventKey, context: String?, payload: [String: Any]?) {
         
         var event: [String: Any] = [
             "event": eventType.rawValue
@@ -135,18 +135,23 @@ open class StreamDeckPlugin {
         event["payload"] = payload
         
         guard JSONSerialization.isValidJSONObject(event) else {
-            throw StreamDeckError.invlaidJSON(eventType, event)
+            NSLog("Data for \(eventType.rawValue) is not valid JSON.")
+            return
         }
         
-        let data = try JSONSerialization.data(withJSONObject: event, options: [])
-        
-        task.task.send(URLSessionWebSocketTask.Message.data(data)) { error in
-            if let error = error {
-                NSLog("ERROR: Failed to send \(eventType.rawValue) event.")
-                NSLog(error.localizedDescription)
-            } else {
-                NSLog("Completed \(eventType.rawValue)")
+        do {
+            let data = try JSONSerialization.data(withJSONObject: event, options: [])
+            
+            task.task.send(URLSessionWebSocketTask.Message.data(data)) { error in
+                if let error = error {
+                    NSLog("ERROR: Failed to send \(eventType.rawValue) event.")
+                    NSLog(error.localizedDescription)
+                } else {
+                    NSLog("Completed \(eventType.rawValue)")
+                }
             }
+        } catch {
+            NSLog("ERROR: \(error.localizedDescription).")
         }
 
     }
@@ -161,6 +166,10 @@ open class StreamDeckPlugin {
             "event": properties.event,
             "uuid": properties.uuid
         ]
+        
+        guard JSONSerialization.isValidJSONObject(event) else {
+            throw StreamDeckError.invlaidJSON(properties.event, event)
+        }
         
         let data = try JSONSerialization.data(withJSONObject: event, options: [])
         
@@ -177,18 +186,16 @@ open class StreamDeckPlugin {
     /// - Parameters:
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - settings: A json object which is persistently saved for the action's instance.
-    /// - Throws: <#description#>
-    public func setSettings(in context: String, to settings: [String: Any]) throws {
-        try sendEvent(.setSettings,
+    public func setSettings(in context: String, to settings: [String: Any]) {
+        sendEvent(.setSettings,
                       context: context,
                       payload: settings)
     }
     
     /// Request the persistent data for the action's instance.
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
-    /// - Throws: <#description#>
-    public func getSettings(in context: String) throws {
-        try sendEvent(.getSettings,
+    public func getSettings(in context: String) {
+        sendEvent(.getSettings,
                       context: context,
                       payload: nil)
     }
@@ -197,37 +204,33 @@ open class StreamDeckPlugin {
     /// - Parameters:
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - settings: A json object which is persistently saved globally.
-    /// - Throws: <#description#>
-    public func setGlobalSettings(in context: String, to settings: [String: Any]) throws {
-        try sendEvent(.setGlobalSettings,
+    public func setGlobalSettings(in context: String, to settings: [String: Any]) {
+        sendEvent(.setGlobalSettings,
                       context: context,
                       payload: settings)
     }
     
     /// Request the global persistent data.
     /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
-    /// - Throws: <#description#>
-    public func getGloablSettings(in context: String) throws {
-        try sendEvent(.getGlobalSettings,
+    public func getGloablSettings(in context: String) {
+        sendEvent(.getGlobalSettings,
                       context: context,
                       payload: nil)
     }
     
     /// Open an URL in the default browser.
     /// - Parameter url: The URL to open
-    /// - Throws: <#description#>
-    public func openURL(_ url: URL) throws {
-        try sendEvent(.openURL,
+    public func openURL(_ url: URL) {
+        sendEvent(.openURL,
                       context: nil,
                       payload: ["url": url.path])
     }
     
     /// Write a debug log to the logs file.
     /// - Parameter message: A string to write to the logs file.
-    /// - Throws: <#description#>
-    public func logMessage(_ message: String) throws {
+    public func logMessage(_ message: String) {
         NSLog("EVENT: Sending log message: \(message)")
-        try sendEvent(.logMessage, context: nil, payload: ["message": message])
+        sendEvent(.logMessage, context: nil, payload: ["message": message])
     }
     
     /// Dynamically change the title of an instance of an action.
@@ -236,14 +239,13 @@ open class StreamDeckPlugin {
     ///   - title: The title to display. If there is no title parameter, the title is reset to the title set by the user.
     ///   - target: Specify if you want to display the title on hardware, software, or both.
     ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
-    /// - Throws: <#description#>
-    public func setTitle(in context: String, to title: String, target: Target? = nil, state: Int? = nil) throws {
+    public func setTitle(in context: String, to title: String, target: Target? = nil, state: Int? = nil) {
         var payload: [String: Any] = ["title": title]
         
         payload["target"] = target?.rawValue
         payload["state"] = state
         
-        try sendEvent(.setTitle,
+        sendEvent(.setTitle,
                       context: context,
                       payload: payload)
     }
@@ -257,15 +259,14 @@ open class StreamDeckPlugin {
     ///   - image: An image to display.
     ///   - target: Specify if you want to display the title on hardware, software, or both.
     ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
-    /// - Throws: <#description#>
-    public func setImage(in context: String, to image: NSImage, target: Target? = nil, state: Int? = nil) throws {
+    public func setImage(in context: String, to image: NSImage, target: Target? = nil, state: Int? = nil) {
         var payload: [String: Any] = [:]
         
         payload["image"] = image.base64String
         payload["target"] = target?.rawValue
         payload["state"] = state
         
-        try sendEvent(.setImage,
+        sendEvent(.setImage,
                       context: context,
                       payload: payload)
     }
@@ -278,39 +279,35 @@ open class StreamDeckPlugin {
     
     /// Temporarily show an alert icon on the image displayed by an instance of an action.
     /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
-    /// - Throws: <#description#>
-    public func showAlert(in context: String) throws {
-        try sendEvent(.showAlert, context: context, payload: nil)
+    public func showAlert(in context: String) {
+        sendEvent(.showAlert, context: context, payload: nil)
     }
     
     /// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
     /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
-    /// - Throws: <#description#>
-    public func showOk(in context: String) throws {
-        try sendEvent(.showOK, context: context, payload: nil)
+    public func showOk(in context: String) {
+        sendEvent(.showOK, context: context, payload: nil)
     }
     
     /// Change the state of the action's instance supporting multiple states.
     /// - Parameters:
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
-    /// - Throws: <#description#>
-    public func setState(in context: String, to state: Int) throws {
+    public func setState(in context: String, to state: Int) {
         let payload: [String: Any] = ["state": state]
 
-        try sendEvent(.setState,
+        sendEvent(.setState,
                       context: context,
                       payload: payload)
     }
     
     /// Switch to one of the preconfigured read-only profiles.
     /// - Parameter name: The name of the profile to switch to. The name should be identical to the name provided in the manifest.json file.
-    /// - Throws: <#description#>
-    public func switchToProfile(named name: String) throws {
+    public func switchToProfile(named name: String) {
         let payload: [String: Any] = ["profile": name]
         // FIXME: Add Device
 
-        try sendEvent(.switchToProfile,
+        sendEvent(.switchToProfile,
                       context: properties.uuid,
                       payload: payload)
     }
@@ -320,12 +317,11 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - action: The action unique identifier.
     ///   - payload: A json object that will be received by the Property Inspector.
-    /// - Throws: <#description#>
-    public func sendToPropertyInspector(in context: String, action: String, payload: [String: Any]) throws {
+    public func sendToPropertyInspector(in context: String, action: String, payload: [String: Any]) {
 //        let payload: [String: Any] = ["profile": name]
         // FIXME: Add action
 
-        try sendEvent(.sendToPropertyInspector,
+        sendEvent(.sendToPropertyInspector,
                       context: context,
                       payload: payload)
     }
@@ -335,12 +331,11 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
     ///   - payload: A json object that will be received by the plugin.
-    /// - Throws: <#description#>
-    public func sendToPlugin(in context: String, action: String, payload: [String: Any]) throws {
+    public func sendToPlugin(in context: String, action: String, payload: [String: Any]) {
 //        let payload: [String: Any] = ["profile": name]
         // FIXME: Add action
 
-        try sendEvent(.sendToPlugin,
+        sendEvent(.sendToPlugin,
                       context: context,
                       payload: payload)
     }
@@ -381,7 +376,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
+    open func keyDown(action: String, context: String, device: String, payload: ActionEvent.Payload) {
         
     }
 
@@ -392,7 +387,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func keyUp(action: String, context: String, device: String, payload: KeyEvent) {
+    open func keyUp(action: String, context: String, device: String, payload: ActionEvent.Payload) {
         
     }
     
