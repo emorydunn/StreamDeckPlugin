@@ -13,13 +13,9 @@ class CounterPlugin: StreamDeckPlugin {
 
     var counter: Int = 0
     
-    override func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
+    override func keyDown(action: String, context: String, device: String, payload: ActionEvent.Payload) {
         counter += 1
-        do {
-            try setTitle(in: context, to: "\(counter)")
-        } catch {
-            NSLog(error.localizedDescription)
-        }
+        setTitle(in: context, to: "\(counter)")
     }
     
 }
