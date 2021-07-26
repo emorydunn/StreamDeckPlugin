@@ -27,7 +27,7 @@ In order to run your plugin it needs to be registered during startup. The `Plugi
 import Foundation
 import StreamDeck
 
-PluginManager.plugin = MacOSPlugin.self
+PluginManager.plugin = CounterPlugin.self
 PluginManager.main()
 
 dispatchMain()
