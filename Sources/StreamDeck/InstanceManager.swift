@@ -15,10 +15,12 @@ public class InstanceManager {
     }
     
     func registerInstance(_ action: ActionEvent) {
+        NSLog("Registered instance of \(action.action) at \(action.payload.coordinates).")
         instances.insert(action)
     }
     
     func removeInstance(_ action: ActionEvent) {
+        NSLog("Removed instance of \(action.action) at \(action.payload.coordinates).")
         instances.remove(action)
     }
     
@@ -27,7 +29,7 @@ public class InstanceManager {
     }
     
     public func instances(with actionID: String) -> [ActionEvent] {
-        instances.filter { $0.action == actionID }
+        instances.filter { $0.action == actionID.lowercased() }
     }
     
     public func instance(at coordinates: ActionEvent.Coordinates) -> ActionEvent? {
