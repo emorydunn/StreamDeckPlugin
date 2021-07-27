@@ -73,7 +73,7 @@ extension WebSocketTaskPublisher {
             while let target = target, demand > 0 {
 
                 // Only allow one request at once
-                let flag = DispatchSemaphore(value: 0)
+//                let flag = DispatchSemaphore(value: 0)
 
                 self.task.receive { result in
                     switch result {
@@ -84,11 +84,11 @@ extension WebSocketTaskPublisher {
                         target.receive(completion: .failure(error))
                     }
                     
-                    flag.signal()
+//                    flag.signal()
 
                 }
 
-                flag.wait()
+//                flag.wait()
 
             }
         }
