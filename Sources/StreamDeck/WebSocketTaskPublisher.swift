@@ -46,9 +46,15 @@ public struct WebSocketTaskPublisher: Publisher {
 
     }
     
-//    public func send(_ message: URLSessionWebSocketTask.Message) {
-//        task.send(message, completionHandler: <#T##(Error?) -> Void#>)
-//    }
+    /// Sends a WebSocket message, receiving the result in a completion handler.
+    ///
+    /// If an error occurs while sending the message, any outstanding work also fails.
+    /// - Parameters:
+    ///   - message: The WebSocket message to send to the other endpoint.
+    ///   - completionHandler: A closure that receives an NSError that indicates an error encountered while sending, or nil if no error occurred.
+    public func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
+        task.send(message, completionHandler: completionHandler)
+    }
     
 }
 

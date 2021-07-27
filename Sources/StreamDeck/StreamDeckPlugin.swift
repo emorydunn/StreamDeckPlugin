@@ -143,7 +143,7 @@ open class StreamDeckPlugin {
         do {
             let data = try JSONSerialization.data(withJSONObject: event, options: [])
             
-            task.task.send(URLSessionWebSocketTask.Message.data(data)) { error in
+            task.send(URLSessionWebSocketTask.Message.data(data)) { error in
                 if let error = error {
                     NSLog("ERROR: Failed to send \(eventType.rawValue) event.")
                     NSLog(error.localizedDescription)
