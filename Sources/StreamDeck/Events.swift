@@ -63,7 +63,7 @@ extension ReceivableEvent {
 }
 
 /// Actions sent by the server.
-public struct ActionEvent: Decodable {
+public struct ActionEvent: Decodable, Hashable {
     
     /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
     public let action: String
@@ -80,7 +80,7 @@ public struct ActionEvent: Decodable {
 
 extension ActionEvent {
 
-    public struct Payload: Decodable {
+    public struct Payload: Decodable, Hashable {
         
         /// This json object contains data that you can set and are stored persistently.
         public let settings: [String: String]
@@ -107,7 +107,7 @@ extension ActionEvent {
     }
     
     /// The coordinates of the action triggered.
-    public struct Coordinates: Decodable {
+    public struct Coordinates: Decodable, Hashable {
         
         /// The column.
         public let column: Int

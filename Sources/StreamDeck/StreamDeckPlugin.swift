@@ -37,7 +37,8 @@ open class StreamDeckPlugin {
     public let properties: PluginManager
     
     /// Known action instances
-    public private(set) var knownContexts: Set<String> = Set()
+//    public private(set) var knownContexts: Set<String> = Set()
+    public let instanceManager = InstanceManager()
     
     /// Create a new plugin object.
     /// - Parameter properties: Properties from the Stream Deck application.
@@ -97,10 +98,10 @@ open class StreamDeckPlugin {
                     case .keyUp:
                         self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
                     case .willAppear:
-                        self.knownContexts.insert(action.context)
+                        self.instanceManager.registerInstance(action)
                         self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
                     case .willDisappear:
-                        self.knownContexts.remove(action.context)
+                        self.instanceManager.removeInstance(action)
                         self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
                     default:
                         NSLog("Unsupported action \(event.rawValue)")
