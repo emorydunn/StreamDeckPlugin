@@ -45,11 +45,7 @@ public struct WebSocketTaskPublisher: Publisher {
             .receive(subscription: subscrption)
 
     }
-    
-//    public func send(_ message: URLSessionWebSocketTask.Message) {
-//        task.send(message, completionHandler: <#T##(Error?) -> Void#>)
-//    }
-    
+
 }
 
 extension WebSocketTaskPublisher {
@@ -69,11 +65,15 @@ extension WebSocketTaskPublisher {
             // Resume the task
             task.resume()
             
-            listen(for: target, with: demand)
+            sendReceivedEvents(to: target, with: demand)
             
         }
         
-        func listen(for target: Target, with demand: Subscribers.Demand) {
+        /// Receive events from the WebSocket and pass them along to the subscriber.
+        /// - Parameters:
+        ///   - target: The subscriber to attach to this Publisher, after which it can receive values.
+        ///   - demand: A requested number of items, sent to a publisher from a subscriber through the subscription.
+        func sendReceivedEvents(to target: Target, with demand: Subscribers.Demand) {
             var demand = demand
             
             self.task.receive { [weak self] result in
@@ -86,7 +86,7 @@ extension WebSocketTaskPublisher {
                 }
                 
                 if demand > 0 {
-                    self?.listen(for: target, with: demand)
+                    self?.sendReceivedEvents(to: target, with: demand)
                 }
             }
         }
