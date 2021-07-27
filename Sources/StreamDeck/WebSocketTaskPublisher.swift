@@ -64,35 +64,33 @@ extension WebSocketTaskPublisher {
         }
         
         func request(_ demand: Subscribers.Demand) {
-            var demand = demand
+            guard let target = target else { return }
             
             // Resume the task
             task.resume()
-
-            // Request new messages from the socket
-            while let target = target, demand > 0 {
-
-                // Only allow one request at once
-//                let flag = DispatchSemaphore(value: 0)
-
-                self.task.receive { result in
-                    switch result {
-                    case let .success(message):
-                        demand -= 1
-                        demand += target.receive(message)
-                    case let .failure(error):
-                        target.receive(completion: .failure(error))
-                    }
-                    
-//                    flag.signal()
-
-                }
-
-//                flag.wait()
-
-            }
+            
+            listen(for: target, with: demand)
+            
         }
         
+        func listen(for target: Target, with demand: Subscribers.Demand) {
+            var demand = demand
+            
+            self.task.receive { [weak self] result in
+                switch result {
+                case let .success(message):
+                    demand -= 1
+                    demand += target.receive(message)
+                case let .failure(error):
+                    target.receive(completion: .failure(error))
+                }
+                
+                if demand > 0 {
+                    self?.listen(for: target, with: demand)
+                }
+            }
+        }
+
         func cancel() {
             task.cancel()
             target = nil
