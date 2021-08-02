@@ -13,7 +13,7 @@ class CounterPlugin: StreamDeckPlugin {
 
     var counter: Int = 0
     
-    override func keyDown(action: String, context: String, device: String, payload: ActionEvent) {
+    override func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
         counter += 1
         setTitle(in: context, to: "\(counter)")
     }
@@ -96,7 +96,7 @@ let package = Package(
     ],
     targets: [
         .target(name: "<command-line-tool>", dependencies: [
-            .product(name: "StreamDeck", package: "StreamDeckPlugin"),
+            "StreamDeck"
         ]),
         // other targets
     ]
