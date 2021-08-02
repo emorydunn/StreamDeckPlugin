@@ -33,15 +33,17 @@ public struct PluginManager: ParsableCommand {
     }
     
     public init() { }
-    
-    
 
     public func run() throws {
         NSLog("Starting macOS plugin")
         StreamDeckPlugin.shared = try PluginManager.plugin?.init(properties: self)
-        
-//        try StreamDeckPlugin.createShared(with: self)
-        NSLog("Shared plugin created")
+    }
+    
+    static func main(plugin: StreamDeckPlugin.Type) {
+        PluginManager.plugin = plugin
+        PluginManager.main()
+
+        dispatchMain()
     }
        
 }
