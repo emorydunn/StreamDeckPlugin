@@ -51,7 +51,7 @@ public struct PluginManager: ParsableCommand {
     
     /// A convenience method for registering the plugin, reading the CLI options, 
     /// and dispatching on the main thread. 
-    static func main(plugin: StreamDeckPlugin.Type) {
+    public static func main(plugin: StreamDeckPlugin.Type) {
         PluginManager.plugin = plugin
         PluginManager.main()
 
