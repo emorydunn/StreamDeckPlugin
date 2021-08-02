@@ -27,17 +27,16 @@ In order to run your plugin it needs to be registered during startup. The `Plugi
 import Foundation
 import StreamDeck
 
-PluginManager.plugin = CounterPlugin.self
-PluginManager.main()
-
-dispatchMain()
+PluginManager.main(plugin: CounterPlugin.self)
 ```
 
-This is all that should be in the file in order for the Stream Deck software to succesfully launch the plugin. 
+This is all that should be in the file in order for the Stream Deck software to successfully launch the plugin. 
 
 ## Responding to Events
 
-When events are received by your plugin they are parsed and the corosponding method is called. See the [Events Received][er] page for more details. 
+When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. In order for your plugin to receive the event you need to override the method. 
+
+Each method is called with the top-level properties along with an event specific payload. For instance, to the `keyDown` event provides a payload that includes the actions settings, coordinates, etc. 
 
 [er]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/
 
@@ -47,9 +46,9 @@ In addition to receiving events from the application your plugin can [send event
 
 [se]: https://developer.elgato.com/documentation/stream-deck/sdk/events-sent/
 
-## Accessing Specific Action Insrances
+## Accessing Specific Action Instances
 
-Responding to events is easy because the context is provided, however updating instances outside of a recieved event requires knowing the state of the Stream Deck. 
+Responding to events is easy because the context is provided, however updating instances outside of a received event requires knowing the state of the Stream Deck. 
 To aid in this the `StreamDeckPlugin` has an `InstanceManager` which tracks `willAppear` and `willDissapear` events. The manager provides methods for looking up available instances in a few ways.  
 
 The most straight forward is by looking up the context token using `.instance(for:)`. Usually you'll be looking up instances of a specific action or at specific coordinates. 
@@ -57,3 +56,31 @@ The most straight forward is by looking up the context token using `.instance(fo
 To look up all instances of an action call `.instances(with:)`  with the UUID from your `manifest.json` file. The ID you pass in will be automatically lowercased. 
 
 You can also look up the instance of an action by coordinates by calling `.instance(at:)`. 
+
+## Adding `StreamDeck` as a Dependency
+
+To use the `StreamDeck` library in a SwiftPM project, 
+add the following line to the dependencies in your `Package.swift` file:
+
+```swift
+.package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main"))
+```
+
+Finally, include `"StreamDeck"` as a dependency for your executable target:
+
+```swift
+let package = Package(
+    // name, products, etc.
+    platforms: [.macOS(.v10_15)],
+    dependencies: [
+        .package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main")),
+        // other dependencies
+    ],
+    targets: [
+        .target(name: "<command-line-tool>", dependencies: [
+            .product(name: "StreamDeck", package: "StreamDeckPlugin"),
+        ]),
+        // other targets
+    ]
+)
+```
