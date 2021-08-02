@@ -36,6 +36,8 @@ This is all that should be in the file in order for the Stream Deck software to 
 
 When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. In order for your plugin to receive the event you need to override the method. 
 
+- Note: You don't need to call `super` when overriding, any internal responses to events are handled automaticaly. 
+
 Each method is called with the top-level properties along with an event specific payload. For instance, to the `keyDown` event provides a payload that includes the actions settings, coordinates, etc. 
 
 [er]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/
@@ -49,13 +51,16 @@ In addition to receiving events from the application your plugin can [send event
 ## Accessing Specific Action Instances
 
 Responding to events is easy because the context is provided, however updating instances outside of a received event requires knowing the state of the Stream Deck. 
-To aid in this the `StreamDeckPlugin` has an `InstanceManager` which tracks `willAppear` and `willDissapear` events. The manager provides methods for looking up available instances in a few ways.  
+
+To aid in this the `StreamDeckPlugin` has an `InstanceManager` which tracks `willAppear` and `willDissapear` events. The manager provides methods for looking up available instances in a few ways. 
 
 The most straight forward is by looking up the context token using `.instance(for:)`. Usually you'll be looking up instances of a specific action or at specific coordinates. 
 
 To look up all instances of an action call `.instances(with:)`  with the UUID from your `manifest.json` file. The ID you pass in will be automatically lowercased. 
 
 You can also look up the instance of an action by coordinates by calling `.instance(at:)`. 
+
+The lookup methods return an `ActionInstance`, which provides the context, action ID, and coordinates of the instance. 
 
 ## Adding `StreamDeck` as a Dependency
 
