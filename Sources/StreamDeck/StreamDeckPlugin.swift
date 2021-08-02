@@ -116,11 +116,11 @@ open class StreamDeckPlugin {
                         
                     case .deviceDidConnect:
                         let action = try decoder.decode(ActionEvent<DeviceInfo>.self, from: data)
-                        self.deviceDidConnect(device: action.device, deviceInfo: action.payload)
+                        self.deviceDidConnect(action.device, deviceInfo: action.payload)
                         
                     case .deviceDidDisconnect:
                         let action = try decoder.decode(ActionEvent<DeviceInfo?>.self, from: data)
-                        self.deviceDidDisconnect(device: action.device)
+                        self.deviceDidDisconnect(action.device)
                     
                     default:
                         NSLog("Unsupported action \(event.rawValue)")
@@ -428,14 +428,14 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func deviceDidConnect(device: String, deviceInfo: DeviceInfo) {
+    open func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) {
         
     }
     
     /// When a device is unplugged from the computer, the plugin will receive a `deviceDidDisconnect` event.
     /// - Parameters:
     ///   - device: An opaque value identifying the device.
-    open func deviceDidDisconnect(device: String) {
+    open func deviceDidDisconnect(_ device: String) {
         
     }
     

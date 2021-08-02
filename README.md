@@ -36,9 +36,22 @@ This is all that should be in the file in order for the Stream Deck software to 
 
 When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. In order for your plugin to receive the event you need to override the method. 
 
-- Note: You don't need to call `super` when overriding, any internal responses to events are handled automaticaly. 
+- Note: You don't need to call `super` when overriding, any internal responses to events are handled automatically. 
 
 Each method is called with the top-level properties along with an event specific payload. For instance, to the `keyDown` event provides a payload that includes the actions settings, coordinates, etc. 
+
+You can override the following methods: 
+
+- `willAppear(action:context:device:payload:)`
+- `willDisappear(action:context:device:payload:)`
+- `keyDown(action:context:device:payload:)`
+- `keyUp(action:context:device:payload:)`
+- `titleParametersDidChange(action:context:device:info:)`
+- `deviceDidConnect(_:deviceInfo:)`
+- `deviceDidDisconnect(_:)`
+- `applicationDidLaunch(_:)`
+- `applicationDidTerminate(_:)`
+- `systemDidWakeUp()`
 
 [er]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/
 
