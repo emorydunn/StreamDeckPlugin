@@ -68,7 +68,7 @@ public struct PluginManifest: Codable {
     /// Override CodePath for Windows.
     public var codePathWin: String?
     
-    internal init(name: String,
+    public init(name: String,
                   description: String,
                   category: String? = nil,
                   categoryIcon: String? = nil,
