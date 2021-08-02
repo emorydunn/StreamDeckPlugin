@@ -2,6 +2,8 @@ name: PublishDocumentation
 on:
   release:
     types: [published]
+  push:
+    branches: [ main ]
 jobs:
   deploy_docs:
     runs-on: macOS-latest
