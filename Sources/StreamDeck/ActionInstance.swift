@@ -7,9 +7,18 @@
 
 import Foundation
 
+/// Holds information about an instance of an action. 
 public struct ActionInstance {
+    
+    /// The actions' ID from `manifest.json`
+    ///
+    /// - Note: Stream Deck lowercases the ID. 
     public let action: String
+    
+    /// The context value for the instance. 
     public let context: String
+    
+    /// The coordinates of the instance. 
     public let coordinates: Coordinates
 }
 
@@ -20,6 +29,8 @@ extension ActionInstance: Hashable {
 }
 
 extension ActionInstance {
+    
+    /// Initialize an ActionInstance from an `AppearEvent`
     init(event: ActionEvent<AppearEvent>) {
         self.action = event.action
         self.context = event.context

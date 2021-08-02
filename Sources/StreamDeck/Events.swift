@@ -36,6 +36,7 @@ public enum Target: Int, Encodable {
 
 // MARK: - Received
 
+/// The root object to decode a received event.
 public struct ReceivableEvent: Decodable {
     let event: EventKey
 }
@@ -82,47 +83,6 @@ public struct ActionEvent<Payload: Decodable>: Decodable {
     public let payload: Payload
 }
 
-//extension ActionEvent {
-//
-//    public struct Payload: Decodable, Hashable {
-//
-//        /// This json object contains data that you can set and are stored persistently.
-//        public let settings: [String: String]
-//
-//        /// The coordinates of the action triggered.
-//        public let coordinates: Coordinates
-//
-//        /// This is a parameter that is only set when the action has multiple states defined in its manifest.json.
-//        ///
-//        /// The 0-based value contains the current state of the action.
-//        public let state: Int?
-//
-//        /// This is a parameter that is only set when the action is triggered with a specific value from a Multi Action.
-//        ///
-//        /// For example if the user sets the Game Capture Record action to be disabled in a Multi Action, you would see the value 1.
-//        ///
-//        /// - Important: Only the value 0 and 1 are valid.
-//        public let userDesiredState: Int?
-//
-//
-//        /// Boolean indicating if the action is inside a Multi Action.
-//        public let isInMultiAction: Bool
-//
-//    }
-//
-//    /// The coordinates of the action triggered.
-//    public struct Coordinates: Decodable, Hashable {
-//
-//        /// The column.
-//        public let column: Int
-//
-//
-//        /// The row.
-//        public let row: Int
-//    }
-//
-//}
-
 /// The coordinates of the action triggered.
 public struct Coordinates: Decodable, Hashable {
     
@@ -134,6 +94,8 @@ public struct Coordinates: Decodable, Hashable {
 }
 
 // MARK: Settings Events
+
+/// Action instance settings received after calling `getSettings()`.
 public struct SettingsEvent: Decodable {
     /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
     public let action: String
@@ -164,6 +126,7 @@ public struct SettingsEvent: Decodable {
     }
 }
 
+/// Global settings received after calling `getGlobalSettings()`.
 public struct GlobalSettingsEvent: Decodable {
     /// The payload of the event.
     public let payload: Payload
