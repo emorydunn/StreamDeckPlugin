@@ -11,8 +11,11 @@ import ArgumentParser
 /// Manages a plugins lifecycle and handling launch from the Stream Deck application.
 public struct PluginManager: ParsableCommand {
     
+    public static var configuration = CommandConfiguration(subcommands: [GenerateManifest.self])
+    
     /// The plugin to be used.
     public static var plugin: StreamDeckPlugin.Type?
+    public static var manifest: PluginManifest?
     
     // CLI
     
@@ -51,8 +54,9 @@ public struct PluginManager: ParsableCommand {
     
     /// A convenience method for registering the plugin, reading the CLI options, 
     /// and dispatching on the main thread. 
-    public static func main(plugin: StreamDeckPlugin.Type) {
+    public static func main(plugin: StreamDeckPlugin.Type, manifest: PluginManifest? = nil) {
         PluginManager.plugin = plugin
+        PluginManager.manifest = manifest
         PluginManager.main()
 
         dispatchMain()

@@ -202,9 +202,35 @@ public struct TitleInfo: Decodable, Locatable {
         public let titleColor: String
     }
     
-    public enum Alignment: String, Decodable {
-        case top, bottom, middle
-    }
+}
+
+public enum Alignment: String, Codable {
+    case top, bottom, middle
+}
+
+public enum FontFamily: String, Codable {
+    case arial = "Arial"
+    case arialBlack = "Arial Black"
+    case comicSansMS = "Comic Sans MS"
+    case courier = "Courier"
+    case courierNew = "Courier New"
+    case georgia = "Georgia"
+    case impact = "Impact"
+    case microsoftSansSerif = "Microsoft Sans Serif"
+    case symbol = "Symbol"
+    case tahoma = "Tahoma"
+    case timesNewRoman = "Times New Roman"
+    case trebuchetMS = "Trebuchet MS"
+    case verdana = "Verdana"
+    case webdings = "Webdings"
+    case wingdings = "Wingdings"
+}
+
+public enum FontStyle: String, Codable {
+    case regular = "Regular"
+    case bold = "Bold"
+    case italic = "Italic"
+    case boldItalic = "Bold Italic"
 }
 
 
@@ -219,11 +245,12 @@ public struct DeviceInfo: Decodable {
         public let rows: Int
     }
     
-    public enum DeviceType: Int, Decodable {
-        case streamDeck
-        case mini
-        case xl
-        case mobile
-        case corsiarGKeys
-    }
+}
+
+public enum DeviceType: Int, Codable {
+    case streamDeck
+    case mini
+    case xl
+    case mobile
+    case corsiarGKeys
 }
