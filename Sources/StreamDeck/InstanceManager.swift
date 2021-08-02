@@ -11,11 +11,11 @@ import Foundation
 public class InstanceManager {
     
     /// Known instances of the plugin's actions.
-    public private(set) var instances: [String: ActionInstance]
+    public private(set) var instances: Set<ActionInstance>
     
     /// Create a new manager.
     /// - Parameter instances: Instances to register.
-    public init(instances: [String: ActionInstance] = [:]) {
+    public init(instances: Set<ActionInstance> = []) {
         self.instances = instances
     }
     
@@ -23,21 +23,24 @@ public class InstanceManager {
     /// - Parameter action: The action instance to register.
     func registerInstance(_ action: ActionEvent<AppearEvent>) {
         NSLog("Registered instance of \(action.action) at \(action.payload.coordinates).")
-        instances[action.context] = ActionInstance(event: action)
+        instances.insert(ActionInstance(event: action))
     }
     
     /// Remove an instance of an action from a `willDisappear` event.
     /// - Parameter action: The action instance to unregister.
     func removeInstance(_ action: ActionEvent<AppearEvent>) {
         NSLog("Removed instance of \(action.action) at \(action.payload.coordinates).")
-        instances[action.context] = nil
+        if let instance = instance(for: action.context) {
+            instances.remove(instance)
+        }
+        
     }
     
     /// Look up an instance based on its context.
     /// - Parameter context: The context from a Stream Deck event.
     /// - Returns: The registered action, if found.
     public func instance(for context: String) -> ActionInstance? {
-        instances[context]
+        instances.first { $0.context == context }
     }
     
     /// Look up all instances with the specified action UUID.
@@ -46,7 +49,7 @@ public class InstanceManager {
     /// - Parameter actionID: The action UUID as specified in `manifest.json`
     /// - Returns: All instances of the action found.
     public func instances(with actionID: String) -> [ActionInstance] {
-        instances.values.filter { $0.action == actionID.lowercased() }
+        instances.filter { $0.action == actionID.lowercased() }
     }
     
     /// Look up an instance based on its coordinates.
@@ -55,6 +58,6 @@ public class InstanceManager {
     /// - Parameter coordinates: The desired instances coordinates.
     /// - Returns: The registered action, if found.
     public func instance(at coordinates: Coordinates) -> ActionInstance? {
-        instances.values.first { $0.coordinates == coordinates }
+        instances.first { $0.coordinates == coordinates }
     }
 }
