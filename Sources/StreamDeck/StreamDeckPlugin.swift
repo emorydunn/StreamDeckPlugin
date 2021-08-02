@@ -37,7 +37,6 @@ open class StreamDeckPlugin {
     public let properties: PluginManager
     
     /// Known action instances
-//    public private(set) var knownContexts: Set<String> = Set()
     public let instanceManager = InstanceManager()
     
     /// Create a new plugin object.
