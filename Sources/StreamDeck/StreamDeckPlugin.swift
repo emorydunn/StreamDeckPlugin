@@ -90,19 +90,39 @@ open class StreamDeckPlugin {
             .sink { (event, data) in
                 
                 do {
-                    let action = try decoder.decode(ActionEvent.self, from: data)
-                    
                     switch event {
                     case .keyDown:
+                        try JSONSerialization.jsonObject(with: data, options: [])
+                        
+                        let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
                         self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
+                    
                     case .keyUp:
+                        let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
                         self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
+                    
                     case .willAppear:
+                        let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
                         self.instanceManager.registerInstance(action)
                         self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+                    
                     case .willDisappear:
+                        let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
                         self.instanceManager.removeInstance(action)
                         self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+                    
+                    case .titleParametersDidChange:
+                        let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
+                        self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
+                        
+                    case .deviceDidConnect:
+                        let action = try decoder.decode(ActionEvent<DeviceInfo>.self, from: data)
+                        self.deviceDidConnect(device: action.device, deviceInfo: action.payload)
+                        
+                    case .deviceDidDisconnect:
+                        let action = try decoder.decode(ActionEvent<DeviceInfo?>.self, from: data)
+                        self.deviceDidDisconnect(device: action.device)
+                    
                     default:
                         NSLog("Unsupported action \(event.rawValue)")
                     }
@@ -354,7 +374,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func willAppear(action: String, context: String, device: String, payload: ActionEvent.Payload) {
+    open func willAppear(action: String, context: String, device: String, payload: AppearEvent) {
         
     }
     
@@ -368,7 +388,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func willDisappear(action: String, context: String, device: String, payload: ActionEvent.Payload) {
+    open func willDisappear(action: String, context: String, device: String, payload: AppearEvent) {
         
     }
     
@@ -378,7 +398,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func keyDown(action: String, context: String, device: String, payload: ActionEvent.Payload) {
+    open func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
         
     }
 
@@ -389,7 +409,57 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
-    open func keyUp(action: String, context: String, device: String, payload: ActionEvent.Payload) {
+    open func keyUp(action: String, context: String, device: String, payload: KeyEvent) {
+        
+    }
+    
+    /// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
+    open func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo) {
+        
+    }
+    
+    /// When a device is plugged to the computer, the plugin will receive a `deviceDidConnect` event.
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
+    open func deviceDidConnect(device: String, deviceInfo: DeviceInfo) {
+        
+    }
+    
+    /// When a device is unplugged from the computer, the plugin will receive a `deviceDidDisconnect` event.
+    /// - Parameters:
+    ///   - device: An opaque value identifying the device.
+    open func deviceDidDisconnect(device: String) {
+        
+    }
+    
+    /// A plugin can request in its manifest.json to be notified when some applications are launched or terminated.
+    ///
+    /// In order to do so, the manifest.json should contain an `ApplicationsToMonitor` object specifying the list of application identifiers to monitor.
+    /// On macOS the application bundle identifier is used while the exe filename is used on Windows.
+    /// - Parameter application: The identifier of the application that has been launched.
+    open func applicationDidLaunch(_ application: String) {
+        
+    }
+    
+    /// A plugin can request in its manifest.json to be notified when some applications are launched or terminated.
+    ///
+    /// In order to do so, the manifest.json should contain an `ApplicationsToMonitor` object specifying the list of application identifiers to monitor.
+    /// On macOS the application bundle identifier is used while the exe filename is used on Windows.
+    /// - Parameter application: The identifier of the application that has been launched.
+    open func applicationDidTerminate(_ application: String) {
+        
+    }
+    
+    /// When the computer is wake up, the plugin will receive the `systemDidWakeUp` event.
+    open func systemDidWakeUp() {
         
     }
     
