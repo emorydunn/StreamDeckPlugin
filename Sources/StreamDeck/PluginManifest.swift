@@ -23,7 +23,9 @@ public struct PluginManifest: Codable {
     
     /// The relative path to a PNG image without the .png extension.
     ///
-    /// This image is used in the actions list. The PNG image should be a 28pt x 28pt image. You should provide @1x and @2x versions of the image. The Stream Deck application takes care of loading the appropriate version of the image.
+    /// This image is used in the actions list. The PNG image should be a 28pt x 28pt image.
+    /// You should provide @1x and @2x versions of the image.
+    /// The Stream Deck application takes care of loading the appropriate version of the image.
     public var categoryIcon: String?
     
     /// The author of the plugin. This string is displayed to the user in the Stream Deck store.
@@ -31,7 +33,9 @@ public struct PluginManifest: Codable {
     
     /// The relative path to a PNG image without the .png extension.
     ///
-    /// This image is displayed in the Plugin Store window. The PNG image should be a 72pt x 72pt image. You should provide @1x and @2x versions of the image. The Stream Deck application takes care of loading the appropriate version of the image.
+    /// This image is displayed in the Plugin Store window. The PNG image should be a 72pt x 72pt image.
+    /// You should provide @1x and @2x versions of the image.
+    /// The Stream Deck application takes care of loading the appropriate version of the image.
     public var icon: String
     
     /// A URL displayed to the user if he wants to get more info about the plugin.
@@ -79,7 +83,7 @@ public struct PluginManifest: Codable {
                   os: [PluginOS],
                   applicationsToMonitor: ApplicationsToMonitor? = nil,
                   software: PluginSoftware,
-                  sdkVersion: Int,
+                  sdkVersion: Int = 2,
                   codePath: String,
                   codePathMac: String? = nil,
                   codePathWin: String? = nil) {
