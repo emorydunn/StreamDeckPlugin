@@ -31,7 +31,11 @@ struct StreamDeckCommand: ParsableCommand {
         
         StreamDeckPlugin.shared = try PluginManager.plugin?.init(port: port, uuid: uuid, event: event, info: info)
         
+        NSLog("Plugin started. Dispatching on main thread.")
+        
         dispatchMain()
+        
+        NSLog("After dispatch")
     }
     
 }
