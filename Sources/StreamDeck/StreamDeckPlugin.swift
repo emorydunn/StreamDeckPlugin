@@ -205,6 +205,7 @@ open class StreamDeckPlugin {
         
         let data = try JSONSerialization.data(withJSONObject: event, options: [])
         
+        NSLog("Sending registration event")
         task.task.send(URLSessionWebSocketTask.Message.data(data)) { error in
             if let error = error {
                 NSLog("ERROR: Failed to send \(self.event) event.")
