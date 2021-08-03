@@ -33,9 +33,7 @@ struct StreamDeckCommand: ParsableCommand {
         
         NSLog("Plugin started. Dispatching on main thread.")
         
-//        dispatchMain()
-        
-        NSLog("After dispatch")
+        dispatchMain()
     }
     
 }
