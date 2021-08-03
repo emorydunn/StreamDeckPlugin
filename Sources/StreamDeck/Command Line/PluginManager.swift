@@ -32,8 +32,6 @@ public struct PluginManager: ParsableCommand {
         PluginManager.plugin = plugin
         PluginManager.manifest = manifest
         PluginManager.main()
-
-        dispatchMain()
     }
        
 }
