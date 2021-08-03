@@ -200,10 +200,10 @@ public struct PluginAction: Codable {
                   uuid: String,
                   icon: String,
                   states: [PluginActionState],
-                  propertyInspectorPath: String?,
-                  supportedInMultiActions: Bool?,
-                  tooltop: String?,
-                  visibleInActionsList: Bool?) {
+                  propertyInspectorPath: String? = nil,
+                  supportedInMultiActions: Bool? = nil,
+                  tooltop: String? = nil,
+                  visibleInActionsList: Bool? = nil) {
         self.name = name
         self.uuid = uuid
         self.icon = icon
@@ -253,6 +253,28 @@ public struct PluginActionState: Codable {
     /// Boolean to have an underline under the title. False by default
     public let fontUnderline: Bool?
     
+    public init(image: String,
+                name: String? = nil,
+                title: String? = nil,
+                showTitle: Bool? = nil,
+                titleColor: String? = nil,
+                titleAlignment: String? = nil,
+                fontFamily: FontFamily,
+                fontStyle: FontStyle,
+                fontSize: Int,
+                fontUnderline: Bool? = nil) {
+        self.image = image
+        self.name = name
+        self.title = title
+        self.showTitle = showTitle
+        self.titleColor = titleColor
+        self.titleAlignment = titleAlignment
+        self.fontFamily = fontFamily
+        self.fontStyle = fontStyle
+        self.fontSize = fontSize
+        self.fontUnderline = fontUnderline
+    }
+    
 }
 
 /// Supported operating systems of a plugin.
@@ -298,7 +320,7 @@ public struct PluginSoftware: Codable {
     public let minimumVersion: String
     
     /// Initialize a new software version.
-    /// - Parameter minimumVersion: <#minimumVersion description#>
+    /// - Parameter minimumVersion: This value should be set to only support Stream Deck 4.1 or later.
     public init(minimumVersion: String) {
         self.minimumVersion = minimumVersion
     }
@@ -343,4 +365,14 @@ public struct PluginProfile: Codable {
     
     /// Boolean to prevent Stream Deck from automatically switching to this profile when installed. False by default.
     public let dontAutoSwitchWhenInstalled: Bool?
+    
+    public init(name: String,
+                deviceType: DeviceType,
+                readOnly: Bool? = nil,
+                dontAutoSwitchWhenInstalled: Bool? = nil) {
+        self.name = name
+        self.deviceType = deviceType
+        self.readOnly = readOnly
+        self.dontAutoSwitchWhenInstalled = dontAutoSwitchWhenInstalled
+    }
 }
