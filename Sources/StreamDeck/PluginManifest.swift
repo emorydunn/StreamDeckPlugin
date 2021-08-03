@@ -12,10 +12,14 @@ import Foundation
 /// See the [SDK documentation](https://developer.elgato.com/documentation/stream-deck/sdk/manifest/) for more information.
 public struct PluginManifest: Codable {
 
-    /// The name of the plugin. This string is displayed to the user in the Stream Deck store.
+    /// The name of the plugin.
+    ///
+    /// This string is displayed to the user in the Stream Deck store.
     public var name: String
     
-    /// Provides a general description of what the plugin does. This string is displayed to the user in the Stream Deck store.
+    /// Provides a general description of what the plugin does.
+    ///
+    /// This string is displayed to the user in the Stream Deck store.
     public var description: String
     
     /// The name of the custom category in which the actions should be listed.
@@ -30,7 +34,9 @@ public struct PluginManifest: Codable {
     /// The Stream Deck application takes care of loading the appropriate version of the image.
     public var categoryIcon: String?
     
-    /// The author of the plugin. This string is displayed to the user in the Stream Deck store.
+    /// The author of the plugin.
+    ///
+    /// This string is displayed to the user in the Stream Deck store.
     public var author: String
     
     /// The relative path to a PNG image without the .png extension.
@@ -74,7 +80,31 @@ public struct PluginManifest: Codable {
     /// Override CodePath for Windows.
     public var codePathWin: String?
     
+    /// Specifies an array of actions.
+    ///
+    /// A plugin can indeed have one or multiple actions.
+    ///
+    /// For example the Game Capture plugin has 6 actions: Scene, Record, Screenshot, Flashback Recording, Stream, Live Commentary.
+    public var actions: [PluginAction]
+    
     /// Initialize a new manifest.
+    /// - Parameters:
+    ///   - name: The name of the plugin.
+    ///   - description: Provides a general description of what the plugin does.
+    ///   - category: The name of the custom category in which the actions should be listed.
+    ///   - categoryIcon: The relative path to a PNG image without the .png extension.
+    ///   - author: The author of the plugin.
+    ///   - icon: The relative path to a PNG image without the .png extension.
+    ///   - url: A URL displayed to the user if he wants to get more info about the plugin.
+    ///   - version: The version of the plugin which can only contain digits and periods.
+    ///   - os: The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.
+    ///   - applicationsToMonitor: List of application identifiers to monitor (applications launched or terminated).
+    ///   - software: Indicates which version of the Stream Deck application is required to install the plugin.
+    ///   - sdkVersion: This value should be set to 2.
+    ///   - codePath: The relative path to the HTML/binary file containing the code of the plugin.
+    ///   - codePathMac: Override CodePath for macOS.
+    ///   - codePathWin: Override CodePath for Windows.
+    ///   - actions: Specifies an array of actions.
     public init(name: String,
                 description: String,
                 category: String? = nil,
@@ -89,7 +119,8 @@ public struct PluginManifest: Codable {
                 sdkVersion: Int = 2,
                 codePath: String,
                 codePathMac: String? = nil,
-                codePathWin: String? = nil) {
+                codePathWin: String? = nil,
+                actions: [PluginAction]) {
         self.name = name
         self.description = description
         self.category = category
@@ -105,6 +136,7 @@ public struct PluginManifest: Codable {
         self.codePath = codePath
         self.codePathMac = codePathMac
         self.codePathWin = codePathWin
+        self.actions = actions
     }
     
 }
