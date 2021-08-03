@@ -67,7 +67,7 @@ protocol Locatable {
     var coordinates: Coordinates { get }
 }
 
-/// Actions sent by the server.
+/// Events sent by the server in response to actions.
 public struct ActionEvent<Payload: Decodable>: Decodable {
     
     /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
@@ -81,6 +81,26 @@ public struct ActionEvent<Payload: Decodable>: Decodable {
     
     /// The payload of the event.
     public let payload: Payload
+}
+
+/// Events sent by the server that do not have an associated action instance.
+public struct Event<Payload: Decodable>: Decodable {
+    
+    /// An opaque value identifying the device.
+    public let device: String
+    
+    /// The payload of the event.
+    public let payload: Payload
+}
+
+/// Device connection events sent by the server. 
+public struct DeviceConnectionEvent: Decodable {
+    
+    /// An opaque value identifying the device.
+    public let device: String
+    
+    /// The payload of the event.
+    public let deviceInfo: DeviceInfo?
 }
 
 /// The coordinates of the action triggered.
@@ -112,7 +132,7 @@ public struct SettingsEvent: Decodable {
     /// Container for the settings data.
     public struct Payload: Decodable, Locatable {
         /// This json object contains data that you can set and are stored persistently.
-        public let settings: Data
+        public let settings: [String: String]
         
         /// The coordinates of the action triggered.
         public let coordinates: Coordinates
@@ -135,7 +155,7 @@ public struct GlobalSettingsEvent: Decodable {
     /// Container for the settings data.
     public struct Payload: Decodable {
         /// This json object contains data that you can set and are stored persistently.
-        public let settings: Data
+        public let settings: [String: String]
     }
 }
 
@@ -145,7 +165,7 @@ public struct GlobalSettingsEvent: Decodable {
 public struct AppearEvent: Decodable, Hashable, Locatable {
     
     /// This json object contains data that you can set and are stored persistently.
-    public let settings: Data
+    public let settings: [String: String]
     
     /// The coordinates of the action triggered.
     public let coordinates: Coordinates
@@ -165,7 +185,7 @@ public struct AppearEvent: Decodable, Hashable, Locatable {
 public struct KeyEvent: Decodable, Hashable, Locatable {
     
     /// This json object contains data that you can set and are stored persistently.
-    public let settings: Data
+    public let settings: [String: String]
     
     /// The coordinates of the action triggered.
     public let coordinates: Coordinates
@@ -203,7 +223,7 @@ public struct TitleInfo: Decodable, Locatable {
     public let coordinates: Coordinates
     
     /// This json object contains data that you can set and is stored persistently.
-    public let settings: Data
+    public let settings: [String: String]
     
     /// Font parameters.
     public struct Parameters: Decodable {
@@ -239,6 +259,7 @@ public enum Alignment: String, Codable {
 
 /// Title font families.
 public enum FontFamily: String, Codable {
+    case unknown = ""
     case arial = "Arial"
     case arialBlack = "Arial Black"
     case comicSansMS = "Comic Sans MS"
@@ -258,6 +279,7 @@ public enum FontFamily: String, Codable {
 
 /// Title font styles.
 public enum FontStyle: String, Codable {
+    case unknown = ""
     case regular = "Regular"
     case bold = "Bold"
     case italic = "Italic"
@@ -272,7 +294,7 @@ public struct DeviceInfo: Decodable {
     public let name: String
     
     /// Type of device.
-    public let type: String
+    public let type: DeviceType
     
     /// The number of columns and rows of keys that the device owns.
     public let size: Size

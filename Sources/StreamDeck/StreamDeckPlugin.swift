@@ -103,7 +103,6 @@ open class StreamDeckPlugin {
                 do {
                     switch event {
                     case .keyDown:
-                        try JSONSerialization.jsonObject(with: data, options: [])
                         
                         let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
                         self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
@@ -127,11 +126,11 @@ open class StreamDeckPlugin {
                         self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
                         
                     case .deviceDidConnect:
-                        let action = try decoder.decode(ActionEvent<DeviceInfo>.self, from: data)
-                        self.deviceDidConnect(action.device, deviceInfo: action.payload)
+                        let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
+                        self.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
                         
                     case .deviceDidDisconnect:
-                        let action = try decoder.decode(ActionEvent<DeviceInfo?>.self, from: data)
+                        let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
                         self.deviceDidDisconnect(action.device)
                     
                     default:
