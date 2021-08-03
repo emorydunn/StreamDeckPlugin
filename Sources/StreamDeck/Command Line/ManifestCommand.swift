@@ -18,7 +18,7 @@ struct GenerateManifest: ParsableCommand {
     
     func run() throws {
         guard let manifest = PluginManager.manifest else {
-            print("Please set `PluginManager.manifest`.")
+            print("Call `PluginManager.main(plugin:manifest:)` with a PluginManifest.")
             return
         }
         

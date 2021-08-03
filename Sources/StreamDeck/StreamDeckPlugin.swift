@@ -33,8 +33,19 @@ open class StreamDeckPlugin {
     
     // MARK: Plugin Properties
     
-    /// The properties sent from the Stream Deck application during init.
-    public let properties: PluginManager
+    /// The port that should be used to create the WebSocket
+    public var port: Int32
+    
+    /// A unique identifier string that should be used to register the plugin once the WebSocket is opened.
+    public var uuid: String
+    
+    /// The event type that should be used to register the plugin once the WebSocket is opened
+    public var event: String
+
+    /// A stringified json containing the Stream Deck application information and devices information.
+    public var info: String
+//    /// The properties sent from the Stream Deck application during init.
+//    public let properties: PluginProperties
     
     /// Known action instances
     public let instanceManager = InstanceManager()
@@ -42,10 +53,14 @@ open class StreamDeckPlugin {
     /// Create a new plugin object.
     /// - Parameter properties: Properties from the Stream Deck application.
     /// - Throws: Errors while registering the plugin.
-    public required init(properties: PluginManager) throws {
-        self.properties = properties
+    public required init(port: Int32, uuid: String, event: String, info: String) throws {
+//        self.properties = properties
+        self.port = port
+        self.uuid = uuid
+        self.event = event
+        self.info = info
         
-        let url = URL(string: "ws://localhost:\(properties.port)")!
+        let url = URL(string: "ws://localhost:\(port)")!
         
         NSLog("Starting connection with \(url)")
         
@@ -53,7 +68,7 @@ open class StreamDeckPlugin {
         
         monitorSocket()
         
-        try registerPlugin(with: properties)
+        try registerPlugin()
 
     }
     
@@ -181,21 +196,21 @@ open class StreamDeckPlugin {
     /// Complete the registration handshake with the server,
     /// - Parameter properties: The properties provided by the Stream Deck application.
     /// - Throws: Errors while encoding the data to JSON.
-    func registerPlugin(with properties: PluginManager) throws {
-        let event: [String: Any] = [
-            "event": properties.event,
-            "uuid": properties.uuid
+    func registerPlugin() throws {
+        let registrationEvent: [String: Any] = [
+            "event": event,
+            "uuid": uuid
         ]
         
         guard JSONSerialization.isValidJSONObject(event) else {
-            throw StreamDeckError.invlaidJSON(properties.event, event)
+            throw StreamDeckError.invlaidJSON(event, registrationEvent)
         }
         
         let data = try JSONSerialization.data(withJSONObject: event, options: [])
         
         task.task.send(URLSessionWebSocketTask.Message.data(data)) { error in
             if let error = error {
-                NSLog("ERROR: Failed to send \(properties.event) event.")
+                NSLog("ERROR: Failed to send \(self.event) event.")
                 NSLog(error.localizedDescription)
             }
         }
@@ -329,7 +344,7 @@ open class StreamDeckPlugin {
         // FIXME: Add Device
 
         sendEvent(.switchToProfile,
-                      context: properties.uuid,
+                      context: uuid,
                       payload: payload)
     }
     

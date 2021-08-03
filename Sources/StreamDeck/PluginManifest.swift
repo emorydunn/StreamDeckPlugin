@@ -157,6 +157,14 @@ public struct PluginOS: Codable {
         self.platform = platform
         self.minimumVersion = minimumVersion
     }
+    
+    public static func mac(minimumVersion: String) -> PluginOS {
+        PluginOS(.mac, minimumVersion: minimumVersion)
+    }
+    
+    public static func win(minimumVersion: String) -> PluginOS {
+        PluginOS(.windows, minimumVersion: minimumVersion)
+    }
 }
 
 public enum PluginPlatform: String, Codable {
@@ -169,6 +177,10 @@ public struct PluginSoftware: Codable {
     
     public init(minimumVersion: String) {
         self.minimumVersion = minimumVersion
+    }
+    
+    public static func minimumVersion(_ minimumVersion: String) -> PluginSoftware {
+        PluginSoftware(minimumVersion: minimumVersion)
     }
 }
 

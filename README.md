@@ -75,6 +75,32 @@ You can also look up the instance of an action by coordinates by calling `.insta
 
 The lookup methods return an `ActionInstance`, which provides the context, action ID, and coordinates of the instance. 
 
+## Manifest Generation
+
+Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor, similar to SwiftPM's `Package.swift`. 
+
+```swift
+let manifest = PluginManifest(name: "Counter",
+                              description: "Count things. On your Stream Deck!",
+                              author: "Emory Dunn",
+                              icon: "counter",
+                              version: "0.1",
+                              os: [
+                                    .mac(minimumVersion: "10.15")
+                              ],
+                              software: .minimumVersion("4.1"),
+                              sdkVersion: 2,
+                              codePath: "counter-plugin")
+
+PluginManager.main(plugin: CounterPlugin.self, manifest: manifest)
+```
+
+To generate your manifest file, perhaps in an automated build, you need to use the `generate-manifest` command. This will output a pretty-printed manifest file you can use in your `.sdPlugin`.
+
+```
+counter-plugin generate-manifest --output /path/to/manifest.json
+```
+
 ## Adding `StreamDeck` as a Dependency
 
 To use the `StreamDeck` library in a SwiftPM project, 
