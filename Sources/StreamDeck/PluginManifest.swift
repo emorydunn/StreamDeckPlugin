@@ -240,15 +240,15 @@ public struct PluginActionState: Codable {
     public let titleAlignment: String?
     
     /// Default font family for the title.
-    public let fontFamily: FontFamily
+    public let fontFamily: FontFamily?
     
     /// Default font style for the title.
     ///
     /// - Note: Some fonts might not support all values.
-    public let fontStyle: FontStyle
+    public let fontStyle: FontStyle?
     
     /// Default font size for the title.
-    public let fontSize: Int
+    public let fontSize: Int?
     
     /// Boolean to have an underline under the title. False by default
     public let fontUnderline: Bool?
@@ -259,9 +259,9 @@ public struct PluginActionState: Codable {
                 showTitle: Bool? = nil,
                 titleColor: String? = nil,
                 titleAlignment: String? = nil,
-                fontFamily: FontFamily,
-                fontStyle: FontStyle,
-                fontSize: Int,
+                fontFamily: FontFamily? = nil,
+                fontStyle: FontStyle? = nil,
+                fontSize: Int? = nil,
                 fontUnderline: Bool? = nil) {
         self.image = image
         self.name = name
