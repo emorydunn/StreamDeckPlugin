@@ -199,14 +199,14 @@ open class StreamDeckPlugin {
             "uuid": uuid
         ]
         
-        guard JSONSerialization.isValidJSONObject(event) else {
+        guard JSONSerialization.isValidJSONObject(registrationEvent) else {
             throw StreamDeckError.invlaidJSON(event, registrationEvent)
         }
         
-        let data = try JSONSerialization.data(withJSONObject: event, options: [])
+        let data = try JSONSerialization.data(withJSONObject: registrationEvent, options: [])
         
         NSLog("Sending registration event")
-        task.task.send(URLSessionWebSocketTask.Message.data(data)) { error in
+        task.send(URLSessionWebSocketTask.Message.data(data)) { error in
             if let error = error {
                 NSLog("ERROR: Failed to send \(self.event) event.")
                 NSLog(error.localizedDescription)
