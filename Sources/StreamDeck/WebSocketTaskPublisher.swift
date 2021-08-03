@@ -20,11 +20,11 @@ extension URLSession {
 }
 
 /// A publisher that delivers the messages from a WebSocket.
-public struct WebSocketTaskPublisher: Publisher {
+struct WebSocketTaskPublisher: Publisher {
     
-    public typealias Output = URLSessionWebSocketTask.Message
+    typealias Output = URLSessionWebSocketTask.Message
     
-    public typealias Failure = Error
+    typealias Failure = Error
     
     let task: URLSessionWebSocketTask
     
@@ -34,15 +34,15 @@ public struct WebSocketTaskPublisher: Publisher {
     /// - Parameters:
     ///   - url: The WebSocket URL with which to connect.
     ///   - session: The URLSession to create the WebSocket task.
-    public init(with url: URL, session: URLSession = URLSession.shared) {
+    init(with url: URL, session: URLSession = URLSession.shared) {
         self.task = session.webSocketTask(with: url)
     }
     
-    public func receive<S>(subscriber: S) where S : Subscriber, Error == S.Failure, URLSessionWebSocketTask.Message == S.Input {
+    func receive<S>(subscriber: S) where S : Subscriber, Error == S.Failure, URLSessionWebSocketTask.Message == S.Input {
         
-        let subscrption = Subscription(task: task, target: subscriber)
+        let subscription = Subscription(task: task, target: subscriber)
         subscriber
-            .receive(subscription: subscrption)
+            .receive(subscription: subscription)
 
     }
     
@@ -52,7 +52,7 @@ public struct WebSocketTaskPublisher: Publisher {
     /// - Parameters:
     ///   - message: The WebSocket message to send to the other endpoint.
     ///   - completionHandler: A closure that receives an NSError that indicates an error encountered while sending, or nil if no error occurred.
-    public func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
+    func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
         task.send(message, completionHandler: completionHandler)
     }
     

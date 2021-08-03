@@ -11,6 +11,7 @@ import ArgumentParser
 /// Manages a plugins lifecycle and handling launch from the Stream Deck application.
 public struct PluginManager: ParsableCommand {
     
+    /// The command's configuration.
     public static var configuration = CommandConfiguration(
         subcommands: [
             StreamDeckCommand.self,
@@ -21,6 +22,8 @@ public struct PluginManager: ParsableCommand {
     
     /// The plugin to be used.
     public static var plugin: StreamDeckPlugin.Type?
+    
+    /// The plugin's manifest
     public static var manifest: PluginManifest?
 
     /// The default init

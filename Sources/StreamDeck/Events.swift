@@ -109,6 +109,7 @@ public struct SettingsEvent: Decodable {
     /// The payload of the event.
     public let payload: Payload
     
+    /// Container for the settings data.
     public struct Payload: Decodable, Locatable {
         /// This json object contains data that you can set and are stored persistently.
         public let settings: Data
@@ -131,6 +132,7 @@ public struct GlobalSettingsEvent: Decodable {
     /// The payload of the event.
     public let payload: Payload
     
+    /// Container for the settings data.
     public struct Payload: Decodable {
         /// This json object contains data that you can set and are stored persistently.
         public let settings: Data
@@ -138,6 +140,7 @@ public struct GlobalSettingsEvent: Decodable {
 }
 
 // MARK: Appear Events
+
 /// Information received about a `willAppear` or `willDisappear` event.
 public struct AppearEvent: Decodable, Hashable, Locatable {
     
@@ -186,28 +189,55 @@ public struct KeyEvent: Decodable, Hashable, Locatable {
 
 /// Information about the title of an action.
 public struct TitleInfo: Decodable, Locatable {
+    
+    /// The new title.
     public let title: String
+    
+    /// This value indicates for which state of the action the title or title parameters have been changed.
     public let state: Int
-    public let titleParameters: String
+    
+    /// A json object describing the new title parameters.
+    public let titleParameters: Parameters
+    
+    /// The coordinates of the action triggered.
     public let coordinates: Coordinates
+    
+    /// This json object contains data that you can set and is stored persistently.
     public let settings: Data
     
+    /// Font parameters.
     public struct Parameters: Decodable {
-        public let fontFamily: String
+        
+        /// The font family for the title.
+        public let fontFamily: FontFamily
+        
+        /// The font size for the title.
         public let fontSize: Int
-        public let fontStyle: String
+        
+        /// The font style for the title.
+        public let fontStyle: FontStyle
+        
+        /// Boolean indicating an underline under the title.
         public let fontUnderline: Bool
+        
+        /// Boolean indicating if the title is visible.
         public let showTitle: Bool
+        
+        /// Vertical alignment of the title.
         public let titleAlignment: Alignment
+        
+        /// Title color.
         public let titleColor: String
     }
     
 }
 
+/// Title alignment.
 public enum Alignment: String, Codable {
     case top, bottom, middle
 }
 
+/// Title font families.
 public enum FontFamily: String, Codable {
     case arial = "Arial"
     case arialBlack = "Arial Black"
@@ -226,6 +256,7 @@ public enum FontFamily: String, Codable {
     case wingdings = "Wingdings"
 }
 
+/// Title font styles.
 public enum FontStyle: String, Codable {
     case regular = "Regular"
     case bold = "Bold"
@@ -236,17 +267,29 @@ public enum FontStyle: String, Codable {
 
 /// Information received about the Stream Deck device.
 public struct DeviceInfo: Decodable {
+    
+    /// The name of the device set by the user.
     public let name: String
+    
+    /// Type of device.
     public let type: String
+    
+    /// The number of columns and rows of keys that the device owns.
     public let size: Size
     
+    /// The size of a device.
     public struct Size: Decodable {
+        
+        /// Number of columns a device has.
         public let columns: Int
+        
+        /// Number of rows a device has.
         public let rows: Int
     }
     
 }
 
+/// The available Stream Deck devices.
 public enum DeviceType: Int, Codable {
     case streamDeck
     case mini

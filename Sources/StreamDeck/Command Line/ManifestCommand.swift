@@ -8,11 +8,14 @@
 import Foundation
 import ArgumentParser
 
+/// The command used to generate a `manifest.json` file.
 struct GenerateManifest: ParsableCommand {
     
+    /// Output location for the manifest file.
     @Option(help: "Output location of the manifest file.")
     var output: String
     
+    /// Whether or not to print the manifest to the console.
     @Flag(help: "Print the manifest to console instead of saving to a file")
     var preview = false
     

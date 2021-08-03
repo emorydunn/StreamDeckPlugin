@@ -7,9 +7,11 @@
 
 import Foundation
 
+/// Errors that can occur when communicating with the Stream Deck application.
 enum StreamDeckError: LocalizedError {
     case invlaidJSON(String, [String: Any])
     
+    /// The error description. 
     var errorDescription: String? {
         switch self {
         case let .invlaidJSON(event, json):

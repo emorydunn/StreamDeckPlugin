@@ -44,8 +44,6 @@ open class StreamDeckPlugin {
 
     /// A stringified json containing the Stream Deck application information and devices information.
     public var info: String
-//    /// The properties sent from the Stream Deck application during init.
-//    public let properties: PluginProperties
     
     /// Known action instances
     public let instanceManager = InstanceManager()
@@ -54,7 +52,6 @@ open class StreamDeckPlugin {
     /// - Parameter properties: Properties from the Stream Deck application.
     /// - Throws: Errors while registering the plugin.
     public required init(port: Int32, uuid: String, event: String, info: String) throws {
-//        self.properties = properties
         self.port = port
         self.uuid = uuid
         self.event = event

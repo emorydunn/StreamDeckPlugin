@@ -8,6 +8,8 @@
 import Cocoa
 
 public extension NSImage {
+    
+    /// Create a prefixed base64 string.
     var base64String: String? {
         guard let rep = NSBitmapImageRep(
             bitmapDataPlanes: nil,
