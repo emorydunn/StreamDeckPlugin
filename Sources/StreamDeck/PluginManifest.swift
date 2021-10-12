@@ -188,7 +188,7 @@ public struct PluginAction: Codable {
     
     
     /// The string displayed as tooltip when the user leaves the mouse over your action in the actions list.
-    public let tooltop: String?
+    public let tooltip: String?
     
     /// Boolean to hide the action in the actions list.
     ///
@@ -202,7 +202,7 @@ public struct PluginAction: Codable {
                   states: [PluginActionState],
                   propertyInspectorPath: String? = nil,
                   supportedInMultiActions: Bool? = nil,
-                  tooltop: String? = nil,
+                  tooltip: String? = nil,
                   visibleInActionsList: Bool? = nil) {
         self.name = name
         self.uuid = uuid
@@ -210,7 +210,7 @@ public struct PluginAction: Codable {
         self.states = states
         self.propertyInspectorPath = propertyInspectorPath
         self.supportedInMultiActions = supportedInMultiActions
-        self.tooltop = tooltop
+        self.tooltip = tooltip
         self.visibleInActionsList = visibleInActionsList
     }
     
