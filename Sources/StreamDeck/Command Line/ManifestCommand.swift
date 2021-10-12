@@ -25,10 +25,7 @@ struct GenerateManifest: ParsableCommand {
             return
         }
         
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-        
-        let data = try encoder.encode(manifest)
+        let data = try encode(manifest: manifest)
         
         if preview {
             if let string = String(data: data, encoding: .utf8) {
@@ -41,5 +38,46 @@ struct GenerateManifest: ParsableCommand {
         }
         
         try data.write(to: URL(fileURLWithPath: output))
+    }
+    
+    func encode(manifest: PluginManifest) throws -> Data {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [
+            .prettyPrinted,
+            .withoutEscapingSlashes
+        ]
+        
+        encoder.keyEncodingStrategy = .custom { keys -> CodingKey in
+            StreamDeckKey(key: keys.last!)
+        }
+        
+        return try encoder.encode(manifest)
+    }
+}
+
+struct StreamDeckKey: CodingKey {
+    var stringValue: String
+    var intValue: Int?
+    
+    init(key: CodingKey) {
+        self.init(stringValue: key.stringValue)!
+    }
+    
+    init?(stringValue: String) {
+        switch stringValue {
+        case "sdkVersion":
+            self.stringValue = "SDKVersion"
+        case "uuid", "url", "os":
+            self.stringValue = stringValue.uppercased()
+        default:
+            let firstLetter = stringValue.first!.uppercased()
+            self.stringValue = firstLetter + stringValue.dropFirst()
+        }
+        self.intValue = nil
+    }
+    
+    init?(intValue: Int) {
+        self.stringValue = String(intValue)
+        self.intValue = intValue
     }
 }
