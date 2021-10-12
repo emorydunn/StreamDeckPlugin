@@ -80,17 +80,37 @@ The lookup methods return an `ActionInstance`, which provides the context, actio
 Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor, similar to SwiftPM's `Package.swift`. 
 
 ```swift
-let manifest = PluginManifest(name: "Counter",
-                              description: "Count things. On your Stream Deck!",
-                              author: "Emory Dunn",
-                              icon: "counter",
-                              version: "0.1",
-                              os: [
-                                    .mac(minimumVersion: "10.15")
-                              ],
-                              software: .minimumVersion("4.1"),
-                              sdkVersion: 2,
-                              codePath: "counter-plugin")
+let manifest = PluginManifest(
+    name: "Counter",
+    description: "Count things. On your Stream Deck!",
+    category: "Counting Actions",
+    author: "Emory Dunn",
+    icon: "counter",
+    version: "0.1",
+    os: [
+        .mac(minimumVersion: "10.15")
+    ],
+    software: .minimumVersion("4.1"),
+    sdkVersion: 2,
+    codePath: "counter-plugin",
+    actions: [
+        PluginAction(
+            name: "Increment",
+            uuid: "photo.lostcause.counter.increment",
+            icon: "Icons/plus",
+            states: [
+                PluginActionState(image: "Icons/plus")
+            ],
+            tooltip: "Increment the count."),
+        PluginAction(
+            name: "Decrement",
+            uuid: "photo.lostcause.counter.decrement",
+            icon: "Icons/minus",
+            states: [
+                PluginActionState(image: "Icons/minus")
+            ],
+            tooltip: "Decrement the count.")
+    ])
 
 PluginManager.main(plugin: CounterPlugin.self, manifest: manifest)
 ```
