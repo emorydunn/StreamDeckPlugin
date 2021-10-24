@@ -132,6 +132,12 @@ open class StreamDeckPlugin {
                     case .deviceDidDisconnect:
                         let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
                         self.deviceDidDisconnect(action.device)
+                        
+                    case .sendToPlugin:
+                        let action = try decoder.decode(ActionEvent<Data>.self, from: data)
+//                        let payloadData = action.payload.data(using: .utf8)!
+                        let json = try JSONSerialization.jsonObject(with: action.payload, options: []) as! [String: Any]
+                        self.sendToPlugin(context: action.context, action: action.action, payload: json)
                     
                     default:
                         NSLog("Unsupported action \(event.rawValue)")
@@ -244,7 +250,7 @@ open class StreamDeckPlugin {
     
     /// Request the global persistent data.
     /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
-    public func getGloablSettings(in context: String) {
+    public func getGlobalSettings(in context: String) {
         sendEvent(.getGlobalSettings,
                       context: context,
                       payload: nil)
@@ -359,21 +365,17 @@ open class StreamDeckPlugin {
                       payload: payload)
     }
     
-    /// Send a payload to the plugin.
-    /// - Parameters:
-    ///   - context: An opaque value identifying the instance's action or Property Inspector.
-    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
-    ///   - payload: A json object that will be received by the plugin.
-    public func sendToPlugin(in context: String, action: String, payload: [String: Any]) {
-//        let payload: [String: Any] = ["profile": name]
-        // FIXME: Add action
-
-        sendEvent(.sendToPlugin,
-                      context: context,
-                      payload: payload)
+    // MARK: Received
+    
+    public func didReceiveSettings(action: String, context: String, device: String, payload: Data) {
+        NSLog("This event is not implemented yet")
     }
     
-    // MARK: Received
+    public func didReceiveGlobalSettings(payload: Data) {
+        NSLog("This event is not implemented yet")
+    }
+    
+    
     /// When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a `willAppear` event.
     ///
     /// You will see such an event when:
@@ -472,6 +474,15 @@ open class StreamDeckPlugin {
     /// When the computer is wake up, the plugin will receive the `systemDidWakeUp` event.
     open func systemDidWakeUp() {
         
+    }
+    
+    /// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
+    ///   - payload: A json object that will be received by the plugin.
+    open func sendToPlugin(context: String, action: String, payload: [String: Any]) {
+
     }
     
     
