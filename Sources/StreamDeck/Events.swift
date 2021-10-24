@@ -252,6 +252,17 @@ public struct TitleInfo: Decodable, Locatable {
     
 }
 
+public struct SendToPluginEvent: Decodable {
+    /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    public let action: String
+    
+    /// An opaque value identifying the instance's action.
+    public let context: String
+    
+    /// The payload sent from the Property Inspector.
+    public let payload: Data
+}
+
 /// Title alignment.
 public enum Alignment: String, Codable {
     case top, bottom, middle
@@ -317,5 +328,5 @@ public enum DeviceType: Int, Codable {
     case mini
     case xl
     case mobile
-    case corsiarGKeys
+    case corsairGKeys
 }

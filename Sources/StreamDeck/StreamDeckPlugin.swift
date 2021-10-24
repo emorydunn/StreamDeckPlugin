@@ -134,10 +134,9 @@ open class StreamDeckPlugin {
                         self.deviceDidDisconnect(action.device)
                         
                     case .sendToPlugin:
-                        let action = try decoder.decode(ActionEvent<Data>.self, from: data)
-//                        let payloadData = action.payload.data(using: .utf8)!
-                        let json = try JSONSerialization.jsonObject(with: action.payload, options: []) as! [String: Any]
-                        self.sendToPlugin(context: action.context, action: action.action, payload: json)
+                        let action = try decoder.decode(SendToPluginEvent.self, from: data)
+//                        let json = try JSONSerialization.jsonObject(with: action.payload, options: []) as! [String: Any]
+                        self.sendToPlugin(context: action.context, action: action.action, payload: action.payload)
                     
                     default:
                         NSLog("Unsupported action \(event.rawValue)")
@@ -486,7 +485,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
     ///   - payload: A json object that will be received by the plugin.
-    open func sendToPlugin(context: String, action: String, payload: [String: Any]) {
+    open func sendToPlugin(context: String, action: String, payload: Data) {
 
     }
     
