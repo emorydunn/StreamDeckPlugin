@@ -485,7 +485,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
     ///   - payload: A json object that will be received by the plugin.
-    open func sendToPlugin(context: String, action: String, payload: Data) {
+    open func sendToPlugin(context: String, action: String, payload: [String: String]) {
 
     }
     

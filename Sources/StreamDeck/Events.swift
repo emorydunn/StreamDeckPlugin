@@ -260,7 +260,7 @@ public struct SendToPluginEvent: Decodable {
     public let context: String
     
     /// The payload sent from the Property Inspector.
-    public let payload: Data
+    public let payload: [String: String]
 }
 
 /// Title alignment.
