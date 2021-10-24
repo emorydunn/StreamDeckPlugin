@@ -147,6 +147,11 @@ open class StreamDeckPlugin {
                     NSLog(error.localizedDescription)
                     NSLog("\(error)")
                     NSLog(String(data: data, encoding: .utf8)!)
+                    
+                    self.logMessage("Failed to decode data for event \(event)")
+                    self.logMessage(error.localizedDescription)
+                    self.logMessage("\(error)")
+                    self.logMessage(String(data: data, encoding: .utf8)!)
                 }
                 
             }
