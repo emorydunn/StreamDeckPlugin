@@ -314,6 +314,55 @@ open class StreamDeckPlugin {
                       payload: payload)
     }
     
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: The name of an image to display.
+    ///   - ext: The filename extension of the file to locate.
+    ///   - subpath: The subdirectory in the plugin bundle in which to search for images.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    public func setImage(in context: String, toImage image: String?, withExtension ext: String, subdirectory subpath: String?, target: Target? = nil, state: Int? = nil) {
+        guard
+            let imageURL = Bundle.main.url(forResource: image, withExtension: ext, subdirectory: subpath)
+        else {
+            logMessage("Could not find \(image ?? "unnamed").\(ext)")
+            return
+        }
+        
+        let image = NSImage(contentsOf: imageURL)
+        
+        setImage(in: context, to: image)
+    }
+    
+    
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: The SVG to display.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    public func setImage(in context: String, toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
+        var payload: [String: Any] = [:]
+        
+        if let svg = svg {
+            payload["image"] = "data:image/svg+xml;charset=utf8,\(svg)"
+        }
+        
+        payload["target"] = target?.rawValue
+        payload["state"] = state
+        
+        sendEvent(.setImage,
+                      context: context,
+                      payload: payload)
+    }
+    
 //    func setTitle(to string: String, target: Target? = nil, state: Int? = nil) throws {
 //        try knownContexts.forEach { context in
 //            try setTitle(to: string, in: context, target: target, state: state)
