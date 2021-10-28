@@ -237,7 +237,7 @@ public struct PluginActionState: Codable {
     public let titleColor: String?
     
     /// Default title vertical alignment.
-    public let titleAlignment: String?
+    public let titleAlignment: Alignment?
     
     /// Default font family for the title.
     public let fontFamily: FontFamily?
@@ -258,7 +258,7 @@ public struct PluginActionState: Codable {
                 title: String? = nil,
                 showTitle: Bool? = nil,
                 titleColor: String? = nil,
-                titleAlignment: String? = nil,
+                titleAlignment: Alignment? = nil,
                 fontFamily: FontFamily? = nil,
                 fontStyle: FontStyle? = nil,
                 fontSize: Int? = nil,
@@ -345,7 +345,7 @@ public struct ApplicationsToMonitor: Codable {
     public let windows: [String]
     
     /// Initialize new applications to monitor.
-    public init(mac: [String], windows: [String]) {
+    public init(mac: [String] = [], windows: [String] = []) {
         self.mac = mac
         self.windows = windows
     }
