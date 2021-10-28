@@ -199,7 +199,7 @@ public struct PluginAction: Codable {
     public init(name: String,
                   uuid: String,
                   icon: String,
-                  states: [PluginActionState],
+                  states: [PluginActionState]? = nil,
                   propertyInspectorPath: String? = nil,
                   supportedInMultiActions: Bool? = nil,
                   tooltip: String? = nil,
@@ -207,11 +207,18 @@ public struct PluginAction: Codable {
         self.name = name
         self.uuid = uuid
         self.icon = icon
-        self.states = states
         self.propertyInspectorPath = propertyInspectorPath
         self.supportedInMultiActions = supportedInMultiActions
         self.tooltip = tooltip
         self.visibleInActionsList = visibleInActionsList
+        
+        if let states = states {
+            self.states = states
+        } else {
+            self.states = [
+                PluginActionState(image: icon)
+            ]
+        }
     }
     
 }
