@@ -103,7 +103,6 @@ open class StreamDeckPlugin {
                 do {
                     switch event {
                     case .keyDown:
-                        
                         let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
                         self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
                     
@@ -133,11 +132,29 @@ open class StreamDeckPlugin {
                         let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
                         self.deviceDidDisconnect(action.device)
                         
+                    case .systemDidWakeUp:
+                        self.systemDidWakeUp()
+                        
+                    case .applicationDidLaunch:
+                        let action = try decoder.decode(ApplicationEvent.self, from: data)
+                        self.applicationDidLaunch(action.payload.application)
+                    
+                    case .applicationDidTerminate:
+                        let action = try decoder.decode(ApplicationEvent.self, from: data)
+                        self.applicationDidTerminate(action.payload.application)
+                        
+                    case .propertyInspectorDidAppear:
+                        let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
+                        self.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
+                    
+                    case .propertyInspectorDidDisappear:
+                        let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
+                        self.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
+                    
                     case .sendToPlugin:
                         let action = try decoder.decode(SendToPluginEvent.self, from: data)
-//                        let json = try JSONSerialization.jsonObject(with: action.payload, options: []) as! [String: Any]
                         self.sendToPlugin(context: action.context, action: action.action, payload: action.payload)
-                    
+
                     default:
                         NSLog("Unsupported action \(event.rawValue)")
                     }
@@ -526,6 +543,14 @@ open class StreamDeckPlugin {
     
     /// When the computer is wake up, the plugin will receive the `systemDidWakeUp` event.
     open func systemDidWakeUp() {
+        
+    }
+    
+    open func propertyInspectorDidAppear(action: String, context: String, device: String) {
+        
+    }
+    
+    open func propertyInspectorDidDisappear(action: String, context: String, device: String) {
         
     }
     

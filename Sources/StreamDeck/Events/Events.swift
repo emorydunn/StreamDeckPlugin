@@ -201,3 +201,25 @@ public struct SendToPluginEvent: Decodable {
     /// The payload sent from the Property Inspector.
     public let payload: [String: String]
 }
+
+// MARK: Application Events
+public struct ApplicationEvent: Decodable {
+    public let payload: App
+    
+    public struct App: Decodable {
+        public let application: String
+    }
+}
+
+// MARK: Property Inspector Events
+public struct PropertyInspectorEvent: Decodable {
+    
+    /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    public let action: String
+    
+    /// An opaque value identifying the instance's action.
+    public let context: String
+    
+    /// An opaque value identifying the device.
+    public let device: String
+}
