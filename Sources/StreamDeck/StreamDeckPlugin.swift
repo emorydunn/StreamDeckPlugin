@@ -90,7 +90,7 @@ open class StreamDeckPlugin {
                 }
             }
             .tryMap { data in
-                (try JSONDecoder().decode(ReceivableEvent.self, from: data).event, data)
+                (try decoder.decode(ReceivableEvent.self, from: data).event, data)
             }
             .catch { fail -> Just<(ReceivableEvent.EventKey, Data)?> in
                 NSLog("ERROR: \(fail.localizedDescription)")
@@ -101,63 +101,7 @@ open class StreamDeckPlugin {
             .sink { (event, data) in
                 
                 do {
-                    switch event {
-                    case .keyDown:
-                        let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-                        self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
-                    
-                    case .keyUp:
-                        let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-                        self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
-                    
-                    case .willAppear:
-                        let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-                        self.instanceManager.registerInstance(action)
-                        self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-                    
-                    case .willDisappear:
-                        let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-                        self.instanceManager.removeInstance(action)
-                        self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-                    
-                    case .titleParametersDidChange:
-                        let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
-                        self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
-                        
-                    case .deviceDidConnect:
-                        let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-                        self.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
-                        
-                    case .deviceDidDisconnect:
-                        let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-                        self.deviceDidDisconnect(action.device)
-                        
-                    case .systemDidWakeUp:
-                        self.systemDidWakeUp()
-                        
-                    case .applicationDidLaunch:
-                        let action = try decoder.decode(ApplicationEvent.self, from: data)
-                        self.applicationDidLaunch(action.payload.application)
-                    
-                    case .applicationDidTerminate:
-                        let action = try decoder.decode(ApplicationEvent.self, from: data)
-                        self.applicationDidTerminate(action.payload.application)
-                        
-                    case .propertyInspectorDidAppear:
-                        let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
-                        self.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
-                    
-                    case .propertyInspectorDidDisappear:
-                        let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
-                        self.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
-                    
-                    case .sendToPlugin:
-                        let action = try decoder.decode(SendToPluginEvent.self, from: data)
-                        self.sendToPlugin(context: action.context, action: action.action, payload: action.payload)
-
-                    default:
-                        NSLog("Unsupported action \(event.rawValue)")
-                    }
+                    try self.parseEvent(event: event, data: data)
                 } catch {
                     NSLog("Failed to decode data for event \(event)")
                     NSLog(error.localizedDescription)
@@ -172,6 +116,76 @@ open class StreamDeckPlugin {
                 
             }
             .store(in: &tokens)
+    }
+    
+    func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {
+        
+        let decoder = JSONDecoder()
+        
+        switch event {
+            
+        case .didReceiveSettings:
+            let action = try decoder.decode(SettingsEvent.self, from: data)
+            self.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
+        case .didReceiveGlobalSettings:
+            let action = try decoder.decode(GlobalSettingsEvent.self, from: data)
+            self.didReceiveGlobalSettings(action.payload.settings)
+        case .keyDown:
+            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
+            self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
+        
+        case .keyUp:
+            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
+            self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
+        
+        case .willAppear:
+            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+            self.instanceManager.registerInstance(action)
+            self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+        
+        case .willDisappear:
+            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+            self.instanceManager.removeInstance(action)
+            self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+        
+        case .titleParametersDidChange:
+            let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
+            self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
+            
+        case .deviceDidConnect:
+            let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
+            self.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
+            
+        case .deviceDidDisconnect:
+            let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
+            self.deviceDidDisconnect(action.device)
+            
+        case .systemDidWakeUp:
+            self.systemDidWakeUp()
+            
+        case .applicationDidLaunch:
+            let action = try decoder.decode(ApplicationEvent.self, from: data)
+            self.applicationDidLaunch(action.payload.application)
+        
+        case .applicationDidTerminate:
+            let action = try decoder.decode(ApplicationEvent.self, from: data)
+            self.applicationDidTerminate(action.payload.application)
+            
+        case .propertyInspectorDidAppear:
+            let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
+            self.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
+        
+        case .propertyInspectorDidDisappear:
+            let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
+            self.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
+        
+        case .sendToPlugin:
+            let action = try decoder.decode(SendToPluginEvent.self, from: data)
+            self.sendToPlugin(context: action.context, action: action.action, payload: action.payload)
+        
+        case .sendToPropertyInspector:
+            NSLog("Plugin does not receive 'sendToPropertyInspector'.")
+        }
     }
     
     // MARK: - Events
@@ -437,12 +451,11 @@ open class StreamDeckPlugin {
     
     // MARK: Received
     
-    public func didReceiveSettings(action: String, context: String, device: String, payload: Data) {
-        NSLog("This event is not implemented yet")
+    open func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) {
     }
     
-    public func didReceiveGlobalSettings(payload: Data) {
-        NSLog("This event is not implemented yet")
+    open func didReceiveGlobalSettings(_ settings: [String: String]) {
+
     }
     
     

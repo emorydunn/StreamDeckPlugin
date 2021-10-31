@@ -122,7 +122,7 @@ public struct SettingsEvent: Decodable {
         /// This is a parameter that is only set when the action has multiple states defined in its manifest.json.
         ///
         /// The 0-based value contains the current state of the action.
-        public let state: Int
+        public let state: Int?
 
         /// Boolean indicating if the action is inside a Multi Action.
         public let isInMultiAction: Bool
