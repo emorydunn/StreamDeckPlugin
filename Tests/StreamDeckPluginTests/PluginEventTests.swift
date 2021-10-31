@@ -362,7 +362,7 @@ final class PluginEventTests: XCTestCase {
     
     func testSendToPlugin() {
         class EventTestPlugin: TestPlugin {
-            override func sendToPlugin(context: String, action: String, payload: [String : String]) {
+            override func sentToPlugin(context: String, action: String, payload: [String : String]) {
                 XCTAssertEqual(action, "com.elgato.example.sendToPlugin")
                 eventExp.fulfill()
             }

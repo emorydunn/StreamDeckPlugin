@@ -24,7 +24,6 @@ public enum SendableEventKey: String, Codable {
     case setState
     case switchToProfile
     case sendToPropertyInspector
-    case sendToPlugin
 }
 
 // MARK: - Received
@@ -52,7 +51,6 @@ extension ReceivableEvent {
         case propertyInspectorDidAppear
         case propertyInspectorDidDisappear
         case sendToPlugin
-        case sendToPropertyInspector
     }
 }
 

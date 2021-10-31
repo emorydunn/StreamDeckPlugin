@@ -181,10 +181,7 @@ open class StreamDeckPlugin {
         
         case .sendToPlugin:
             let action = try decoder.decode(SendToPluginEvent.self, from: data)
-            self.sendToPlugin(context: action.context, action: action.action, payload: action.payload)
-        
-        case .sendToPropertyInspector:
-            NSLog("Plugin does not receive 'sendToPropertyInspector'.")
+            self.sentToPlugin(context: action.context, action: action.action, payload: action.payload)
         }
     }
     
@@ -559,10 +556,20 @@ open class StreamDeckPlugin {
         
     }
     
+    /// The plugin will receive a `propertyInspectorDidAppear` event when the Property Inspector appears.
+    /// - Parameters:
+    ///   - action: The action unique identifier.
+    ///   - context: An opaque value identifying the instance's action.
+    ///   - device: An opaque value identifying the device.
     open func propertyInspectorDidAppear(action: String, context: String, device: String) {
         
     }
     
+    /// The plugin will receive a `propertyInspectorDidDisappear` event when the Property Inspector appears.
+    /// - Parameters:
+    ///   - action: The action unique identifier.
+    ///   - context: An opaque value identifying the instance's action.
+    ///   - device: An opaque value identifying the device.
     open func propertyInspectorDidDisappear(action: String, context: String, device: String) {
         
     }
@@ -572,7 +579,17 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
     ///   - payload: A json object that will be received by the plugin.
+    @available(*, deprecated, renamed: "sentToPlugin")
     open func sendToPlugin(context: String, action: String, payload: [String: String]) {
+
+    }
+    
+    /// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
+    ///   - payload: A json object that will be received by the plugin.
+    open func sentToPlugin(context: String, action: String, payload: [String: String]) {
 
     }
     
