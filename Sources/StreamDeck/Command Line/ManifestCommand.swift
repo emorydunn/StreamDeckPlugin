@@ -40,12 +40,12 @@ struct GenerateManifest: ParsableCommand {
         try data.write(to: URL(fileURLWithPath: output))
     }
     
-    func encode(manifest: PluginManifest) throws -> Data {
+    func encode(manifest: PluginManifest,
+                outputFormatting: JSONEncoder.OutputFormatting = [
+                    .prettyPrinted,
+                    .withoutEscapingSlashes]) throws -> Data {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [
-            .prettyPrinted,
-            .withoutEscapingSlashes
-        ]
+        encoder.outputFormatting = outputFormatting
         
         encoder.keyEncodingStrategy = .custom { keys -> CodingKey in
             StreamDeckKey(key: keys.last!)
