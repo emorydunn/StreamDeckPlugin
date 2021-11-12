@@ -117,7 +117,7 @@ public struct PluginManifest: Codable {
                 applicationsToMonitor: ApplicationsToMonitor? = nil,
                 software: PluginSoftware,
                 sdkVersion: Int = 2,
-                codePath: String,
+                codePath: String = PluginManifest.executableName,
                 codePathMac: String? = nil,
                 codePathWin: String? = nil,
                 actions: [PluginAction]) {
@@ -139,6 +139,12 @@ public struct PluginManifest: Codable {
         self.actions = actions
     }
     
+}
+
+extension PluginManifest {
+    public static var executableName: String {
+        Bundle.main.executableURL!.lastPathComponent
+    }
 }
 
 
