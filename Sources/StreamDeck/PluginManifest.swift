@@ -101,7 +101,7 @@ public struct PluginManifest: Codable {
     ///   - applicationsToMonitor: List of application identifiers to monitor (applications launched or terminated).
     ///   - software: Indicates which version of the Stream Deck application is required to install the plugin.
     ///   - sdkVersion: This value should be set to 2.
-    ///   - codePath: The relative path to the HTML/binary file containing the code of the plugin.
+    ///   - codePath: The relative path to the HTML/binary file containing the code of the plugin. Defaults to the executable name.
     ///   - codePathMac: Override CodePath for macOS.
     ///   - codePathWin: Override CodePath for Windows.
     ///   - actions: Specifies an array of actions.
@@ -139,9 +139,63 @@ public struct PluginManifest: Codable {
         self.actions = actions
     }
     
+    /// Initialize a new manifest.
+    /// - Parameters:
+    ///   - name: The name of the plugin.
+    ///   - description: Provides a general description of what the plugin does.
+    ///   - category: The name of the custom category in which the actions should be listed.
+    ///   - categoryIcon: The relative path to a PNG image without the .png extension.
+    ///   - author: The author of the plugin.
+    ///   - icon: The relative path to a PNG image without the .png extension.
+    ///   - url: A URL displayed to the user if he wants to get more info about the plugin.
+    ///   - version: The version of the plugin which can only contain digits and periods.
+    ///   - os: The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.
+    ///   - applicationsToMonitor: List of application identifiers to monitor (applications launched or terminated).
+    ///   - software: Indicates which version of the Stream Deck application is required to install the plugin.
+    ///   - sdkVersion: This value should be set to 2.
+    ///   - codePath: The relative path to the HTML/binary file containing the code of the plugin. Defaults to the executable name.
+    ///   - codePathMac: Override CodePath for macOS.
+    ///   - codePathWin: Override CodePath for Windows.
+    ///   - actions: Specifies an array of actions.
+    public init(name: String,
+                description: String,
+                category: String? = nil,
+                categoryIcon: String? = nil,
+                author: String,
+                icon: String,
+                url: URL? = nil,
+                version: String,
+                os: [PluginOS],
+                applicationsToMonitor: ApplicationsToMonitor? = nil,
+                software: PluginSoftware,
+                sdkVersion: Int = 2,
+                codePath: String = PluginManifest.executableName,
+                codePathMac: String? = nil,
+                codePathWin: String? = nil,
+                actions: PluginAction...) {
+        self.name = name
+        self.description = description
+        self.category = category
+        self.categoryIcon = categoryIcon
+        self.author = author
+        self.icon = icon
+        self.url = url
+        self.version = version
+        self.os = os
+        self.applicationsToMonitor = applicationsToMonitor
+        self.software = software
+        self.sdkVersion = sdkVersion
+        self.codePath = codePath
+        self.codePathMac = codePathMac
+        self.codePathWin = codePathWin
+        self.actions = actions
+    }
+    
 }
 
 extension PluginManifest {
+    
+    /// Determine the CodePath for the plugin based on the bundles executable's name.
     public static var executableName: String {
         Bundle.main.executableURL!.lastPathComponent
     }
