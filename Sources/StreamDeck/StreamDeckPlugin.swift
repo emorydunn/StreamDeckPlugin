@@ -274,18 +274,18 @@ open class StreamDeckPlugin {
     /// - Parameters:
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - settings: A json object which is persistently saved globally.
-    public func setGlobalSettings(in context: String, to settings: [String: Any]) {
+    public func setGlobalSettings(_ settings: [String: Any]) {
         
         sendEvent(.setGlobalSettings,
-                      context: context,
+                  context: uuid,
                       payload: settings)
     }
     
     /// Request the global persistent data.
     /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
-    public func getGlobalSettings(in context: String) {
+    public func getGlobalSettings() {
         sendEvent(.getGlobalSettings,
-                      context: context,
+                      context: uuid,
                       payload: nil)
     }
     
