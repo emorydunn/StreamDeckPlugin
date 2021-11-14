@@ -15,10 +15,17 @@ class TestPlugin: StreamDeckPlugin {
     
     init(_ exp: XCTestExpectation) throws {
         self.eventExp = exp
-        try super.init(port: 42, uuid: "", event: "", info: "")
+        
+        let info = PluginRegistrationInfo(
+            application: StreamDeckApp(language: .english, platform: .mac, platformVersion: "", version: ""),
+            plugin: PluginInfo(version: "", uuid: "TestPlugin"),
+            devicePixelRatio: 2,
+            colors: [:])
+        
+        try super.init(port: 42, uuid: "", event: "", info: info)
     }
     
-    required init(port: Int32, uuid: String, event: String, info: String) throws {
+    required init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) throws {
         fatalError("init(port:uuid:event:info:) has not been implemented")
     }
 

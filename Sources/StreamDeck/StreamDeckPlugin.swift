@@ -42,8 +42,8 @@ open class StreamDeckPlugin {
     /// The event type that should be used to register the plugin once the WebSocket is opened
     public var event: String
 
-    /// A stringified json containing the Stream Deck application information and devices information.
-    public var info: String
+    /// The Stream Deck application information and devices information.
+    public var info: PluginRegistrationInfo
     
     /// Known action instances
     public let instanceManager = InstanceManager()
@@ -51,7 +51,7 @@ open class StreamDeckPlugin {
     /// Create a new plugin object.
     /// - Parameter properties: Properties from the Stream Deck application.
     /// - Throws: Errors while registering the plugin.
-    public required init(port: Int32, uuid: String, event: String, info: String) throws {
+    public required init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) throws {
         self.port = port
         self.uuid = uuid
         self.event = event
@@ -237,7 +237,7 @@ open class StreamDeckPlugin {
         ]
         
         guard JSONSerialization.isValidJSONObject(registrationEvent) else {
-            throw StreamDeckError.invlaidJSON(event, registrationEvent)
+            throw StreamDeckError.invalidJSON(event, registrationEvent)
         }
         
         let data = try JSONSerialization.data(withJSONObject: registrationEvent, options: [])
@@ -275,6 +275,7 @@ open class StreamDeckPlugin {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - settings: A json object which is persistently saved globally.
     public func setGlobalSettings(in context: String, to settings: [String: Any]) {
+        
         sendEvent(.setGlobalSettings,
                       context: context,
                       payload: settings)
