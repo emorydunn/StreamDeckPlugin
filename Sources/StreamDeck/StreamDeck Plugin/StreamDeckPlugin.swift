@@ -42,8 +42,8 @@ open class StreamDeckPlugin {
     /// The event type that should be used to register the plugin once the WebSocket is opened
     public var event: String
 
-    /// A stringified json containing the Stream Deck application information and devices information.
-    public var info: String
+    /// The Stream Deck application information and devices information.
+    public var info: PluginRegistrationInfo
     
     /// Known action instances
     public let instanceManager = InstanceManager()
@@ -51,7 +51,7 @@ open class StreamDeckPlugin {
     /// Create a new plugin object.
     /// - Parameter properties: Properties from the Stream Deck application.
     /// - Throws: Errors while registering the plugin.
-    public required init(port: Int32, uuid: String, event: String, info: String) throws {
+    public required init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) throws {
         self.port = port
         self.uuid = uuid
         self.event = event
@@ -90,7 +90,7 @@ open class StreamDeckPlugin {
                 }
             }
             .tryMap { data in
-                (try JSONDecoder().decode(ReceivableEvent.self, from: data).event, data)
+                (try decoder.decode(ReceivableEvent.self, from: data).event, data)
             }
             .catch { fail -> Just<(ReceivableEvent.EventKey, Data)?> in
                 NSLog("ERROR: \(fail.localizedDescription)")
@@ -101,50 +101,88 @@ open class StreamDeckPlugin {
             .sink { (event, data) in
                 
                 do {
-                    switch event {
-                    case .keyDown:
-                        
-                        let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-                        self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
-                    
-                    case .keyUp:
-                        let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-                        self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
-                    
-                    case .willAppear:
-                        let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-                        self.instanceManager.registerInstance(action)
-                        self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-                    
-                    case .willDisappear:
-                        let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-                        self.instanceManager.removeInstance(action)
-                        self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-                    
-                    case .titleParametersDidChange:
-                        let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
-                        self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
-                        
-                    case .deviceDidConnect:
-                        let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-                        self.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
-                        
-                    case .deviceDidDisconnect:
-                        let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-                        self.deviceDidDisconnect(action.device)
-                    
-                    default:
-                        NSLog("Unsupported action \(event.rawValue)")
-                    }
+                    try self.parseEvent(event: event, data: data)
                 } catch {
                     NSLog("Failed to decode data for event \(event)")
                     NSLog(error.localizedDescription)
                     NSLog("\(error)")
                     NSLog(String(data: data, encoding: .utf8)!)
+                    
+                    self.logMessage("Failed to decode data for event \(event)")
+                    self.logMessage(error.localizedDescription)
+                    self.logMessage("\(error)")
+                    self.logMessage(String(data: data, encoding: .utf8)!)
                 }
                 
             }
             .store(in: &tokens)
+    }
+    
+    func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {
+        
+        let decoder = JSONDecoder()
+        
+        switch event {
+            
+        case .didReceiveSettings:
+            let action = try decoder.decode(SettingsEvent.self, from: data)
+            self.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
+        case .didReceiveGlobalSettings:
+            let action = try decoder.decode(GlobalSettingsEvent.self, from: data)
+            self.didReceiveGlobalSettings(action.payload.settings)
+        case .keyDown:
+            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
+            self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
+        
+        case .keyUp:
+            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
+            self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
+        
+        case .willAppear:
+            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+            self.instanceManager.registerInstance(action)
+            self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+        
+        case .willDisappear:
+            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+            self.instanceManager.removeInstance(action)
+            self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+        
+        case .titleParametersDidChange:
+            let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
+            self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
+            
+        case .deviceDidConnect:
+            let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
+            self.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
+            
+        case .deviceDidDisconnect:
+            let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
+            self.deviceDidDisconnect(action.device)
+            
+        case .systemDidWakeUp:
+            self.systemDidWakeUp()
+            
+        case .applicationDidLaunch:
+            let action = try decoder.decode(ApplicationEvent.self, from: data)
+            self.applicationDidLaunch(action.payload.application)
+        
+        case .applicationDidTerminate:
+            let action = try decoder.decode(ApplicationEvent.self, from: data)
+            self.applicationDidTerminate(action.payload.application)
+            
+        case .propertyInspectorDidAppear:
+            let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
+            self.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
+        
+        case .propertyInspectorDidDisappear:
+            let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
+            self.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
+        
+        case .sendToPlugin:
+            let action = try decoder.decode(SendToPluginEvent.self, from: data)
+            self.sentToPlugin(context: action.context, action: action.action, payload: action.payload)
+        }
     }
     
     // MARK: - Events
@@ -199,7 +237,7 @@ open class StreamDeckPlugin {
         ]
         
         guard JSONSerialization.isValidJSONObject(registrationEvent) else {
-            throw StreamDeckError.invlaidJSON(event, registrationEvent)
+            throw StreamDeckError.invalidJSON(event, registrationEvent)
         }
         
         let data = try JSONSerialization.data(withJSONObject: registrationEvent, options: [])
@@ -236,17 +274,18 @@ open class StreamDeckPlugin {
     /// - Parameters:
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - settings: A json object which is persistently saved globally.
-    public func setGlobalSettings(in context: String, to settings: [String: Any]) {
+    public func setGlobalSettings(_ settings: [String: Any]) {
+        
         sendEvent(.setGlobalSettings,
-                      context: context,
+                  context: uuid,
                       payload: settings)
     }
     
     /// Request the global persistent data.
     /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
-    public func getGloablSettings(in context: String) {
+    public func getGlobalSettings() {
         sendEvent(.getGlobalSettings,
-                      context: context,
+                      context: uuid,
                       payload: nil)
     }
     
@@ -263,6 +302,18 @@ open class StreamDeckPlugin {
     public func logMessage(_ message: String) {
         NSLog("EVENT: Sending log message: \(message)")
         sendEvent(.logMessage, context: nil, payload: ["message": message])
+    }
+    
+    /// Write a debug log to the logs file.
+    /// - Parameters:
+    ///   - items: Zero or more items to print.
+    ///   - separator: A string to print between each item. The default is a single space (" ").
+    public func logMessage(_ items: Any..., separator: String = " ") {
+        let message = items.map {
+            String(describing: $0)
+        }.joined(separator: separator)
+        
+        logMessage(message)
     }
     
     /// Dynamically change the title of an instance of an action.
@@ -296,6 +347,55 @@ open class StreamDeckPlugin {
         var payload: [String: Any] = [:]
         
         payload["image"] = image?.base64String
+        payload["target"] = target?.rawValue
+        payload["state"] = state
+        
+        sendEvent(.setImage,
+                      context: context,
+                      payload: payload)
+    }
+    
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: The name of an image to display.
+    ///   - ext: The filename extension of the file to locate.
+    ///   - subpath: The subdirectory in the plugin bundle in which to search for images.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    public func setImage(in context: String, toImage image: String?, withExtension ext: String, subdirectory subpath: String?, target: Target? = nil, state: Int? = nil) {
+        guard
+            let imageURL = Bundle.main.url(forResource: image, withExtension: ext, subdirectory: subpath)
+        else {
+            logMessage("Could not find \(image ?? "unnamed").\(ext)")
+            return
+        }
+        
+        let image = NSImage(contentsOf: imageURL)
+        
+        setImage(in: context, to: image)
+    }
+    
+    
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: The SVG to display.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    public func setImage(in context: String, toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
+        var payload: [String: Any] = [:]
+        
+        if let svg = svg {
+            payload["image"] = "data:image/svg+xml;charset=utf8,\(svg)"
+        }
+        
         payload["target"] = target?.rawValue
         payload["state"] = state
         
@@ -359,21 +459,16 @@ open class StreamDeckPlugin {
                       payload: payload)
     }
     
-    /// Send a payload to the plugin.
-    /// - Parameters:
-    ///   - context: An opaque value identifying the instance's action or Property Inspector.
-    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
-    ///   - payload: A json object that will be received by the plugin.
-    public func sendToPlugin(in context: String, action: String, payload: [String: Any]) {
-//        let payload: [String: Any] = ["profile": name]
-        // FIXME: Add action
-
-        sendEvent(.sendToPlugin,
-                      context: context,
-                      payload: payload)
+    // MARK: Received
+    
+    open func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) {
     }
     
-    // MARK: Received
+    open func didReceiveGlobalSettings(_ settings: [String: String]) {
+
+    }
+    
+    
     /// When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a `willAppear` event.
     ///
     /// You will see such an event when:
@@ -472,6 +567,43 @@ open class StreamDeckPlugin {
     /// When the computer is wake up, the plugin will receive the `systemDidWakeUp` event.
     open func systemDidWakeUp() {
         
+    }
+    
+    /// The plugin will receive a `propertyInspectorDidAppear` event when the Property Inspector appears.
+    /// - Parameters:
+    ///   - action: The action unique identifier.
+    ///   - context: An opaque value identifying the instance's action.
+    ///   - device: An opaque value identifying the device.
+    open func propertyInspectorDidAppear(action: String, context: String, device: String) {
+        
+    }
+    
+    /// The plugin will receive a `propertyInspectorDidDisappear` event when the Property Inspector appears.
+    /// - Parameters:
+    ///   - action: The action unique identifier.
+    ///   - context: An opaque value identifying the instance's action.
+    ///   - device: An opaque value identifying the device.
+    open func propertyInspectorDidDisappear(action: String, context: String, device: String) {
+        
+    }
+    
+    /// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
+    ///   - payload: A json object that will be received by the plugin.
+    @available(*, deprecated, renamed: "sentToPlugin")
+    open func sendToPlugin(context: String, action: String, payload: [String: String]) {
+
+    }
+    
+    /// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
+    ///   - payload: A json object that will be received by the plugin.
+    open func sentToPlugin(context: String, action: String, payload: [String: String]) {
+
     }
     
     

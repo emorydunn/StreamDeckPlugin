@@ -13,7 +13,7 @@ struct GenerateManifest: ParsableCommand {
     
     /// Output location for the manifest file.
     @Option(help: "Output location of the manifest file.")
-    var output: String
+    var output: String?
     
     /// Whether or not to print the manifest to the console.
     @Flag(help: "Print the manifest to console instead of saving to a file")
@@ -37,15 +37,29 @@ struct GenerateManifest: ParsableCommand {
             return
         }
         
-        try data.write(to: URL(fileURLWithPath: output))
+        // Ensure we have a path
+        guard let output = output else { return }
+        
+        var outputURL = URL(fileURLWithPath: output)
+        
+        // If the location is a directory append the default name
+        var isDir: ObjCBool = false
+        FileManager.default.fileExists(atPath: output, isDirectory: &isDir)
+        
+        if isDir.boolValue {
+            outputURL.appendPathComponent("manifest.json")
+        }
+        
+        // Attempt to write the file
+        try data.write(to: outputURL)
     }
     
-    func encode(manifest: PluginManifest) throws -> Data {
+    func encode(manifest: PluginManifest,
+                outputFormatting: JSONEncoder.OutputFormatting = [
+                    .prettyPrinted,
+                    .withoutEscapingSlashes]) throws -> Data {
         let encoder = JSONEncoder()
-        encoder.outputFormatting = [
-            .prettyPrinted,
-            .withoutEscapingSlashes
-        ]
+        encoder.outputFormatting = outputFormatting
         
         encoder.keyEncodingStrategy = .custom { keys -> CodingKey in
             StreamDeckKey(key: keys.last!)
