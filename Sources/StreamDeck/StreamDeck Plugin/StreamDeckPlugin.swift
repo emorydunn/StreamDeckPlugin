@@ -304,6 +304,18 @@ open class StreamDeckPlugin {
         sendEvent(.logMessage, context: nil, payload: ["message": message])
     }
     
+    /// Write a debug log to the logs file.
+    /// - Parameters:
+    ///   - items: Zero or more items to print.
+    ///   - separator: A string to print between each item. The default is a single space (" ").
+    public func logMessage(_ items: Any..., separator: String = " ") {
+        let message = items.map {
+            String(describing: $0)
+        }.joined(separator: separator)
+        
+        logMessage(message)
+    }
+    
     /// Dynamically change the title of an instance of an action.
     /// - Parameters:
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
