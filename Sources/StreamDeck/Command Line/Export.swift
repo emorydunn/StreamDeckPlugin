@@ -14,7 +14,7 @@ struct ExportCommand: ParsableCommand {
     
     public static var configuration = CommandConfiguration(
         commandName: "export",
-        abstract: "Conveniently export the plugin."
+        abstract: "Conveniently export the plugin.",
         discussion: "Automatically generate the manifest and copy the executable to the Plugins folder.")
     
     enum ManifestGeneration: String, EnumerableFlag {
