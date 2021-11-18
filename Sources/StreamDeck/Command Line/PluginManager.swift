@@ -15,7 +15,8 @@ public struct PluginManager: ParsableCommand {
     public static var configuration = CommandConfiguration(
         subcommands: [
             StreamDeckCommand.self,
-            GenerateManifest.self
+            ExportCommand.self
+//            GenerateManifest.self
         ],
         defaultSubcommand: StreamDeckCommand.self
         )
