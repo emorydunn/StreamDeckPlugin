@@ -42,7 +42,7 @@ final class PluginManifestTests: XCTestCase {
                     tooltip: "Decrement the count.")
             ])
         
-        let generator = GenerateManifest()
+        let generator = ExportCommand()
         let data = try! generator.encode(
             manifest: manifest,
             outputFormatting: [
