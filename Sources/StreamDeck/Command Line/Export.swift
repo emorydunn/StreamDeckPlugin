@@ -17,8 +17,8 @@ struct ExportCommand: ParsableCommand {
         discussion: "Conveniently export the plugin.")
     
     enum ManifestGeneration: String, EnumerableFlag {
-        case generate
-        case preview
+        case generateManifest
+        case previewManifest
     }
     
     @Argument(help: "The URI for your plugin")
@@ -69,6 +69,8 @@ struct ExportCommand: ParsableCommand {
     /// - Parameter folder: The folder in which to copy the executable.
     func copyExecutable(to folder: URL) throws {
         
+        guard copyExecutable else { return }
+        
         // Get the current executable
         guard let exePath = Bundle.main.executableURL else {
             print("ERROR: Could not determine the current executable's path.")
@@ -84,6 +86,7 @@ struct ExportCommand: ParsableCommand {
         
         let newPath = folder.appendingPathComponent(newName)
         
+        try FileManager.default.removeItem(at: newPath)
         try FileManager.default.copyItem(at: exePath, to: newPath)
     }
     
@@ -99,7 +102,7 @@ struct ExportCommand: ParsableCommand {
         let data = try encode(manifest: pluginManifest)
         
         switch manifest {
-        case .generate:
+        case .generateManifest:
             var outputURL = folder.appendingPathComponent(manifestName)
             
             if outputURL.pathExtension != "json" {
@@ -108,7 +111,7 @@ struct ExportCommand: ParsableCommand {
             
             // Attempt to write the file
             try data.write(to: outputURL)
-        case .preview:
+        case .previewManifest:
             if let string = String(data: data, encoding: .utf8) {
                 print(string)
             } else {
