@@ -7,11 +7,13 @@
 
 import Foundation
 
-class WebSocketConnection<Payload: Decodable> {
+public class WebSocketConnection<Payload: Decodable> {
     
-    let task: URLSessionWebSocketTask
+    public let task: URLSessionWebSocketTask
+    
     let decoder = JSONDecoder()
-    var callback: ((Payload, Data) -> Void)? {
+    
+    public var callback: ((Payload, Data) -> Void)? {
         didSet {
             // Resume the task
             task.resume()
@@ -20,7 +22,7 @@ class WebSocketConnection<Payload: Decodable> {
         }
     }
     
-    init(with url: URL, session: URLSession = URLSession.shared) {
+    public init(with url: URL, session: URLSession = URLSession.shared) {
         self.task = session.webSocketTask(with: url)
     }
     
@@ -30,12 +32,12 @@ class WebSocketConnection<Payload: Decodable> {
     /// - Parameters:
     ///   - message: The WebSocket message to send to the other endpoint.
     ///   - completionHandler: A closure that receives an NSError that indicates an error encountered while sending, or nil if no error occurred.
-    func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
+    public func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
         task.send(message, completionHandler: completionHandler)
     }
     
     
-    func listen() {
+    public func listen() {
         self.task.receive { [weak self] result in
             switch result {
             case let .success(message):

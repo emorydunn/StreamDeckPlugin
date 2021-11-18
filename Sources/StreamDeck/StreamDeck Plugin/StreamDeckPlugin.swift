@@ -21,7 +21,7 @@ open class StreamDeckPlugin {
     // MARK: Connection Properties
 
     /// The underlying WebSocket task
-    let task: WebSocketConnection<ReceivableEvent>
+    public let task: WebSocketConnection<ReceivableEvent>
     
     /// The queue used for WebSocket subscriptions
     let backgroundQueue = DispatchQueue(label: "WebSocketQueue", qos: .userInteractive)
