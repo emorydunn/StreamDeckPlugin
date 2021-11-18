@@ -16,23 +16,25 @@ struct ExportCommand: ParsableCommand {
         commandName: "export",
         discussion: "Conveniently export the plugin.")
     
+    enum ManifestGeneration: String, EnumerableFlag {
+        case generate
+        case preview
+    }
+    
     @Argument(help: "The URI for your plugin")
     var uri: String
     
     @Option(help: "Output folder")
     var output: URL?
-    
-    @Flag(name: .shortAndLong, help: "Generate the plugin manifest file.")
-    var generateManifest: Bool = true
-    
-    @Flag(name: .shortAndLong, help: "Generate the plugin manifest file.")
-    var previewManifest: Bool = true
+
+    @Flag(exclusivity: FlagExclusivity.exclusive, help: nil)
+    var manifest: ManifestGeneration
     
     @Option(name: .shortAndLong, help: "The name of the manifest file.")
     var manifestName: String = "manifest.json"
     
     @Flag(name: .shortAndLong, help: "Copy the executable file.")
-    var copyExecutable: Bool = true
+    var copyExecutable: Bool = false
     
     @Option(name: .shortAndLong, help: "The name of the executable file.")
     var executableName: String?
@@ -88,33 +90,32 @@ struct ExportCommand: ParsableCommand {
     /// Generate the plugin manifest file.
     /// - Parameter folder: The folder in which to write the manifest.
     func generateManifestFile(in folder: URL) throws {
-        guard generateManifest else { return }
-        
-        guard let manifest = PluginManager.manifest else {
+
+        guard let pluginManifest = PluginManager.manifest else {
             print("Call `PluginManager.main(plugin:manifest:)` with a PluginManifest.")
             return
         }
         
-        let data = try encode(manifest: manifest)
+        let data = try encode(manifest: pluginManifest)
         
-        if previewManifest {
+        switch manifest {
+        case .generate:
+            var outputURL = folder.appendingPathComponent(manifestName)
+            
+            if outputURL.pathExtension != "json" {
+                outputURL.appendPathExtension("json")
+            }
+            
+            // Attempt to write the file
+            try data.write(to: outputURL)
+        case .preview:
             if let string = String(data: data, encoding: .utf8) {
                 print(string)
             } else {
                 print("Could not encode manifest to JSON string.")
             }
-            
-            return
         }
         
-        var outputURL = folder.appendingPathComponent(manifestName)
-        
-        if outputURL.pathExtension != "json" {
-            outputURL.appendPathExtension("json")
-        }
-        
-        // Attempt to write the file
-        try data.write(to: outputURL)
     }
     
     func encode(manifest: PluginManifest,
