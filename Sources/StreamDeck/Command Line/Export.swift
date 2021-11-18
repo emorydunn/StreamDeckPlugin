@@ -86,8 +86,10 @@ struct ExportCommand: ParsableCommand {
         
         let newPath = folder.appendingPathComponent(newName)
         
-        try FileManager.default.removeItem(at: newPath)
+        try? FileManager.default.removeItem(at: newPath)
         try FileManager.default.copyItem(at: exePath, to: newPath)
+        
+        print("Copied \(exePath.lastPathComponent) -> \(newPath.path)")
     }
     
     /// Generate the plugin manifest file.
@@ -111,6 +113,8 @@ struct ExportCommand: ParsableCommand {
             
             // Attempt to write the file
             try data.write(to: outputURL)
+            
+            print("Write manifest to \(outputURL.path)")
         case .previewManifest:
             if let string = String(data: data, encoding: .utf8) {
                 print(string)
