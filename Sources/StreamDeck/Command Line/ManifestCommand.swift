@@ -12,7 +12,7 @@ import ArgumentParser
 struct GenerateManifest: ParsableCommand {
     
     /// Output location for the manifest file.
-    @Option(help: "Output location of the manifest file.")
+    @Option(name: .shortAndLong, help: "Output location of the manifest file.")
     var output: String?
     
     /// Whether or not to print the manifest to the console.
