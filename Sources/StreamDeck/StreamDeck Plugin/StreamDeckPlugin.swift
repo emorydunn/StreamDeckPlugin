@@ -7,8 +7,6 @@
 
 import Foundation
 import Cocoa
-import Combine
-
 
 /// The base class for building Stream Deck plugins.
 ///
@@ -21,12 +19,9 @@ open class StreamDeckPlugin {
     public static var shared: StreamDeckPlugin?
     
     // MARK: Connection Properties
-    
-    /// Storage for Combine tokens.
-    public var tokens: [AnyCancellable] = []
-    
+
     /// The underlying WebSocket task
-    let task: WebSocketTaskPublisher
+    let task: WebSocketConnection<ReceivableEvent>
     
     /// The queue used for WebSocket subscriptions
     let backgroundQueue = DispatchQueue(label: "WebSocketQueue", qos: .userInteractive)
@@ -61,63 +56,31 @@ open class StreamDeckPlugin {
         
         NSLog("Starting connection with \(url)")
         
-        self.task = URLSession.shared.webSocketTaskPublisher(for: url)
+        self.task = WebSocketConnection(with: url)
         
-        monitorSocket()
-        
+        self.task.callback = { event, data in
+            
+            do {
+                try self.parseEvent(event: event.event, data: data)
+            } catch {
+                NSLog("Failed to decode data for event \(event)")
+                NSLog(error.localizedDescription)
+                NSLog("\(error)")
+                NSLog(String(data: data, encoding: .utf8)!)
+
+                self.logMessage("Failed to decode data for event \(event)")
+                self.logMessage(error.localizedDescription)
+                self.logMessage("\(error)")
+                self.logMessage(String(data: data, encoding: .utf8)!)
+            }
+        }
+
         try registerPlugin()
 
     }
     
     // MARK: Connections
-    
-    /// Connect to the Web Socket, watch for events, and parse the actions.
-    func monitorSocket() {
-        NSLog("Beginning to monitor socket")
-        
-        let decoder = JSONDecoder()
-        
-        task
-            .subscribe(on: backgroundQueue)
-            .compactMap { message in
-                switch message {
-                case let .data(data):
-                    return data
-                case let .string(string):
-                    return string.data(using: .utf8)
-                @unknown default:
-                    return nil
-                }
-            }
-            .tryMap { data in
-                (try decoder.decode(ReceivableEvent.self, from: data).event, data)
-            }
-            .catch { fail -> Just<(ReceivableEvent.EventKey, Data)?> in
-                NSLog("ERROR: \(fail.localizedDescription)")
-                
-                return Just(nil)
-            }
-            .compactMap { $0 }
-            .sink { (event, data) in
-                
-                do {
-                    try self.parseEvent(event: event, data: data)
-                } catch {
-                    NSLog("Failed to decode data for event \(event)")
-                    NSLog(error.localizedDescription)
-                    NSLog("\(error)")
-                    NSLog(String(data: data, encoding: .utf8)!)
-                    
-                    self.logMessage("Failed to decode data for event \(event)")
-                    self.logMessage(error.localizedDescription)
-                    self.logMessage("\(error)")
-                    self.logMessage(String(data: data, encoding: .utf8)!)
-                }
-                
-            }
-            .store(in: &tokens)
-    }
-    
+
     func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {
         
         let decoder = JSONDecoder()
