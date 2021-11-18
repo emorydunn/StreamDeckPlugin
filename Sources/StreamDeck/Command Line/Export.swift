@@ -28,7 +28,7 @@ struct ExportCommand: ParsableCommand {
     var output: URL?
 
     @Flag(exclusivity: FlagExclusivity.exclusive, help: nil)
-    var manifest: ManifestGeneration
+    var manifest: ManifestGeneration?
     
     @Option(name: .shortAndLong, help: "The name of the manifest file.")
     var manifestName: String = "manifest.json"
@@ -121,6 +121,8 @@ struct ExportCommand: ParsableCommand {
             } else {
                 print("Could not encode manifest to JSON string.")
             }
+        case nil:
+            break
         }
         
     }
