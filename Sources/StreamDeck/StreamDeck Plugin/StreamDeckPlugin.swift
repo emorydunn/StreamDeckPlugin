@@ -13,12 +13,12 @@ import Combine
 /// The base class for building Stream Deck plugins.
 ///
 /// The WebSocket connection and plugin registration procedure are handled automatically.
-open class StreamDeckPlugin {
+open class StreamDeckPlugin_old {
     
     // MARK: Shared Plugin
     
     /// The shared plugin instance
-    public static var shared: StreamDeckPlugin?
+    public static var shared: StreamDeckPlugin_old?
     
     // MARK: Connection Properties
     

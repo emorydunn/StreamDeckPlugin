@@ -27,10 +27,8 @@ struct StreamDeckCommand: ParsableCommand {
     
     /// Initialize an instance of the plugin with the properties provided by the command line.
     public func run() throws {
-        NSLog("Starting macOS plugin")
-        
         let pluginInfo = try PluginRegistrationInfo(string: info)
-        StreamDeckPlugin.shared = try PluginManager.plugin?.init(port: port, uuid: uuid, event: event, info: pluginInfo)
+        StreamDeckPlugin_old.shared = try PluginManager.plugin?.init(port: port, uuid: uuid, event: event, info: pluginInfo)
         
         NSLog("Plugin started. Dispatching on main thread.")
         

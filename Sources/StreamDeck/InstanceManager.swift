@@ -61,3 +61,51 @@ public class InstanceManager {
         instances.first { $0.coordinates == coordinates }
     }
 }
+
+
+/// Manages known instances from the `willAppear` & `willDisappear` events.
+public class InstanceManagerII {
+    
+    private var actions: [Action.Type]
+    private var instances: [String: Action] = [:]
+    
+    public init(actions: [Action.Type] = []) {
+        self.actions = actions
+    }
+    
+    /// Look up the action type based on the UUID.
+    /// - Parameter uuid: The UUID of the action.
+    /// - Returns: The action's type, if available.
+    public func action(forID uuid: String) -> Action.Type? {
+        actions.first { $0.uuid == uuid }
+    }
+    
+    /// Register a new instance of an action from a `willAppear` event.
+    /// - Parameter event: The event with information about the instance.
+    public func registerInstance(_ event: ActionEvent<AppearEvent>) {
+        
+        // Check if the instance already exists
+        guard instances[event.context] == nil else {
+            NSLog("This instance has already been registered.")
+            return
+        }
+        
+        // Look up the action
+        guard let actionType = action(forID: event.action) else {
+            NSLog("No action available with UUID '\(event.action)'.")
+            return
+        }
+        
+        // Initialize a new instance
+        instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
+        
+    }
+    
+    /// Remove an instance of an action from a `willDisappear` event.
+    /// - Parameter event: The event with information about the instance.
+    public func removeInstance(_ event: ActionEvent<AppearEvent>) {
+        instances[event.context] = nil
+    }
+    
+    subscript (context: String) -> Action? { instances[context] }
+}
