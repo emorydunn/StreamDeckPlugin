@@ -86,20 +86,110 @@ public protocol PluginDelegate {
 
     // MARK: Events Received
     
+    /// Event received after calling the `getSettings` API to retrieve the persistent data stored for the action.
     func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload)
+    
+    /// Event received after calling the `getGlobalSettings` API to retrieve the global persistent data.
     func didReceiveGlobalSettings(_ settings: [String: String])
+    
+    /// When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a `willAppear` event.
+    ///
+    /// You will see such an event when:
+    /// - the Stream Deck application is started
+    /// - the user switches between profiles
+    /// - the user sets a key to use your action
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
     func willAppear(action: String, context: String, device: String, payload: AppearEvent)
+    
+    /// When an instance of an action ceases to be displayed on Stream Deck, for example when switching profiles or folders, the plugin will receive a `willDisappear` event.
+    ///
+    /// You will see such an event when:
+    /// - the user switches between profiles
+    /// - the user deletes an action
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
     func willDisappear(action: String, context: String, device: String, payload: AppearEvent)
+    
+    /// When the user presses a key, the plugin will receive the `keyDown` event.
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
     func keyDown(action: String, context: String, device: String, payload: KeyEvent)
+    
+    /// When the user releases a key, the plugin will receive the `keyUp` event.
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
     func keyUp(action: String, context: String, device: String, payload: KeyEvent)
+    
+    /// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
     func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo)
+    
+    /// When a device is plugged to the computer, the plugin will receive a `deviceDidConnect` event.
+    /// - Parameters:
+    ///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - device: An opaque value identifying the device.
+    ///   - payload: The event payload sent by the server.
     func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo)
+    
+    /// When a device is unplugged from the computer, the plugin will receive a `deviceDidDisconnect` event.
+    /// - Parameters:
+    ///   - device: An opaque value identifying the device.
     func deviceDidDisconnect(_ device: String)
+    
+    /// A plugin can request in its manifest.json to be notified when some applications are launched or terminated.
+    ///
+    /// In order to do so, the manifest.json should contain an `ApplicationsToMonitor` object specifying the list of application identifiers to monitor.
+    /// On macOS the application bundle identifier is used while the exe filename is used on Windows.
+    /// - Parameter application: The identifier of the application that has been launched.
     func applicationDidLaunch(_ application: String)
+    
+    /// A plugin can request in its manifest.json to be notified when some applications are launched or terminated.
+    ///
+    /// In order to do so, the manifest.json should contain an `ApplicationsToMonitor` object specifying the list of application identifiers to monitor.
+    /// On macOS the application bundle identifier is used while the exe filename is used on Windows.
+    /// - Parameter application: The identifier of the application that has been launched.
     func applicationDidTerminate(_ application: String)
+    
+    /// When the computer is wake up, the plugin will receive the `systemDidWakeUp` event.
     func systemDidWakeUp()
+    
+    /// The plugin will receive a `propertyInspectorDidAppear` event when the Property Inspector appears.
+    /// - Parameters:
+    ///   - action: The action unique identifier.
+    ///   - context: An opaque value identifying the instance's action.
+    ///   - device: An opaque value identifying the device.
     func propertyInspectorDidAppear(action: String, context: String, device: String)
+    
+    /// The plugin will receive a `propertyInspectorDidDisappear` event when the Property Inspector appears.
+    /// - Parameters:
+    ///   - action: The action unique identifier.
+    ///   - context: An opaque value identifying the instance's action.
+    ///   - device: An opaque value identifying the device.
     func propertyInspectorDidDisappear(action: String, context: String, device: String)
+    
+    /// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
+    ///   - payload: A json object that will be received by the plugin.
     func sentToPlugin(context: String, action: String, payload: [String: String])
 }
 
