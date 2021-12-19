@@ -26,6 +26,6 @@ let package = Package(
             ]),
         .testTarget(
             name: "StreamDeckPluginTests",
-            dependencies: ["StreamDeck"])
+            dependencies: ["StreamDeck"]),
     ]
 )
