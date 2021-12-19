@@ -97,7 +97,7 @@ struct ExportCommand: ParsableCommand {
     /// - Parameter folder: The folder in which to write the manifest.
     func generateManifestFile(in folder: URL) throws {
 
-        guard let plugin = PluginManager.plugin else {
+        guard let plugin = PluginCommand.plugin else {
             print("Call `PluginManager.main(plugin:manifest:)` with a PluginManifest.")
             return
         }
