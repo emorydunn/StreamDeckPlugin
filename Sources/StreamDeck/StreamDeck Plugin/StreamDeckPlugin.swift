@@ -14,14 +14,14 @@ public class StreamDeckPlugin {
     
     let task: URLSessionWebSocketTask
     
-    private var instances: [String: Action] = [:]
+    public private(set) var instances: [String: Action] = [:]
     
     let decoder = JSONDecoder()
     
     // MARK: Streamdeck Properties
     
     /// The port that should be used to create the WebSocket
-    let port: Int32
+    public let port: Int32
     
     /// A unique identifier string that should be used to register the plugin once the WebSocket is opened.
     public let uuid: String
@@ -84,7 +84,7 @@ public class StreamDeckPlugin {
         instances[event.context] = nil
     }
     
-    subscript (context: String) -> Action? { instances[context] }
+    public subscript (context: String) -> Action? { instances[context] }
     
     // MARK: - WebSocket Methods
     /// Continually receive messages from the socket.
@@ -175,7 +175,7 @@ public class StreamDeckPlugin {
     ///   - context: The context token.
     ///   - payload: The payload for the action.
     /// - Throws: Errors while encoding the data to JSON.
-    func sendEvent(_ eventType: SendableEventKey, context: String?, payload: [String: Any]?) {
+    public func sendEvent(_ eventType: SendableEventKey, context: String?, payload: [String: Any]?) {
         
         var event: [String: Any] = [
             "event": eventType.rawValue
