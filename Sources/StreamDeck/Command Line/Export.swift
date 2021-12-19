@@ -55,11 +55,15 @@ struct ExportCommand: ParsableCommand {
     func run() throws {
         
         // Determine the root folder for the plugin
-        let root = try pluginsDir().appendingPathComponent(uri)
+        var root = try pluginsDir().appendingPathComponent(uri)
+        
+        // Add the plugin extension if needed
+        if root.pathExtension != "sdPlugin" {
+            root.appendPathExtension("sdPlugin")
+        }
         
         // Create the plugin directory
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true, attributes: nil)
-        
         
         try generateManifestFile(in: root)
         try copyExecutable(to: root)
