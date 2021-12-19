@@ -14,9 +14,11 @@ class DecrementAction: Action {
     
     static var uuid: String = "counter.decrement"
     
-    static var icon: String = "Icons/minus"
+    static var icon: String = "Icons/actionIcon"
     
-    static var states: [PluginActionState] = []
+    static var states: [PluginActionState] = [
+        PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
+    ]
     
     static var propertyInspectorPath: String?
     

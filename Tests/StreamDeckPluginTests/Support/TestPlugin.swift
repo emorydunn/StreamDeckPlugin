@@ -13,12 +13,12 @@ struct PluginCount: EnvironmentKey {
     static let defaultValue: Int = 0
 }
 
-class DemoIncrementAction: Action {
-    static var name: String = "Increment"
+class TestAction: Action {
+    static var name: String = "TestAction"
     
-    static var uuid: String = "counter.increment"
+    static var uuid: String = "test.action"
     
-    static var icon: String = "Icons/plug"
+    static var icon: String = "Icons/test"
     
     static var states: [PluginActionState] = []
     
@@ -34,7 +34,7 @@ class DemoIncrementAction: Action {
     
     var coordinates: Coordinates
     
-    @Environment(PluginCount.self) var count: Int
+//    let eventExp: XCTestExpectation
     
     required init(context: String, coordinates: Coordinates) {
         self.context = context
@@ -42,7 +42,7 @@ class DemoIncrementAction: Action {
     }
     
     func keyDown(device: String, payload: KeyEvent) {
-        count += 1
+        
     }
 
 }
@@ -85,7 +85,7 @@ class TestPlugin: PluginDelegate {
     @Environment(PluginCount.self) var count: Int
     
     static var actions: [Action.Type] = [
-        DemoIncrementAction.self
+        
     ]
 
     init(_ exp: XCTestExpectation) {
