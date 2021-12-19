@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AppKit
 
 public protocol PluginDelegate {
 
@@ -79,28 +80,10 @@ public protocol PluginDelegate {
     /// Override CodePath for Windows.
     static var codePathWin: String? { get }
     
-    // MARK: Streamdeck Properties
-    
-    /// The port that should be used to create the WebSocket
-    var port: Int32  { get }
-    
-    /// A unique identifier string that should be used to register the plugin once the WebSocket is opened.
-    var uuid: String  { get }
-    
-    /// The event type that should be used to register the plugin once the WebSocket is opened
-    var event: String  { get }
-
-    /// The Stream Deck application information and devices information.
-    var info: PluginRegistrationInfo  { get }
-    
-    // MARK: Plugin Properties
-    
-    var instanceManager: InstanceManagerII { get }
-
     static var actions: [Action.Type] { get }
     
-    init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo, instanceManager: InstanceManagerII)
-    
+    init()
+
     // MARK: Events Received
     
     func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload)
@@ -123,14 +106,15 @@ public protocol PluginDelegate {
 public extension PluginDelegate {
     
     static func main() {
-        PluginManager.plugin = self
-        PluginManager.main()
+        PluginCommand.plugin = self
+        PluginCommand.main()
     }
     
     /// Determine the CodePath for the plugin based on the bundles executable's name.
     static var executableName: String {
         Bundle.main.executableURL!.lastPathComponent
     }
+    
 }
 
 public extension PluginDelegate {
@@ -166,76 +150,218 @@ public extension PluginDelegate {
     func propertyInspectorDidDisappear(action: String, context: String, device: String) {}
     
     func sentToPlugin(context: String, action: String, payload: [String: String]) {}
-    
-    
-    func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {
-        
-        let decoder = JSONDecoder()
-
-        switch event {
-            
-        case .didReceiveSettings:
-            let action = try decoder.decode(SettingsEvent.self, from: data)
-            self.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
-        case .didReceiveGlobalSettings:
-            let action = try decoder.decode(GlobalSettingsEvent.self, from: data)
-            self.didReceiveGlobalSettings(action.payload.settings)
-        case .keyDown:
-            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-            self.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
-        
-        case .keyUp:
-            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-            self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
-            self.instanceManager[action.context]?.keyUp(device: action.device, payload: action.payload)
-        
-        case .willAppear:
-            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-            self.instanceManager.registerInstance(action)
-            self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-        
-        case .willDisappear:
-            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-            self.instanceManager.removeInstance(action)
-            self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-        
-        case .titleParametersDidChange:
-            let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
-            self.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
-            
-        case .deviceDidConnect:
-            let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-            self.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
-            
-        case .deviceDidDisconnect:
-            let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-            self.deviceDidDisconnect(action.device)
-            
-        case .systemDidWakeUp:
-            self.systemDidWakeUp()
-            
-        case .applicationDidLaunch:
-            let action = try decoder.decode(ApplicationEvent.self, from: data)
-            self.applicationDidLaunch(action.payload.application)
-        
-        case .applicationDidTerminate:
-            let action = try decoder.decode(ApplicationEvent.self, from: data)
-            self.applicationDidTerminate(action.payload.application)
-            
-        case .propertyInspectorDidAppear:
-            let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
-            self.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
-        
-        case .propertyInspectorDidDisappear:
-            let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
-            self.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
-        
-        case .sendToPlugin:
-            let action = try decoder.decode(SendToPluginEvent.self, from: data)
-            self.sentToPlugin(context: action.context, action: action.action, payload: action.payload)
-        }
-    }
 
 }
 
 
+public extension PluginDelegate {
+    
+    // MARK: Sent
+    
+    /// Save data persistently for the action's instance.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - settings: A json object which is persistently saved for the action's instance.
+    func setSettings(in context: String, to settings: [String: Any]) {
+        
+        StreamDeckPlugin.shared.sendEvent(.setSettings,
+                      context: context,
+                      payload: settings)
+    }
+    
+    /// Request the persistent data for the action's instance.
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    func getSettings(in context: String) {
+        StreamDeckPlugin.shared.sendEvent(.getSettings,
+                      context: context,
+                      payload: nil)
+    }
+    
+    /// Save data securely and globally for the plugin.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - settings: A json object which is persistently saved globally.
+    func setGlobalSettings(_ settings: [String: Any]) {
+        StreamDeckPlugin.shared.sendEvent(.setGlobalSettings,
+                                          context: StreamDeckPlugin.shared.uuid,
+                      payload: settings)
+    }
+    
+    /// Request the global persistent data.
+    /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
+    func getGlobalSettings() {
+        StreamDeckPlugin.shared.sendEvent(.getGlobalSettings,
+                                          context: StreamDeckPlugin.shared.uuid,
+                      payload: nil)
+    }
+    
+    /// Open an URL in the default browser.
+    /// - Parameter url: The URL to open
+    func openURL(_ url: URL) {
+        StreamDeckPlugin.shared.sendEvent(.openURL,
+                      context: nil,
+                      payload: ["url": url.path])
+    }
+    
+    /// Write a debug log to the logs file.
+    /// - Parameter message: A string to write to the logs file.
+    func logMessage(_ message: String) {
+        NSLog("EVENT: Sending log message: \(message)")
+        StreamDeckPlugin.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+    }
+    
+    /// Write a debug log to the logs file.
+    /// - Parameters:
+    ///   - items: Zero or more items to print.
+    ///   - separator: A string to print between each item. The default is a single space (" ").
+    func logMessage(_ items: Any..., separator: String = " ") {
+        let message = items.map {
+            String(describing: $0)
+        }.joined(separator: separator)
+        
+        logMessage(message)
+    }
+    
+    /// Dynamically change the title of an instance of an action.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - title: The title to display. If there is no title parameter, the title is reset to the title set by the user.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    func setTitle(in context: String, to title: String?, target: Target? = nil, state: Int? = nil) {
+        var payload: [String: Any] = [:]
+        
+        payload["title"] = title
+        payload["target"] = target?.rawValue
+        payload["state"] = state
+        
+        StreamDeckPlugin.shared.sendEvent(.setTitle,
+                      context: context,
+                      payload: payload)
+    }
+    
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: An image to display.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    func setImage(in context: String, to image: NSImage?, target: Target? = nil, state: Int? = nil) {
+        var payload: [String: Any] = [:]
+        
+        payload["image"] = image?.base64String
+        payload["target"] = target?.rawValue
+        payload["state"] = state
+        
+        StreamDeckPlugin.shared.sendEvent(.setImage,
+                      context: context,
+                      payload: payload)
+    }
+    
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: The name of an image to display.
+    ///   - ext: The filename extension of the file to locate.
+    ///   - subpath: The subdirectory in the plugin bundle in which to search for images.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    func setImage(in context: String, toImage image: String?, withExtension ext: String, subdirectory subpath: String?, target: Target? = nil, state: Int? = nil) {
+        guard
+            let imageURL = Bundle.main.url(forResource: image, withExtension: ext, subdirectory: subpath)
+        else {
+            logMessage("Could not find \(image ?? "unnamed").\(ext)")
+            return
+        }
+        
+        let image = NSImage(contentsOf: imageURL)
+        
+        setImage(in: context, to: image)
+    }
+    
+    
+    /// Dynamically change the image displayed by an instance of an action.
+    ///
+    /// The image is automatically encoded to a prefixed base64 string.
+    ///
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - image: The SVG to display.
+    ///   - target: Specify if you want to display the title on hardware, software, or both.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    func setImage(in context: String, toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
+        var payload: [String: Any] = [:]
+        
+        if let svg = svg {
+            payload["image"] = "data:image/svg+xml;charset=utf8,\(svg)"
+        }
+        
+        payload["target"] = target?.rawValue
+        payload["state"] = state
+        
+        StreamDeckPlugin.shared.sendEvent(.setImage,
+                      context: context,
+                      payload: payload)
+    }
+    
+//    func setTitle(to string: String, target: Target? = nil, state: Int? = nil) throws {
+//        try knownContexts.forEach { context in
+//            try setTitle(to: string, in: context, target: target, state: state)
+//        }
+//    }
+    
+    /// Temporarily show an alert icon on the image displayed by an instance of an action.
+    /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
+    func showAlert(in context: String) {
+        StreamDeckPlugin.shared.sendEvent(.showAlert, context: context, payload: nil)
+    }
+    
+    /// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
+    /// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
+    func showOk(in context: String) {
+        StreamDeckPlugin.shared.sendEvent(.showOK, context: context, payload: nil)
+    }
+    
+    /// Change the state of the action's instance supporting multiple states.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+    func setState(in context: String, to state: Int) {
+        let payload: [String: Any] = ["state": state]
+
+        StreamDeckPlugin.shared.sendEvent(.setState,
+                      context: context,
+                      payload: payload)
+    }
+    
+    /// Switch to one of the preconfigured read-only profiles.
+    /// - Parameter name: The name of the profile to switch to. The name should be identical to the name provided in the manifest.json file.
+    func switchToProfile(named name: String) {
+        let payload: [String: Any] = ["profile": name]
+        // FIXME: Add Device
+
+        StreamDeckPlugin.shared.sendEvent(.switchToProfile,
+                                          context: StreamDeckPlugin.shared.uuid,
+                      payload: payload)
+    }
+    
+    /// Send a payload to the Property Inspector.
+    /// - Parameters:
+    ///   - context: An opaque value identifying the instance's action or Property Inspector.
+    ///   - action: The action unique identifier.
+    ///   - payload: A json object that will be received by the Property Inspector.
+    func sendToPropertyInspector(in context: String, action: String, payload: [String: Any]) {
+//        let payload: [String: Any] = ["profile": name]
+        // FIXME: Add action
+
+        StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
+                      context: context,
+                      payload: payload)
+    }
+}
