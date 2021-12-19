@@ -41,6 +41,8 @@ public class StreamDeckPlugin {
         
         let url = URL(string: "ws://localhost:\(port)")!
         self.task = URLSession.shared.webSocketTask(with: url)
+        
+        task.resume()
     }
     
     // MARK: - InstanceManager
