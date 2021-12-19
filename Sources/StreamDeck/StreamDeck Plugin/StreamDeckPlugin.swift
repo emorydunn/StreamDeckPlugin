@@ -90,9 +90,7 @@ public class StreamDeckPlugin {
     /// Continually receive messages from the socket.
     func monitorSocket() {
         self.task.receive { [weak self] result in
-            
-            NSLog("Received message from server")
-            
+
             // Handle a new message
             switch result {
             case let .success(message):
