@@ -82,7 +82,7 @@ public protocol Action {
 }
 
 
-extension Action {
+public extension Action {
     func keyDown(device: String, payload: KeyEvent) { }
     
     func keyUp(device: String, payload: KeyEvent) { }

@@ -55,13 +55,13 @@ public protocol PluginDelegate {
     func sentToPlugin(context: String, action: String, payload: [String: String])
 }
 
-extension PluginDelegate {
+public extension PluginDelegate {
     static func main() {
         
     }
 }
 
-extension PluginDelegate {
+public extension PluginDelegate {
     
     // MARK: - Events Received
     
