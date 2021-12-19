@@ -4,16 +4,19 @@ A library for creating Stream Deck plugins in Swift.
 
 ## Usage
 
-Your plugin class should inherit from `StreamDeckPlugin`, which handles the WebSocket connection and events automatically. You can override event methods in order to act upon received actions.
+Your plugin should conform to `PluginDelegate`, which handles event routing to you actions and lets you interact with the Stream Deck application.
 
 ```swift
 import StreamDeck
 
-class CounterPlugin: StreamDeckPlugin {
+@main
+class CounterPlugin: PluginDelegate {
+
+    // Skipping manifest for brevity
 
     var counter: Int = 0
 
-    override func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
+    func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
         counter += 1
         setTitle(in: context, to: "\(counter)")
     }
@@ -21,24 +24,37 @@ class CounterPlugin: StreamDeckPlugin {
 }
 ```
 
-In order to run your plugin it needs to be registered during startup. The `PluginManager` manages the lifecycle of your plugin. In your `main.swift` file add your plugin:
-
-```swift
-import Foundation
-import StreamDeck
-
-PluginManager.main(plugin: CounterPlugin.self)
-```
-
-This is all that should be in the file in order for the Stream Deck software to successfully launch the plugin.
+My using the `@main` attribute your plugin will be automatically initialized.
 
 ## Responding to Events
 
-When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. In order for your plugin to receive the event you need to override the method.
+### With Methods
 
-- Note: You don't need to call `super` when overriding, any internal responses to events are handled automatically.
+When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. Each event has a default implementation that does nothing, so your plugin only needs to include any events you care about.
 
 Each method is called with the top-level properties along with an event specific payload. For instance, to the `keyDown` event provides a payload that includes the actions settings, coordinates, etc.
+
+### With Actions
+
+A more powerful way to respond to events is with `Actions`. By creating an object that conforms to `Action` you can move the logic out of the plugin. For a plugin with many actions this is the preferred way to handle events. The `StreamDeckPlugin` creates a new instance of your action when `willAppear` is called and releases it when `willDisappear` is called.
+
+## The Environment
+
+In order to pass variables between instances you can use `@Environment` property wrapper. Firstly you need to declare your `EnvironmentKey`:
+
+```swift
+struct PluginCount: EnvironmentKey {
+    static let defaultValue: Int = 0
+}
+```
+
+Then when you need to access that value in an action you decorate the variable:
+
+```swift
+class IncrementAction: Action {
+    @Environment(PluginCount.self) var count: Int
+}
+```
 
 [er]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/
 
@@ -48,51 +64,71 @@ In addition to receiving events from the application your plugin can [send event
 
 [se]: https://developer.elgato.com/documentation/stream-deck/sdk/events-sent/
 
-## Accessing Specific Action Instances
-
-Responding to events is easy because the context is provided, however updating instances outside of a received event requires knowing the state of the Stream Deck.
-
-To aid in this the `StreamDeckPlugin` has an `InstanceManager` which tracks `willAppear` and `willDissapear` events. The manager provides methods for looking up available instances in a few ways.
-
-The most straight forward is by looking up the context token using `.instance(for:)`. Usually you'll be looking up instances of a specific action or at specific coordinates.
-
-To look up all instances of an action call `.instances(with:)` with the UUID from your `manifest.json` file. The ID you pass in will be automatically lowercased.
-
-You can also look up the instance of an action by coordinates by calling `.instance(at:)`.
-
-The lookup methods return an `ActionInstance`, which provides the context, action ID, and coordinates of the instance.
-
 ## Exporting Your Plugin
 
-Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor, similar to SwiftPM's `Package.swift`.
+Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor. Each `Action` also has its own manifest properties as well.
 
 ```swift
-let manifest = PluginManifest(
-    name: "Counter",
-    description: "Count things. On your Stream Deck!",
-    category: "Counting Actions",
-    author: "Emory Dunn",
-    icon: "counter",
-    version: "0.1",
-    os: [
-        .mac(minimumVersion: "10.15")
-    ],
-    software: .minimumVersion("4.1"),
-    codePath: "counter-plugin",
-    actions: [
-        PluginAction(
-            name: "Increment",
-            uuid: "counter.increment",
-            icon: "Icons/plus",
-            tooltip: "Increment the count."),
-        PluginAction(
-            name: "Decrement",
-            uuid: "counter.decrement",
-            icon: "Icons/minus",
-            tooltip: "Decrement the count.")
-    ])
+@main
+class CounterPlugin: PluginDelegate {
 
-PluginManager.main(plugin: CounterPlugin.self, manifest: manifest)
+    // MARK: Manifest
+    static var name: String = "Counter"
+
+    static var description: String = "Count things. On your Stream Deck!"
+
+    static var category: String? = "Counting Actions"
+
+    static var categoryIcon: String? = nil
+
+    static var author: String = "Emory Dunn"
+
+    static var icon: String = "counter"
+
+    static var url: URL? = nil
+
+    static var version: String = "0.2"
+
+    static var os: [PluginOS] = [.mac(minimumVersion: "10.15")]
+
+    static var applicationsToMonitor: ApplicationsToMonitor? = nil
+
+    static var software: PluginSoftware = .minimumVersion("4.1")
+
+    static var sdkVersion: Int = 2
+
+    static var codePath: String = CounterPlugin.executableName
+
+    static var codePathMac: String? = nil
+
+    static var codePathWin: String? = nil
+
+    static var actions: [Action.Type] = [
+        IncrementAction.self,
+        DecrementAction.self
+    ]
+
+}
+
+class IncrementAction: Action {
+
+    static var name: String = "Increment"
+
+    static var uuid: String = "counter.increment"
+
+    static var icon: String = "Icons/plus"
+
+    static var states: [PluginActionState] = []
+
+    static var propertyInspectorPath: String?
+
+    static var supportedInMultiActions: Bool?
+
+    static var tooltip: String?
+
+    static var visibleInActionsList: Bool?
+}
+
 ```
 
 Using the `export` command you can generate the manifest file and copy the actual executable to the Plugins directory:
@@ -123,7 +159,7 @@ let package = Package(
         // other dependencies
     ],
     targets: [
-        .target(name: "<command-line-tool>", dependencies: [
+        .executableTarget(name: "<command-line-tool>", dependencies: [
             "StreamDeck"
         ]),
         // other targets
