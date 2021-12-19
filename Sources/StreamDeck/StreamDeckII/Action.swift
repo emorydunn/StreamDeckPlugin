@@ -8,10 +8,7 @@
 import Foundation
 
 public protocol Action {
-    
-    // TODO: Figure out how to get this working
-    // associatedtype Plugin: RoutingPlugin
-    
+
     // MARK: - Action Properties
     
     /// The name of the action. This string is visible to the user in the actions list.
