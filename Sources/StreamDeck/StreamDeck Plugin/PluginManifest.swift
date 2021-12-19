@@ -10,52 +10,52 @@ import Foundation
 /// The manifest file providing plugin details.
 ///
 /// See the [SDK documentation](https://developer.elgato.com/documentation/stream-deck/sdk/manifest/) for more information.
-public struct PluginManifest: Codable {
+struct PluginManifest: Codable {
 
     /// The name of the plugin.
     ///
     /// This string is displayed to the user in the Stream Deck store.
-    public var name: String
+    var name: String
     
     /// Provides a general description of what the plugin does.
     ///
     /// This string is displayed to the user in the Stream Deck store.
-    public var description: String
+    var description: String
     
     /// The name of the custom category in which the actions should be listed.
     ///
     /// This string is visible to the user in the actions list. If you don't provide a category, the actions will appear inside a "Custom" category.
-    public var category: String?
+    var category: String?
     
     /// The relative path to a PNG image without the .png extension.
     ///
     /// This image is used in the actions list. The PNG image should be a 28pt x 28pt image.
     /// You should provide @1x and @2x versions of the image.
     /// The Stream Deck application takes care of loading the appropriate version of the image.
-    public var categoryIcon: String?
+    var categoryIcon: String?
     
     /// The author of the plugin.
     ///
     /// This string is displayed to the user in the Stream Deck store.
-    public var author: String
+    var author: String
     
     /// The relative path to a PNG image without the .png extension.
     ///
     /// This image is displayed in the Plugin Store window. The PNG image should be a 72pt x 72pt image.
     /// You should provide @1x and @2x versions of the image.
     /// The Stream Deck application takes care of loading the appropriate version of the image.
-    public var icon: String
+    var icon: String
     
     /// A URL displayed to the user if he wants to get more info about the plugin.
-    public var url: URL?
+    var url: URL?
     
     /// The version of the plugin which can only contain digits and periods.
     ///
     /// This is used for the software update mechanism.
-    public var version: String
+    var version: String
     
     /// The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.
-    public var os: [PluginOS]
+    var os: [PluginOS]
     
     /// List of application identifiers to monitor (applications launched or terminated).
     ///
@@ -63,29 +63,29 @@ public struct PluginManifest: Codable {
     ///
     /// [launch]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/#applicationdidlaunch
     /// [term]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/#applicationdidterminate
-    public var applicationsToMonitor: ApplicationsToMonitor?
+    var applicationsToMonitor: ApplicationsToMonitor?
     
     /// Indicates which version of the Stream Deck application is required to install the plugin.
-    public var software: PluginSoftware
+    var software: PluginSoftware
     
     /// This value should be set to 2.
-    public var sdkVersion: Int
+    var sdkVersion: Int
     
     /// The relative path to the HTML/binary file containing the code of the plugin.
-    public var codePath: String
+    var codePath: String
     
     /// Override CodePath for macOS.
-    public var codePathMac: String?
+    var codePathMac: String?
     
     /// Override CodePath for Windows.
-    public var codePathWin: String?
+    var codePathWin: String?
     
     /// Specifies an array of actions.
     ///
     /// A plugin can indeed have one or multiple actions.
     ///
     /// For example the Game Capture plugin has 6 actions: Scene, Record, Screenshot, Flashback Recording, Stream, Live Commentary.
-    public var actions: [PluginAction]
+    var actions: [PluginAction]
     
     /// Initialize a new manifest.
     /// - Parameters:
@@ -105,7 +105,7 @@ public struct PluginManifest: Codable {
     ///   - codePathMac: Override CodePath for macOS.
     ///   - codePathWin: Override CodePath for Windows.
     ///   - actions: Specifies an array of actions.
-    public init(name: String,
+    init(name: String,
                 description: String,
                 category: String? = nil,
                 categoryIcon: String? = nil,
@@ -157,7 +157,7 @@ public struct PluginManifest: Codable {
     ///   - codePathMac: Override CodePath for macOS.
     ///   - codePathWin: Override CodePath for Windows.
     ///   - actions: Specifies an array of actions.
-    public init(name: String,
+    init(name: String,
                 description: String,
                 category: String? = nil,
                 categoryIcon: String? = nil,
@@ -191,6 +191,25 @@ public struct PluginManifest: Codable {
         self.actions = actions
     }
     
+    init(plugin: PluginDelegate.Type) {
+        self.name = plugin.name
+        self.description = plugin.description
+        self.category = plugin.category
+        self.categoryIcon = plugin.categoryIcon
+        self.author = plugin.author
+        self.icon = plugin.icon
+        self.url = plugin.url
+        self.version = plugin.version
+        self.os = plugin.os
+        self.applicationsToMonitor = plugin.applicationsToMonitor
+        self.software = plugin.software
+        self.sdkVersion = plugin.sdkVersion
+        self.codePath = plugin.codePath
+        self.codePathMac = plugin.codePathMac
+        self.codePathWin = plugin.codePathWin
+        self.actions = plugin.actions.map { PluginAction(action: $0) }
+    }
+    
 }
 
 extension PluginManifest {
@@ -203,10 +222,10 @@ extension PluginManifest {
 
 
 /// An action a plugin can provide for the user.
-public struct PluginAction: Codable {
+struct PluginAction: Codable {
     
     /// The name of the action. This string is visible to the user in the actions list.
-    public let name: String
+    let name: String
     
     /// The unique identifier of the action.
     ///
@@ -215,7 +234,7 @@ public struct PluginAction: Codable {
     /// The string must be in reverse-DNS format.
     ///
     /// For example, if your domain is elgato.com and you create a plugin named Hello with the action My Action, you could assign the string com.elgato.hello.myaction as your action's Unique Identifier.
-    public let uuid: String
+    let uuid: String
     
     /// The relative path to a PNG image without the .png extension.
     ///
@@ -223,7 +242,7 @@ public struct PluginAction: Codable {
     /// The Stream Deck application take care of loaded the appropriate version of the image.
     ///
     /// - Note: This icon is not required for actions not visible in the actions list (`VisibleInActionsList` set to false).
-    public let icon: String
+    let icon: String
     
     /// Specifies an array of states.
     ///
@@ -234,29 +253,29 @@ public struct PluginAction: Codable {
     /// The state of an action, supporting multiple states, is always automatically toggled whenever the action's key is released (after being pressed).
     ///
     /// In addition, it is possible to force the action to switch its state by sending a setState event.
-    public let states: [PluginActionState]
+    let states: [PluginActionState]
     
     /// This can override PropertyInspectorPath member from the plugin if you wish to have different PropertyInspectorPath based on the action.
     ///
     /// The relative path to the Property Inspector html file if your plugin want to display some custom settings in the Property Inspector.
-    public let propertyInspectorPath: String?
+    let propertyInspectorPath: String?
     
     /// Boolean to prevent the action from being used in a Multi Action.
     ///
     /// True by default.
-    public let supportedInMultiActions: Bool?
+    let supportedInMultiActions: Bool?
     
     
     /// The string displayed as tooltip when the user leaves the mouse over your action in the actions list.
-    public let tooltip: String?
+    let tooltip: String?
     
     /// Boolean to hide the action in the actions list.
     ///
     /// This can be used for plugin that only works with a specific profile. True by default.
-    public let visibleInActionsList: Bool?
+    let visibleInActionsList: Bool?
     
     /// Initialize a new action.
-    public init(name: String,
+    init(name: String,
                   uuid: String,
                   icon: String,
                   states: [PluginActionState]? = nil,
@@ -279,6 +298,17 @@ public struct PluginAction: Codable {
                 PluginActionState(image: icon)
             ]
         }
+    }
+    
+    init(action: Action.Type) {
+        self.name = action.name
+        self.uuid = action.uuid
+        self.icon = action.icon
+        self.propertyInspectorPath = action.propertyInspectorPath
+        self.supportedInMultiActions = action.supportedInMultiActions
+        self.tooltip = action.tooltip
+        self.visibleInActionsList = action.visibleInActionsList
+        self.states = action.states
     }
     
 }

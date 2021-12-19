@@ -22,21 +22,22 @@ public struct PluginManager: ParsableCommand {
         )
     
     /// The plugin to be used.
-    public static var plugin: StreamDeckPlugin_old.Type?
+    public static var plugin: PluginDelegate.Type?
     
     /// The plugin's manifest
-    public static var manifest: PluginManifest?
+//    public static var manifest: PluginManifest?
 
     /// The default init
     public init() { }
 
-    /// A convenience method for registering the plugin, reading the CLI options, 
-    /// and dispatching on the main thread. 
-    public static func main(plugin: StreamDeckPlugin_old.Type, manifest: PluginManifest? = nil) {
-        PluginManager.plugin = plugin
-        PluginManager.manifest = manifest
-        PluginManager.main()
-    }
+//    /// A convenience method for registering the plugin, reading the CLI options,
+//    /// and dispatching on the main thread.
+//    @available(*, deprecated, message: "Use `@main` on `PluginDelegate`.")
+//    public static func main(plugin: StreamDeckPlugin_old.Type, manifest: PluginManifest? = nil) {
+////        PluginManager.plugin = plugin
+////        PluginManager.manifest = manifest
+////        PluginManager.main()
+//    }
        
 }
 
