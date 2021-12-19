@@ -27,14 +27,21 @@ struct StreamDeckCommand: ParsableCommand {
     
     /// Initialize an instance of the plugin with the properties provided by the command line.
     public func run() throws {
+        let pluginType = PluginManager.plugin!
         
-        // TODO: Run Plugin
-//        let pluginInfo = try PluginRegistrationInfo(string: info)
-//        StreamDeckPlugin_old.shared = try PluginManager.plugin?.init(port: port, uuid: uuid, event: event, info: pluginInfo)
-//
-//        NSLog("Plugin started. Dispatching on main thread.")
-//
-//        dispatchMain()
+        let pluginInfo = try PluginRegistrationInfo(string: info)
+        let instanceManager = InstanceManager(plugin: pluginType)
+        
+        
+        let manager = ConnectionManager(
+            plugin: pluginType.init(port: port, uuid: uuid, event: event, info: pluginInfo, instanceManager: instanceManager),
+            port: port)
+        
+        manager.monitorSocket()
+        
+        NSLog("Plugin started. Dispatching on main thread.")
+
+        dispatchMain()
     }
     
 }

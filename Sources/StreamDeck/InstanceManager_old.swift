@@ -8,7 +8,7 @@
 import Foundation
 
 /// Manages known instances from the `willAppear` & `willDisappear` events.
-public class InstanceManager {
+public class InstanceManager_old {
     
     /// Known instances of the plugin's actions.
     public private(set) var instances: Set<ActionInstance>
@@ -64,20 +64,20 @@ public class InstanceManager {
 
 
 /// Manages known instances from the `willAppear` & `willDisappear` events.
-public class InstanceManagerII {
+public class InstanceManager {
     
-    private var actions: [Action.Type]
+    private let plugin: PluginDelegate.Type
     private var instances: [String: Action] = [:]
     
-    public init(actions: [Action.Type] = []) {
-        self.actions = actions
+    public init(plugin: PluginDelegate.Type) {
+        self.plugin = plugin
     }
     
     /// Look up the action type based on the UUID.
     /// - Parameter uuid: The UUID of the action.
     /// - Returns: The action's type, if available.
     public func action(forID uuid: String) -> Action.Type? {
-        actions.first { $0.uuid == uuid }
+        plugin.actions.first { $0.uuid == uuid }
     }
     
     /// Register a new instance of an action from a `willAppear` event.

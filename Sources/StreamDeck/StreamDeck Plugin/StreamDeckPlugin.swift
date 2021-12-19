@@ -46,7 +46,7 @@ open class StreamDeckPlugin_old {
     public var info: PluginRegistrationInfo
     
     /// Known action instances
-    public let instanceManager = InstanceManager()
+    public let instanceManager = InstanceManager_old()
     
     /// Create a new plugin object.
     /// - Parameter properties: Properties from the Stream Deck application.

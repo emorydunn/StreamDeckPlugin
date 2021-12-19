@@ -93,15 +93,13 @@ public protocol PluginDelegate {
     /// The Stream Deck application information and devices information.
     var info: PluginRegistrationInfo  { get }
     
-//    var instanceManager: InstanceManagerII { get }
-    
     // MARK: Plugin Properties
     
-//    var manifest: PluginManifest { get }
-    
+    var instanceManager: InstanceManagerII { get }
+
     static var actions: [Action.Type] { get }
     
-//    init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo)
+    init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo, instanceManager: InstanceManagerII)
     
     // MARK: Events Received
     
@@ -189,16 +187,16 @@ public extension PluginDelegate {
         case .keyUp:
             let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
             self.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
-//            self.instanceManager[action.context]?.keyUp(device: action.device, payload: action.payload)
+            self.instanceManager[action.context]?.keyUp(device: action.device, payload: action.payload)
         
         case .willAppear:
             let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-//            self.instanceManager.registerInstance(action)
+            self.instanceManager.registerInstance(action)
             self.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
         
         case .willDisappear:
             let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-//            self.instanceManager.removeInstance(action)
+            self.instanceManager.removeInstance(action)
             self.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
         
         case .titleParametersDidChange:
