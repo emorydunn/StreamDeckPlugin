@@ -28,6 +28,8 @@ My using the `@main` attribute your plugin will be automatically initialized.
 
 ## Responding to Events
 
+When the plugin receives a message from the application the event is parsed and routed. Events are first sent to the relevant `Action` and then to the `PluginDelegate`. Global events, like `applicationDidLaunch` and `didReceiveGlobalSettings`, are sent only to the delegate.
+
 ### With Methods
 
 When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. Each event has a default implementation that does nothing, so your plugin only needs to include any events you care about.
