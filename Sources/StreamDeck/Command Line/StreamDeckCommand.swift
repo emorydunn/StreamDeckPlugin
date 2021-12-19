@@ -30,6 +30,13 @@ struct StreamDeckCommand: ParsableCommand {
         let pluginType = PluginCommand.plugin!
         let pluginInfo = try PluginRegistrationInfo(string: info)
         
+        NSLog("Initializing plugin '\(pluginType.name)'")
+        NSLog("""
+        CLI Port: \(port)
+        CLI UUID: \(uuid)
+        CLI Event: \(event)
+        """)
+        NSLog(pluginInfo.description)
         
         StreamDeckPlugin.shared = StreamDeckPlugin(plugin: pluginType.init(), port: port, uuid: uuid, event: event, info: pluginInfo)
 

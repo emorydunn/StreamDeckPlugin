@@ -71,11 +71,14 @@ public class StreamDeckPlugin {
         // Initialize a new instance
         instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
         
+        NSLog("Initialized a new instance of '\(actionType.uuid)'")
     }
     
     /// Remove an instance of an action from a `willDisappear` event.
     /// - Parameter event: The event with information about the instance.
     public func removeInstance(_ event: ActionEvent<AppearEvent>) {
+        
+        NSLog("Removing instance of '\(event.action)'")
         instances[event.context] = nil
     }
     
@@ -85,6 +88,8 @@ public class StreamDeckPlugin {
     /// Continually receive messages from the socket.
     func monitorSocket() {
         self.task.receive { [weak self] result in
+            
+            NSLog("Received message from server")
             
             // Handle a new message
             switch result {
@@ -121,6 +126,18 @@ public class StreamDeckPlugin {
             print(error)
         }
         
+    }
+    
+    /// Interpret the message as either Data or a UTF-8 encoded data.
+    func readMessage(_ message: URLSessionWebSocketTask.Message) -> Data? {
+        switch message {
+        case let .data(data):
+            return data
+        case let .string(string):
+            return string.data(using: .utf8)
+        @unknown default:
+            return nil
+        }
     }
     
     
@@ -187,18 +204,6 @@ public class StreamDeckPlugin {
             NSLog("ERROR: \(error.localizedDescription).")
         }
 
-    }
-    
-    /// Interpret the message as either Data or a UTF-8 encoded data.
-    func readMessage(_ message: URLSessionWebSocketTask.Message) -> Data? {
-        switch message {
-        case let .data(data):
-            return data
-        case let .string(string):
-            return string.data(using: .utf8)
-        @unknown default:
-            return nil
-        }
     }
     
     func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {

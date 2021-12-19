@@ -16,28 +16,15 @@ public struct PluginCommand: ParsableCommand {
         subcommands: [
             StreamDeckCommand.self,
             ExportCommand.self
-//            GenerateManifest.self
         ],
         defaultSubcommand: StreamDeckCommand.self
         )
     
     /// The plugin to be used.
     public static var plugin: PluginDelegate.Type?
-    
-    /// The plugin's manifest
-//    public static var manifest: PluginManifest?
 
     /// The default init
     public init() { }
-
-//    /// A convenience method for registering the plugin, reading the CLI options,
-//    /// and dispatching on the main thread.
-//    @available(*, deprecated, message: "Use `@main` on `PluginDelegate`.")
-//    public static func main(plugin: StreamDeckPlugin_old.Type, manifest: PluginManifest? = nil) {
-////        PluginManager.plugin = plugin
-////        PluginManager.manifest = manifest
-////        PluginManager.main()
-//    }
-       
+    
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct PluginRegistrationInfo: Decodable {
+public struct PluginRegistrationInfo: Decodable, CustomStringConvertible {
     
     /// A json object containing information about the application.
     public let application: StreamDeckApp
@@ -20,6 +20,15 @@ public struct PluginRegistrationInfo: Decodable {
     
     /// A json object containing information about the preferred user colors.
     public let colors: [String: String]
+    
+    public var description: String {
+        """
+        \(application)
+        \(plugin)
+        Device Pixel Ratio: \(devicePixelRatio)
+        Colors: \(colors)
+        """
+    }
 }
 
 extension PluginRegistrationInfo {
@@ -30,11 +39,20 @@ extension PluginRegistrationInfo {
     }
 }
 
-public struct StreamDeckApp: Decodable {
+public struct StreamDeckApp: Decodable, CustomStringConvertible {
     public let language: Language
     public let platform: Platform
     public let platformVersion: String
     public let version: String
+    
+    public var description: String {
+        """
+        Language: \(language)
+        Platform: \(platform)
+        Platform Version: \(platformVersion)
+        App Version: \(version)
+        """
+    }
 }
 
 public enum Language: String, Decodable {
@@ -51,7 +69,14 @@ public enum Platform: String, Decodable {
     case windows // "kESDSDKApplicationInfoPlatformWindows"
 }
 
-public struct PluginInfo: Decodable {
+public struct PluginInfo: Decodable, CustomStringConvertible {
     public let version: String
     public let uuid: String
+    
+    public var description: String {
+        """
+        Plugin Version: \(version)
+        Plugin UUID: \(uuid)
+        """
+    }
 }
