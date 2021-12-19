@@ -9,33 +9,30 @@ import XCTest
 import Combine
 @testable import StreamDeck
 
-class TestPlugin: StreamDeckPlugin {
-    
-    let eventExp: XCTestExpectation
-    
-    init(_ exp: XCTestExpectation) throws {
-        self.eventExp = exp
-        
-        let info = PluginRegistrationInfo(
-            application: StreamDeckApp(language: .english, platform: .mac, platformVersion: "", version: ""),
-            plugin: PluginInfo(version: "", uuid: "TestPlugin"),
-            devicePixelRatio: 2,
-            colors: [:])
-        
-        try super.init(port: 42, uuid: "", event: "", info: info)
-    }
-    
-    required init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) throws {
-        fatalError("init(port:uuid:event:info:) has not been implemented")
-    }
-
-}
-
 final class PluginEventTests: XCTestCase {
+    
+    let info = PluginRegistrationInfo(
+        application: StreamDeckApp(language: .english, platform: .mac, platformVersion: "", version: ""),
+        plugin: PluginInfo(version: "", uuid: "TestPlugin"),
+        devicePixelRatio: 2,
+        colors: [:])
+    
+    func wait(for event: ReceivableEvent.EventKey, data: Data, delegate: TestPlugin) {
+        let plugin = StreamDeckPlugin(plugin: delegate, port: 42, uuid: "", event: "", info: info)
+        
+        do {
+            try plugin.parseEvent(event: event, data: data)
+        } catch {
+            print(error)
+        }
+        
+        wait(for: [delegate.eventExp], timeout: 1)
+    }
     
     func testDidReceiveSettings() {
         class EventTestPlugin: TestPlugin {
             override func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) {
+                print("EventTestPlugin", #function)
                 XCTAssertEqual(action, "com.elgato.example.didReceiveSettings")
                 eventExp.fulfill()
             }
@@ -45,15 +42,17 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.didReceiveSettings
         let data = TestEvent.didReceiveSettings
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
+//        let plugin = StreamdeckPlugin(plugin: delegate, port: 42, uuid: "", event: "", info: info)
+//
+//        do {
+//            try plugin.parseEvent(event: event, data: data)
+//        } catch {
+//            print(error)
+//        }
+//
+//        wait(for: [delegate.eventExp], timeout: 1)
 
     }
     
@@ -69,15 +68,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.didReceiveGlobalSettings
         let data = TestEvent.didReceiveGlobalSettings
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -92,15 +84,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.keyDown
         let data = TestEvent.keyDown
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -115,21 +100,13 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.keyUp
         let data = TestEvent.keyUp
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
     func testWillAppear() {
         class EventTestPlugin: TestPlugin {
-            
             override func willAppear(action: String, context: String, device: String, payload: AppearEvent) {
                 XCTAssertEqual(action, "com.elgato.example.willAppear")
                 eventExp.fulfill()
@@ -140,15 +117,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.willAppear
         let data = TestEvent.willAppear
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -164,15 +134,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.willDisappear
         let data = TestEvent.willDisappear
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -188,15 +151,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.titleParametersDidChange
         let data = TestEvent.titleParametersDidChange
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -212,15 +168,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.deviceDidConnect
         let data = TestEvent.deviceDidConnect
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -236,15 +185,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.deviceDidDisconnect
         let data = TestEvent.deviceDidDisconnect
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -259,15 +201,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.systemDidWakeUp
         let data = TestEvent.systemDidWakeUp
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -283,15 +218,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.applicationDidLaunch
         let data = TestEvent.applicationDidLaunch
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -307,15 +235,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.applicationDidTerminate
         let data = TestEvent.applicationDidTerminate
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -331,15 +252,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.propertyInspectorDidAppear
         let data = TestEvent.propertyInspectorDidAppear
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -355,15 +269,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.propertyInspectorDidDisappear
         let data = TestEvent.propertyInspectorDidDisappear
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
     
@@ -379,15 +286,8 @@ final class PluginEventTests: XCTestCase {
         let event = ReceivableEvent.EventKey.sendToPlugin
         let data = TestEvent.sendToPlugin
 
-        let plugin = try! EventTestPlugin(expectation(description: #function))
-        
-        do {
-            try plugin.parseEvent(event: event, data: data)
-        } catch {
-            print(error)
-        }
-        
-        wait(for: [plugin.eventExp], timeout: 1)
+        let delegate = EventTestPlugin(expectation(description: #function))
+        wait(for: event, data: data, delegate: delegate)
 
     }
 }
