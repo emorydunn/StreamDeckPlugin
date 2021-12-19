@@ -44,15 +44,6 @@ final class PluginEventTests: XCTestCase {
 
         let delegate = EventTestPlugin(expectation(description: #function))
         wait(for: event, data: data, delegate: delegate)
-//        let plugin = StreamdeckPlugin(plugin: delegate, port: 42, uuid: "", event: "", info: info)
-//
-//        do {
-//            try plugin.parseEvent(event: event, data: data)
-//        } catch {
-//            print(error)
-//        }
-//
-//        wait(for: [delegate.eventExp], timeout: 1)
 
     }
     

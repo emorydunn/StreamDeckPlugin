@@ -211,35 +211,35 @@ public extension PluginDelegate {
     
     // MARK: - Events Received
     
-    func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) {}
+    func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) { }
     
-    func didReceiveGlobalSettings(_ settings: [String: String]) {}
+    func didReceiveGlobalSettings(_ settings: [String: String]) { }
     
-    func willAppear(action: String, context: String, device: String, payload: AppearEvent) {}
+    func willAppear(action: String, context: String, device: String, payload: AppearEvent) { }
     
-    func willDisappear(action: String, context: String, device: String, payload: AppearEvent) {}
+    func willDisappear(action: String, context: String, device: String, payload: AppearEvent) { }
     
-    func keyDown(action: String, context: String, device: String, payload: KeyEvent) {}
+    func keyDown(action: String, context: String, device: String, payload: KeyEvent) { }
     
-    func keyUp(action: String, context: String, device: String, payload: KeyEvent) {}
+    func keyUp(action: String, context: String, device: String, payload: KeyEvent) { }
     
-    func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo) {}
+    func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo) { }
     
-    func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) {}
+    func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) { }
     
-    func deviceDidDisconnect(_ device: String) {}
+    func deviceDidDisconnect(_ device: String) { }
     
-    func applicationDidLaunch(_ application: String) {}
+    func applicationDidLaunch(_ application: String) { }
     
-    func applicationDidTerminate(_ application: String) {}
+    func applicationDidTerminate(_ application: String) { }
     
-    func systemDidWakeUp() {}
+    func systemDidWakeUp() { }
     
-    func propertyInspectorDidAppear(action: String, context: String, device: String) {}
+    func propertyInspectorDidAppear(action: String, context: String, device: String) { }
     
-    func propertyInspectorDidDisappear(action: String, context: String, device: String) {}
+    func propertyInspectorDidDisappear(action: String, context: String, device: String) { }
     
-    func sentToPlugin(context: String, action: String, payload: [String: String]) {}
+    func sentToPlugin(context: String, action: String, payload: [String: String]) { }
 
 }
 
