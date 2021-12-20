@@ -308,7 +308,15 @@ struct PluginAction: Codable {
         self.supportedInMultiActions = action.supportedInMultiActions
         self.tooltip = action.tooltip
         self.visibleInActionsList = action.visibleInActionsList
-        self.states = action.states
+
+        if action.states.isEmpty {
+            self.states = [
+                PluginActionState(image: action.icon)
+            ]
+        } else {
+            self.states = action.states
+        }
+        
     }
     
 }
