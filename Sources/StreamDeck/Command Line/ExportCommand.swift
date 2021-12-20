@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  ExportCommand.swift
 //  
 //
 //  Created by Emory Dunn on 11/17/21.
@@ -7,8 +7,6 @@
 
 import Foundation
 import ArgumentParser
-
-
 
 struct ExportCommand: ParsableCommand {
     
@@ -106,10 +104,18 @@ struct ExportCommand: ParsableCommand {
             return
         }
         
+        // Check actions for duplicate UUIDs
+        let actionIDs = Dictionary(grouping: plugin.actions) { $0.uuid }
+        try actionIDs.forEach { uuid, actions in
+            if actions.count != 1 {
+                throw StreamDeckError.duplicateUUIDs(uuid)
+            }
+        }
+        
         let pluginManifest = PluginManifest(plugin: plugin)
         
         let data = try encode(manifest: pluginManifest)
-        
+
         switch manifest {
         case .generateManifest:
             var outputURL = folder.appendingPathComponent(manifestName)
