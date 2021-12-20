@@ -16,7 +16,7 @@ class IncrementAction: Action {
     
     static var icon: String = "Icons/actionIcon"
     
-    static var states: [PluginActionState] = [
+    static var states: [PluginActionState]? = [
         PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
     ]
     
