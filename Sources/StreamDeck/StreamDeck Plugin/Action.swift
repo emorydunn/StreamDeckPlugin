@@ -40,8 +40,10 @@ public protocol Action {
     ///
     /// The state of an action, supporting multiple states, is always automatically toggled whenever the action's key is released (after being pressed).
     ///
-    /// In addition, it is possible to force the action to switch its state by sending a setState event.
-    static var states: [PluginActionState] { get }
+    /// In addition, it is possible to force the action to switch its state by sending a `setState` event.
+    ///
+    /// - Note: If no states are specified the manifest will generate a single state using the `Action`'s icon. 
+    static var states: [PluginActionState]? { get }
     
     /// This can override PropertyInspectorPath member from the plugin if you wish to have different PropertyInspectorPath based on the action.
     ///

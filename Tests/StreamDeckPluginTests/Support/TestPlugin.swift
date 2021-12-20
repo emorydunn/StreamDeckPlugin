@@ -20,7 +20,7 @@ class TestAction: Action {
     
     static var icon: String = "Icons/test"
     
-    static var states: [PluginActionState] = []
+    static var states: [PluginActionState]?
     
     static var propertyInspectorPath: String?
     

@@ -309,12 +309,12 @@ struct PluginAction: Codable {
         self.tooltip = action.tooltip
         self.visibleInActionsList = action.visibleInActionsList
 
-        if action.states.isEmpty {
-            self.states = [
-                PluginActionState(image: action.icon)
-            ]
+        if let states = action.states {
+            self.states = states
         } else {
-            self.states = action.states
+            self.states = [
+                PluginActionState(image: icon)
+            ]
         }
         
     }
