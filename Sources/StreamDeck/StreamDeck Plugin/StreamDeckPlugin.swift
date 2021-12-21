@@ -175,12 +175,13 @@ public class StreamDeckPlugin {
     ///   - context: The context token.
     ///   - payload: The payload for the action.
     /// - Throws: Errors while encoding the data to JSON.
-    public func sendEvent(_ eventType: SendableEventKey, context: String?, payload: [String: Any]?) {
+    public func sendEvent(_ eventType: SendableEventKey, action: String? = nil, context: String?, payload: [String: Any]?) {
         
         var event: [String: Any] = [
             "event": eventType.rawValue
         ]
         
+        event["action"] = action
         event["context"] = context
         event["payload"] = payload
         

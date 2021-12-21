@@ -447,11 +447,9 @@ public extension PluginDelegate {
     ///   - action: The action unique identifier.
     ///   - payload: A json object that will be received by the Property Inspector.
     func sendToPropertyInspector(in context: String, action: String, payload: [String: Any]) {
-//        let payload: [String: Any] = ["profile": name]
-        // FIXME: Add action
-
         StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
-                      context: context,
-                      payload: payload)
+                                          action: action,
+                                          context: context,
+                                          payload: payload)
     }
 }

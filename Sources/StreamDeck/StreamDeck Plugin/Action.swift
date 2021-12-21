@@ -136,6 +136,12 @@ public protocol Action {
 
 
 public extension Action {
+    
+    /// The Action's UUID.
+    var uuid: String {
+        type(of: self).uuid
+    }
+    
     /// Event received after calling the `getSettings` API to retrieve the persistent data stored for the action.
     func didReceiveSettings(device: String, payload: SettingsEvent.Payload) { }
     
@@ -354,11 +360,10 @@ public extension Action {
     ///   - context: An opaque value identifying the instance's action or Property Inspector.
     ///   - action: The action unique identifier.
     ///   - payload: A json object that will be received by the Property Inspector.
-    func sendToPropertyInspector(action: String, payload: [String: Any]) {
-        // FIXME: Add action
-
+    func sendToPropertyInspector(payload: [String: Any]) {
         StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
-                      context: context,
-                      payload: payload)
+                                          action: uuid,
+                                          context: context,
+                                          payload: payload)
     }
 }
