@@ -202,7 +202,7 @@ public extension PluginDelegate {
         PluginCommand.configuration.discussion = """
         \(name) by \(author)
         
-        \(description)
+        Version \(version)
         """
         PluginCommand.main()
     }
