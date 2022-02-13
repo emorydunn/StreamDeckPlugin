@@ -197,6 +197,13 @@ public extension PluginDelegate {
     
     static func main() {
         PluginCommand.plugin = self
+        PluginCommand.configuration.version = version
+        PluginCommand.configuration.abstract = description
+        PluginCommand.configuration.discussion = """
+        \(name) by \(author)
+        
+        \(description)
+        """
         PluginCommand.main()
     }
     
