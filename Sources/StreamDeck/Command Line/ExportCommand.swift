@@ -23,7 +23,7 @@ struct ExportCommand: ParsableCommand {
     @Argument(help: "The URI for your plugin")
     var uri: String
     
-    @Option(help: "Output folder")
+    @Option(name: .shortAndLong, help: "Output folder")
     var output: URL?
 
     @Flag(exclusivity: FlagExclusivity.exclusive, help: nil)
@@ -43,7 +43,11 @@ struct ExportCommand: ParsableCommand {
             return url
         }
         
-        var appSupport = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        var appSupport = try FileManager.default.url(
+            for: .applicationSupportDirectory,
+               in: .userDomainMask,
+               appropriateFor: nil,
+               create: true)
         
         appSupport.appendPathComponent("com.elgato.StreamDeck/Plugins")
         
@@ -127,7 +131,7 @@ struct ExportCommand: ParsableCommand {
             // Attempt to write the file
             try data.write(to: outputURL)
             
-            print("Write manifest to \(outputURL.path)")
+            print("Wrote manifest to \(outputURL.path)")
         case .previewManifest:
             if let string = String(data: data, encoding: .utf8) {
                 print(string)
