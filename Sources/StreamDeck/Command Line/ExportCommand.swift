@@ -23,10 +23,12 @@ struct ExportCommand: ParsableCommand {
     @Argument(help: "The URI for your plugin")
     var uri: String
     
-    @Option(name: .shortAndLong, help: "Output folder")
+    @Option(name: .shortAndLong,
+            help: "The folder in which to create the plugin's directory. (default: ~/Library/Application Support/com.elgato.StreamDeck/Plugins)",
+            completion: .directory)
     var output: URL?
 
-    @Flag(exclusivity: FlagExclusivity.exclusive, help: nil)
+    @Flag(exclusivity: FlagExclusivity.exclusive, help: "Encode the manifest for the plugin and either save or preview it.")
     var manifest: ManifestGeneration?
     
     @Option(name: .shortAndLong, help: "The name of the manifest file.")
