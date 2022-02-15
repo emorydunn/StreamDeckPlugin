@@ -26,5 +26,11 @@ public struct PluginCommand: ParsableCommand {
     /// The default init
     public init() { }
     
+    /// Add a subcommand to the plugin executable.
+    /// - Parameter command: The additional subcommand.
+    public static func addCommand(_ command: ParsableCommand.Type) {
+        configuration.subcommands.append(command)
+    }
+    
 }
 
