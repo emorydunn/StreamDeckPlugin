@@ -191,11 +191,19 @@ public protocol PluginDelegate {
     ///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
     ///   - payload: A json object that will be received by the plugin.
     func sentToPlugin(context: String, action: String, payload: [String: String])
+    
+    static func pluginWasCreated()
 }
 
 public extension PluginDelegate {
     
+    static func pluginWasCreated() {
+        
+    }
+    
     static func main() {
+        pluginWasCreated()
+        
         PluginCommand.plugin = self
         PluginCommand.configuration.version = version
         PluginCommand.configuration.abstract = description
