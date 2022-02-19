@@ -5,8 +5,8 @@
         "package": "StreamDeck",
         "repositoryURL": "https://github.com/emorydunn/StreamDeckPlugin.git",
         "state": {
-          "branch": "actions",
-          "revision": "2c199dd4a26e88f727458372ee80c17c1790bbca",
+          "branch": "main",
+          "revision": "f370d67854cfe8423d08df88d3e8b0964a41bcd4",
           "version": null
         }
       },
