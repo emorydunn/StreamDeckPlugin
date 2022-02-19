@@ -201,15 +201,29 @@ public struct SendToPluginEvent: Decodable {
 }
 
 // MARK: Application Events
+
+/// Basic type for application events.
+/// - `applicationDidLaunch`
+/// - `applicationDidTerminate`
 public struct ApplicationEvent: Decodable {
+    /// The event's payload.
     public let payload: App
     
+    /// An application event payload.
     public struct App: Decodable {
+        
+        /// The bundle identifier of the application.
         public let application: String
     }
 }
 
 // MARK: Property Inspector Events
+
+/// The basic type for decoding property inspector events.
+/// - `propertyInspectorDidAppear`
+/// - `propertyInspectorDidDisappear`
+/// - `sendToPlugin`
+/// - `sendToPropertyInspector`
 public struct PropertyInspectorEvent: Decodable {
     
     /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.

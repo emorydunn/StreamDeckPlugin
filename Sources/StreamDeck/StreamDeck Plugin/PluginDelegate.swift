@@ -8,6 +8,10 @@
 import Foundation
 import AppKit
 
+/// The `PluginDelegate` represents the entry point to to your plugin and is used to generate the manifest.
+///
+/// Your plugin's `@main` type should conform to `PluginDelegate` in order for the framework to handle plugin
+/// lifecycle and command line events.
 public protocol PluginDelegate {
 
     // MARK: Manifest
@@ -80,6 +84,7 @@ public protocol PluginDelegate {
     /// Override CodePath for Windows.
     static var codePathWin: String? { get }
     
+    /// The actions defined by your plugin.
     static var actions: [Action.Type] { get }
     
     init()
@@ -192,14 +197,14 @@ public protocol PluginDelegate {
     ///   - payload: A json object that will be received by the plugin.
     func sentToPlugin(context: String, action: String, payload: [String: String])
     
+    /// Called immediately after `main()`. 
     static func pluginWasCreated()
 }
 
 public extension PluginDelegate {
     
-    static func pluginWasCreated() {
-        
-    }
+    /// The default implementation of `static PluginDelegate.pluginWasCreated()`
+    static func pluginWasCreated() { }
     
     static func main() {
         pluginWasCreated()

@@ -1,6 +1,8 @@
 # StreamDeck
 
-A library for creating Stream Deck plugins in Swift.
+![Swift](https://github.com/emorydunn/StreamDeckPlugin/workflows/Swift/badge.svg) ![Documentation badge](https://emorydunn.github.io/StreamDeckPlugin/badge.svg)
+
+A library for creating Stream Deck plugins in Swift. 
 
 ## Usage
 

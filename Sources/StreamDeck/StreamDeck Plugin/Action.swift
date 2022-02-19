@@ -8,6 +8,9 @@
 import Foundation
 import AppKit
 
+/// A single action that can be assigned to a Stream Deck key.
+///
+/// The action type is shown in the actions list and a new instance is initiated when the user adds an action to a key.
 public protocol Action {
 
     // MARK: - Action Properties
@@ -72,6 +75,7 @@ public protocol Action {
     /// The coordinates of the instance.
     var coordinates: Coordinates { get }
     
+    /// Create a new instance with the specified context and coordinates.
     init(context: String, coordinates: Coordinates)
     
     // MARK: - Events

@@ -9,7 +9,11 @@ import Foundation
 
 /// Errors that can occur when communicating with the Stream Deck application.
 enum StreamDeckError: LocalizedError {
+    
+    /// The JSON for an event is invalid.
     case invalidJSON(String, [String: Any])
+    
+    /// The UUID has been used more than once. 
     case duplicateUUIDs(String)
     
     /// The error description. 

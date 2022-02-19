@@ -7,13 +7,19 @@
 
 import Foundation
 
-public class StreamDeckPlugin {
+/// An object that manages a plugins’s main event loop.
+public final class StreamDeckPlugin {
+    
+    /// The shared plugin.
     public static var shared: StreamDeckPlugin!
     
+    /// The plugin's delegate object.
     public let plugin: PluginDelegate
     
+    /// The task used for communicating with the Stream Deck application.
     let task: URLSessionWebSocketTask
     
+    /// Instances of actions.
     public private(set) var instances: [String: Action] = [:]
     
     let decoder = JSONDecoder()
@@ -84,6 +90,7 @@ public class StreamDeckPlugin {
         instances[event.context] = nil
     }
     
+    /// Return an action by its context.
     public subscript (context: String) -> Action? { instances[context] }
     
     // MARK: - WebSocket Methods
@@ -207,6 +214,10 @@ public class StreamDeckPlugin {
 
     }
     
+    /// Parse an event received from the Stream Deck application.
+    /// - Parameters:
+    ///   - event: The event key.
+    ///   - data: The JSON data.
     func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {
 
         switch event {

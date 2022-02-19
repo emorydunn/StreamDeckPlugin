@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// The registration information sent by the Stream Deck application when launching the plugin.
 public struct PluginRegistrationInfo: Decodable, CustomStringConvertible {
     
     /// A json object containing information about the application.
@@ -32,6 +33,8 @@ public struct PluginRegistrationInfo: Decodable, CustomStringConvertible {
 }
 
 extension PluginRegistrationInfo {
+    /// Create an object from a JSON string.
+    /// - Parameter string: A UTF-8 encoded JSON string.
     public init(string: String) throws {
         let data = string.data(using: .utf8) ?? Data()
         
@@ -39,10 +42,18 @@ extension PluginRegistrationInfo {
     }
 }
 
+/// Information about the Stream Deck application.
 public struct StreamDeckApp: Decodable, CustomStringConvertible {
+    /// In which language the Stream Deck application is running.
     public let language: Language
+    
+    /// On which platform the Stream Deck application is running.
     public let platform: Platform
+    
+    /// The operating system version.
     public let platformVersion: String
+    
+    /// The Stream Deck application version.
     public let version: String
     
     public var description: String {
@@ -55,6 +66,7 @@ public struct StreamDeckApp: Decodable, CustomStringConvertible {
     }
 }
 
+/// In which language the Stream Deck application is running.
 public enum Language: String, Decodable {
     case english = "en"
     case french = "fr"
@@ -64,13 +76,18 @@ public enum Language: String, Decodable {
     case chinese = "zh_CN"
 }
 
+/// On which platform the Stream Deck application is running.
 public enum Platform: String, Decodable {
     case mac // "kESDSDKApplicationInfoPlatformMac"
     case windows // "kESDSDKApplicationInfoPlatformWindows"
 }
 
+/// Information about the plugin.
 public struct PluginInfo: Decodable, CustomStringConvertible {
+    /// The plugin version as written in the manifest.json.
     public let version: String
+    
+    /// The unique identifier of the plugin.
     public let uuid: String
     
     public var description: String {
