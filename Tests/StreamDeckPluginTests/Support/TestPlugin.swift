@@ -32,11 +32,9 @@ class TestAction: Action {
 
     var context: String
     
-    var coordinates: Coordinates
-    
-//    let eventExp: XCTestExpectation
-    
-    required init(context: String, coordinates: Coordinates) {
+    var coordinates: Coordinates?
+
+    required init(context: String, coordinates: Coordinates?) {
         self.context = context
         self.coordinates = coordinates
     }
