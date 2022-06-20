@@ -1,0 +1,558 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 14,
+      "symbol": "SendableEventKey.setSettings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 15,
+      "symbol": "SendableEventKey.getSettings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 16,
+      "symbol": "SendableEventKey.setGlobalSettings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 17,
+      "symbol": "SendableEventKey.getGlobalSettings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 18,
+      "symbol": "SendableEventKey.openURL",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 19,
+      "symbol": "SendableEventKey.logMessage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 20,
+      "symbol": "SendableEventKey.setTitle",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 21,
+      "symbol": "SendableEventKey.setImage",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 22,
+      "symbol": "SendableEventKey.showAlert",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 23,
+      "symbol": "SendableEventKey.showOK",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 24,
+      "symbol": "SendableEventKey.setState",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 25,
+      "symbol": "SendableEventKey.switchToProfile",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 26,
+      "symbol": "SendableEventKey.sendToPropertyInspector",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 38,
+      "symbol": "ReceivableEvent.EventKey",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 39,
+      "symbol": "ReceivableEvent.EventKey.didReceiveSettings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 40,
+      "symbol": "ReceivableEvent.EventKey.didReceiveGlobalSettings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 41,
+      "symbol": "ReceivableEvent.EventKey.keyDown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 42,
+      "symbol": "ReceivableEvent.EventKey.keyUp",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 43,
+      "symbol": "ReceivableEvent.EventKey.willAppear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 44,
+      "symbol": "ReceivableEvent.EventKey.willDisappear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 45,
+      "symbol": "ReceivableEvent.EventKey.titleParametersDidChange",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 46,
+      "symbol": "ReceivableEvent.EventKey.deviceDidConnect",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 47,
+      "symbol": "ReceivableEvent.EventKey.deviceDidDisconnect",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 48,
+      "symbol": "ReceivableEvent.EventKey.applicationDidLaunch",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 49,
+      "symbol": "ReceivableEvent.EventKey.applicationDidTerminate",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 50,
+      "symbol": "ReceivableEvent.EventKey.systemDidWakeUp",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 51,
+      "symbol": "ReceivableEvent.EventKey.propertyInspectorDidAppear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 52,
+      "symbol": "ReceivableEvent.EventKey.propertyInspectorDidDisappear",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 53,
+      "symbol": "ReceivableEvent.EventKey.sendToPlugin",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Events/Events.swift",
+      "line": 192,
+      "symbol": "SendToPluginEvent",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/StreamDeck Plugin/PluginDelegate.swift",
+      "line": 90,
+      "symbol": "PluginDelegate.init()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/StreamDeck Plugin/PluginDelegate.swift",
+      "line": 209,
+      "symbol": "PluginDelegate.main()",
+      "symbol_kind": "source.lang.swift.decl.function.method.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Environment/Environment.swift",
+      "line": 16,
+      "symbol": "Environment.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Environment/EnvironmentKey.swift",
+      "line": 12,
+      "symbol": "EnvironmentKey.Value",
+      "symbol_kind": "source.lang.swift.decl.associatedtype",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Environment/EnvironmentKey.swift",
+      "line": 13,
+      "symbol": "EnvironmentKey.defaultValue",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 58,
+      "symbol": "Alignment.bottom",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 58,
+      "symbol": "Alignment.middle",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 58,
+      "symbol": "Alignment.top",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 63,
+      "symbol": "FontFamily.unknown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 64,
+      "symbol": "FontFamily.arial",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 65,
+      "symbol": "FontFamily.arialBlack",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 66,
+      "symbol": "FontFamily.comicSansMS",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 67,
+      "symbol": "FontFamily.courier",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 68,
+      "symbol": "FontFamily.courierNew",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 69,
+      "symbol": "FontFamily.georgia",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 70,
+      "symbol": "FontFamily.impact",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 71,
+      "symbol": "FontFamily.microsoftSansSerif",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 72,
+      "symbol": "FontFamily.symbol",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 73,
+      "symbol": "FontFamily.tahoma",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 74,
+      "symbol": "FontFamily.timesNewRoman",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 75,
+      "symbol": "FontFamily.trebuchetMS",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 76,
+      "symbol": "FontFamily.verdana",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 77,
+      "symbol": "FontFamily.webdings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 78,
+      "symbol": "FontFamily.wingdings",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 83,
+      "symbol": "FontStyle.unknown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 84,
+      "symbol": "FontStyle.regular",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 85,
+      "symbol": "FontStyle.bold",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 86,
+      "symbol": "FontStyle.italic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Fonts.swift",
+      "line": 87,
+      "symbol": "FontStyle.boldItalic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 12,
+      "symbol": "Target.both",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 13,
+      "symbol": "Target.hardwareOnly",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 14,
+      "symbol": "Target.softwareOnly",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 36,
+      "symbol": "DeviceType.streamDeck",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 37,
+      "symbol": "DeviceType.mini",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 38,
+      "symbol": "DeviceType.xl",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 39,
+      "symbol": "DeviceType.mobile",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/Hardware.swift",
+      "line": 40,
+      "symbol": "DeviceType.corsairGKeys",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 71,
+      "symbol": "Language.english",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 72,
+      "symbol": "Language.french",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 73,
+      "symbol": "Language.german",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 74,
+      "symbol": "Language.spanish",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 75,
+      "symbol": "Language.japanese",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 76,
+      "symbol": "Language.chinese",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 81,
+      "symbol": "Platform.mac",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginInfo.swift",
+      "line": 82,
+      "symbol": "Platform.windows",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginManifest.swift",
+      "line": 361,
+      "symbol": "PluginActionState.init(image:name:title:showTitle:titleColor:titleAlignment:fontFamily:fontStyle:fontSize:fontUnderline:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginManifest.swift",
+      "line": 415,
+      "symbol": "PluginPlatform.mac",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginManifest.swift",
+      "line": 416,
+      "symbol": "PluginPlatform.windows",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin/Sources/StreamDeck/Support Models/PluginManifest.swift",
+      "line": 474,
+      "symbol": "PluginProfile.init(name:deviceType:readOnly:dontAutoSwitchWhenInstalled:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/runner/work/StreamDeckPlugin/StreamDeckPlugin"
+}
