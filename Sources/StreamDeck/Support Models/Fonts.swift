@@ -21,7 +21,7 @@ public struct TitleInfo: Decodable, Locatable, EventSettings {
     public let titleParameters: Parameters
     
     /// The coordinates of the action triggered.
-    public let coordinates: Coordinates
+    public let coordinates: Coordinates?
     
     /// This json object contains data that you can set and is stored persistently.
     public let settings: [String: String]

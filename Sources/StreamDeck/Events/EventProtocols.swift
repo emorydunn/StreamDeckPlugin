@@ -11,7 +11,7 @@ import Foundation
 public protocol Locatable {
     
     /// The coordinates of the action.
-    var coordinates: Coordinates { get }
+    var coordinates: Coordinates? { get }
 }
 
 /// An event which includes the action's settings.

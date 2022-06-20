@@ -115,7 +115,7 @@ public struct SettingsEvent: Decodable {
         public let settings: [String: String]
         
         /// The coordinates of the action triggered.
-        public let coordinates: Coordinates
+        public let coordinates: Coordinates?
         
         /// This is a parameter that is only set when the action has multiple states defined in its manifest.json.
         ///
@@ -148,7 +148,7 @@ public struct AppearEvent: Decodable, Hashable, Locatable, EventSettings {
     public let settings: [String: String]
     
     /// The coordinates of the action triggered.
-    public let coordinates: Coordinates
+    public let coordinates: Coordinates?
     
     /// This is a parameter that is only set when the action has multiple states defined in its manifest.json.
     ///
@@ -168,7 +168,7 @@ public struct KeyEvent: Decodable, Hashable, Locatable, EventSettings {
     public let settings: [String: String]
     
     /// The coordinates of the action triggered.
-    public let coordinates: Coordinates
+    public let coordinates: Coordinates?
     
     /// This is a parameter that is only set when the action has multiple states defined in its manifest.json.
     ///

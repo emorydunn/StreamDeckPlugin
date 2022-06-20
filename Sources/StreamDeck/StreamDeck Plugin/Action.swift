@@ -73,10 +73,10 @@ public protocol Action {
     var context: String { get }
     
     /// The coordinates of the instance.
-    var coordinates: Coordinates { get }
+    var coordinates: Coordinates? { get }
     
     /// Create a new instance with the specified context and coordinates.
-    init(context: String, coordinates: Coordinates)
+    init(context: String, coordinates: Coordinates?)
     
     // MARK: - Events
     
@@ -329,7 +329,7 @@ public extension Action {
         
         payload["target"] = target?.rawValue
         payload["state"] = state
-        
+
         StreamDeckPlugin.shared.sendEvent(.setImage,
                       context: context,
                       payload: payload)
