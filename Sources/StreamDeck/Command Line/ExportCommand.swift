@@ -8,8 +8,11 @@
 import Foundation
 import ArgumentParser
 
+/// Conveniently export the plugin.
+///
+/// The `export` command generates the plugin's manifest and copies the binary to the Plugins Folder.
 struct ExportCommand: ParsableCommand {
-    
+
     public static var configuration = CommandConfiguration(
         commandName: "export",
         abstract: "Conveniently export the plugin.",

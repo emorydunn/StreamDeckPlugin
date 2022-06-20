@@ -8,6 +8,8 @@
 import Foundation
 
 /// An event that includes coordinate information about the action.
+///
+/// - Note: Actions that are part of a Multi-Action don't have individual coordinates as they are nested inside their parent action. 
 public protocol Locatable {
     
     /// The coordinates of the action.
