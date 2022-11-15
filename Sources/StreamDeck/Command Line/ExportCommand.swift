@@ -13,36 +13,48 @@ import ArgumentParser
 /// The `export` command generates the plugin's manifest and copies the binary to the Plugins Folder.
 struct ExportCommand: ParsableCommand {
 
+	/// Export command configuration.
     public static var configuration = CommandConfiguration(
         commandName: "export",
         abstract: "Conveniently export the plugin.",
         discussion: "Automatically generate the manifest and copy the executable to the Plugins folder.")
-    
+
+	/// Flags for manifest generation.
     enum ManifestGeneration: String, EnumerableFlag {
         case generateManifest
         case previewManifest
     }
     
-    @Argument(help: "The URI for your plugin")
+	@Argument(help: "The URI for your plugin")
+	/// The URI for your plugin
     var uri: String
     
     @Option(name: .shortAndLong,
             help: "The folder in which to create the plugin's directory. (default: ~/Library/Application Support/com.elgato.StreamDeck/Plugins)",
-            completion: .directory)
+			completion: .directory)
+	/// The folder in which to create the plugin's directory
     var output: URL?
 
-    @Flag(exclusivity: FlagExclusivity.exclusive, help: "Encode the manifest for the plugin and either save or preview it.")
+	@Flag(exclusivity: FlagExclusivity.exclusive, help: "Encode the manifest for the plugin and either save or preview it.")
+	/// Encode the manifest for the plugin and either save or preview it.
     var manifest: ManifestGeneration?
     
-    @Option(name: .shortAndLong, help: "The name of the manifest file.")
+	@Option(name: .shortAndLong, help: "The name of the manifest file.")
+	/// The name of the manifest file.
     var manifestName: String = "manifest.json"
     
-    @Flag(name: .shortAndLong, help: "Copy the executable file.")
+	@Flag(name: .shortAndLong, help: "Copy the executable file.")
+	/// Copy the executable file.
     var copyExecutable: Bool = false
     
-    @Option(name: .shortAndLong, help: "The name of the executable file.")
+	@Option(name: .shortAndLong, help: "The name of the executable file.")
+	/// The name of the executable file.
     var executableName: String?
-    
+
+	/// Determine the location of the plugins directory.
+	///
+	/// If `--url` was specified this method returns that URL. Otherwise it constructs `~/Library/Application Support/com.elgato.StreamDeck/Plugins`
+	/// - Returns: The URL for the Stream Deck Plugins directory.
     func pluginsDir() throws -> URL {
         if let url = output {
             return url
@@ -58,7 +70,8 @@ struct ExportCommand: ParsableCommand {
         
         return appSupport
     }
-    
+
+	/// Run the command.
     func run() throws {
         
         // Determine the root folder for the plugin
@@ -148,7 +161,12 @@ struct ExportCommand: ParsableCommand {
         }
         
     }
-    
+
+	/// Encode the manifest as JSON.
+	/// - Parameters:
+	///   - manifest: The plugin manifest to encide.
+	///   - outputFormatting: JSON formatting to use.
+	/// - Returns: The encoded manifest.
     func encode(manifest: PluginManifest,
                 outputFormatting: JSONEncoder.OutputFormatting = [
                     .prettyPrinted,

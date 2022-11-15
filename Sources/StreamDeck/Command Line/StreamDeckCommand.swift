@@ -8,8 +8,10 @@
 import Foundation
 import ArgumentParser
 
+/// The command called by the Stream Deck application to run the plugin.
 struct StreamDeckCommand: ParsableCommand {
-    /// The port that should be used to create the WebSocket
+
+	/// The port that should be used to create the WebSocket
     @Option(name: .customLong("port", withSingleDash: true), help: "")
     public var port: Int32
     

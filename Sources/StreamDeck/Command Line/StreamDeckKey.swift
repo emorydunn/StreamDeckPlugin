@@ -8,6 +8,7 @@
 import Foundation
 import ArgumentParser
 
+/// A coding key for converting between `JSONCodable` and the keys expected by the Stream Deck application.
 struct StreamDeckKey: CodingKey {
     var stringValue: String
     var intValue: Int?
