@@ -302,12 +302,13 @@ public extension Action {
             let imageURL = Bundle.main.url(forResource: image, withExtension: ext, subdirectory: subpath)
         else {
             logMessage("Could not find \(image ?? "unnamed").\(ext)")
+			setImage(to: nil, target: target, state: state)
             return
         }
         
         let image = NSImage(contentsOf: imageURL)
         
-        setImage(to: image)
+        setImage(to: image, target: target, state: state)
     }
     
     
