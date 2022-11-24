@@ -150,7 +150,7 @@ public final class StreamDeckPlugin {
     
     // MARK: - Helper Functions
     
-    /// Complete the registration handshake with the server,
+    /// Complete the registration handshake with the server.
     /// - Parameter properties: The properties provided by the Stream Deck application.
     /// - Throws: Errors while encoding the data to JSON.
     func registerPlugin() throws {
@@ -224,24 +224,27 @@ public final class StreamDeckPlugin {
             
         case .didReceiveSettings:
             let action = try decoder.decode(SettingsEvent.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to \(action.context)")
             self[action.context]?.didReceiveSettings(device: action.device, payload: action.payload)
             plugin.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
         
         case .didReceiveGlobalSettings:
             let action = try decoder.decode(GlobalSettingsEvent.self, from: data)
-            
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.didReceiveGlobalSettings(action.payload.settings)
         
         case .keyDown:
             let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to \(action.context)")
             self[action.context]?.keyDown(device: action.device, payload: action.payload)
             plugin.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
         
         case .keyUp:
             let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to \(action.context)")
             self[action.context]?.keyUp(device: action.device, payload: action.payload)
             plugin.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
             
@@ -263,46 +266,58 @@ public final class StreamDeckPlugin {
         
         case .titleParametersDidChange:
             let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to \(action.context)")
             self[action.context]?.titleParametersDidChange(device: action.device, info: action.payload)
             plugin.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
             
         case .deviceDidConnect:
             let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
             
         case .deviceDidDisconnect:
             let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.deviceDidDisconnect(action.device)
             
         case .systemDidWakeUp:
+
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.systemDidWakeUp()
             
         case .applicationDidLaunch:
             let action = try decoder.decode(ApplicationEvent.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.applicationDidLaunch(action.payload.application)
         
         case .applicationDidTerminate:
             let action = try decoder.decode(ApplicationEvent.self, from: data)
+
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.applicationDidTerminate(action.payload.application)
             
         case .propertyInspectorDidAppear:
             let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to \(action.context)")
             self[action.context]?.propertyInspectorDidAppear(device: action.device)
             plugin.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
         
         case .propertyInspectorDidDisappear:
             let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
-            
+
+			NSLog("Forwarding \(event) to \(action.context)")
             self[action.context]?.propertyInspectorDidDisappear(device: action.device)
             plugin.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
         
         case .sendToPlugin:
             let action = try decoder.decode(SendToPluginEvent.self, from: data)
+
+			NSLog("Forwarding \(event) to PluginDelegate")
             plugin.sentToPlugin(context: action.context, action: action.action, payload: action.payload)
         }
     }
