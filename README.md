@@ -26,7 +26,7 @@ class CounterPlugin: PluginDelegate {
 }
 ```
 
-My using the `@main` attribute your plugin will be automatically initialized.
+By using the `@main` attribute your plugin will be automatically initialized.
 
 ## Responding to Events
 
