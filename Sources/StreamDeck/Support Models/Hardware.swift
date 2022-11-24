@@ -32,12 +32,37 @@ public struct DeviceInfo: Decodable {
 }
 
 /// The available Stream Deck devices.
-public enum DeviceType: Int, Codable {
-    case streamDeck
-    case mini
-    case xl
-    case mobile
-    case corsairGKeys
+public enum DeviceType: Int, Codable, CustomStringConvertible {
+    case streamDeck = 0
+    case mini = 1
+    case xl = 2
+    case mobile = 3
+    case corsairGKeys = 4
+	case pedal = 5
+	case corsairVoyager = 6
+	case plus = 7
+
+	public var description: String {
+		switch self {
+		case .streamDeck:
+			return "Elgato StreamDeck"
+		case .mini:
+			return "Elgato StreamDeck Mini"
+		case .xl:
+			return "Elgato StreamDeck XL"
+		case .mobile:
+			return "Elgato StreamDeck Mobile"
+		case .corsairGKeys:
+			return "Corsair GKeys"
+		case .pedal:
+			return "Elgato StreamDeck Pedal"
+		case .corsairVoyager:
+			return "Corsair Voyager"
+		case .plus:
+			return "Elgato StreamDeck+"
+		}
+	}
+
 }
 
 /// The size of a device.
