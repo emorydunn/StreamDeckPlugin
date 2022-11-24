@@ -103,7 +103,7 @@ public final class StreamDeckPlugin {
             case let .success(message):
                 self?.parseMessage(message)
             case let .failure(error):
-                print(error)
+                NSLog("WebSocket Error: \(error)")
                 break
             }
             
@@ -123,14 +123,18 @@ public final class StreamDeckPlugin {
     }
     
     func parseMessage(_ message: URLSessionWebSocketTask.Message) {
-        guard let data = readMessage(message) else { return }
+        guard let data = readMessage(message) else {
+			NSLog("Warning: WebSocket sent empty message")
+			return
+
+		}
         
         // Decode the event from the data
         do {
             let eventKey = try decoder.decode(ReceivableEvent.self, from: data).event
             try parseEvent(event: eventKey, data: data)
         } catch {
-            print(error)
+			NSLog("Decoding Error: \(error.localizedDescription)")
         }
         
     }
@@ -143,6 +147,7 @@ public final class StreamDeckPlugin {
         case let .string(string):
             return string.data(using: .utf8)
         @unknown default:
+			NSLog("Warning: WebSocket sent unknown message")
             return nil
         }
     }
