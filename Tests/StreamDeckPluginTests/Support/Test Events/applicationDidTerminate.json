@@ -1,0 +1,6 @@
+{
+  "event": "applicationDidTerminate",
+  "payload": {
+    "application": "com.test.terminate"
+  }
+}

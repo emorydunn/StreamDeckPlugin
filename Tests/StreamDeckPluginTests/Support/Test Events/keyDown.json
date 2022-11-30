@@ -1,0 +1,16 @@
+{
+  "action": "com.elgato.example.keyDown",
+  "event": "keyDown",
+  "context": "opaqueValue",
+  "device": "opaqueValue",
+  "payload": {
+    "settings": {},
+    "coordinates": {
+      "column": 3,
+      "row": 1
+    },
+    "state": 0,
+    "userDesiredState": 1,
+    "isInMultiAction": false
+  }
+}

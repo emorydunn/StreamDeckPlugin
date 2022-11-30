@@ -1,0 +1,12 @@
+{
+  "event": "deviceDidConnect",
+  "device": "deviceDidConnect",
+  "deviceInfo": {
+    "name": "Device Name",
+    "type": 0,
+    "size": {
+      "columns": 5,
+      "rows": 3
+    }
+  }
+}

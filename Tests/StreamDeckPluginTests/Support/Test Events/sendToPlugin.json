@@ -1,0 +1,6 @@
+{
+  "action": "com.elgato.example.sendToPlugin",
+  "event": "sendToPlugin",
+  "context": "opaqueValue",
+  "payload": {}
+}

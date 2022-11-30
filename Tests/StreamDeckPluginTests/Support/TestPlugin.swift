@@ -14,6 +14,11 @@ struct PluginCount: EnvironmentKey {
 }
 
 class TestAction: Action {
+
+	struct Settings: Codable {
+
+	}
+
     static var name: String = "TestAction"
     
     static var uuid: String = "test.action"
@@ -46,6 +51,10 @@ class TestAction: Action {
 }
 
 class TestPlugin: PluginDelegate {
+
+	struct Settings: Codable {
+		let globalKey: Bool
+	}
     
     // MARK: Manifest
     static var name: String = "Test Plugin"
@@ -82,7 +91,7 @@ class TestPlugin: PluginDelegate {
     
     @Environment(PluginCount.self) var count: Int
     
-    static var actions: [Action.Type] = [
+    static var actions: [any Action.Type] = [
         
     ]
 

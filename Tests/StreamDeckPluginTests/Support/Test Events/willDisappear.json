@@ -1,0 +1,15 @@
+{
+  "action": "com.elgato.example.willDisappear",
+  "event": "willDisappear",
+  "context": "opaqueValue",
+  "device": "opaqueValue",
+  "payload": {
+    "settings": {},
+    "coordinates": {
+      "column": 3,
+      "row": 1
+    },
+    "state": 0,
+    "isInMultiAction": false
+  }
+}
