@@ -14,6 +14,11 @@ import AppKit
 /// lifecycle and command line events.
 public protocol PluginDelegate {
 
+	/// Settings returned by the Stream Deck application.
+	///
+	/// If your plugin does not use global settings, simply use `NoSettings`.
+	associatedtype Settings: Codable
+
     // MARK: Manifest
     
     /// The name of the plugin.
@@ -85,7 +90,7 @@ public protocol PluginDelegate {
     static var codePathWin: String? { get }
     
     /// The actions defined by your plugin.
-    static var actions: [Action.Type] { get }
+    static var actions: [any Action.Type] { get }
     
     init()
 
@@ -93,9 +98,13 @@ public protocol PluginDelegate {
     
     /// Event received after calling the `getSettings` API to retrieve the persistent data stored for the action.
     func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload)
-    
+
+	@available(*, deprecated, message: "Please declare a Settings type")
     /// Event received after calling the `getGlobalSettings` API to retrieve the global persistent data.
     func didReceiveGlobalSettings(_ settings: [String: String])
+
+	/// Event received after calling the `getGlobalSettings` API to retrieve the global persistent data.
+	func didReceiveGlobalSettings(_ settings: Settings)
     
     /// When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a `willAppear` event.
     ///
@@ -236,6 +245,14 @@ public extension PluginDelegate {
 	static var codePathMac: String? { nil }
 
 	static var codePathWin: String? { nil }
+
+	func decodeGlobalSettings(_ data: Data, using decoder: JSONDecoder) throws {
+		let settings = try decoder.decode(GlobalSettingsEvent<Settings>.self, from: data)
+
+		didReceiveGlobalSettings(settings.payload.settings)
+	}
+
+//	func decodeGlobalSetting
     
 }
 
@@ -246,6 +263,8 @@ public extension PluginDelegate {
     func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) { }
     
     func didReceiveGlobalSettings(_ settings: [String: String]) { }
+
+	func didReceiveGlobalSettings(_ settings: Settings) { }
     
     func willAppear(action: String, context: String, device: String, payload: AppearEvent) { }
     

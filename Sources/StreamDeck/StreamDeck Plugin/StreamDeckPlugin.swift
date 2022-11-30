@@ -14,13 +14,13 @@ public final class StreamDeckPlugin {
     public static var shared: StreamDeckPlugin!
     
     /// The plugin's delegate object.
-    public let plugin: PluginDelegate
+    public let plugin: any PluginDelegate
     
     /// The task used for communicating with the Stream Deck application.
     let task: URLSessionWebSocketTask
     
     /// Instances of actions.
-    public private(set) var instances: [String: Action] = [:]
+    public private(set) var instances: [String: any Action] = [:]
     
     let decoder = JSONDecoder()
     
@@ -38,7 +38,7 @@ public final class StreamDeckPlugin {
     /// The Stream Deck application information and devices information.
     public let info: PluginRegistrationInfo
     
-    init(plugin: PluginDelegate, port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) {
+    init(plugin: any PluginDelegate, port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) {
         self.plugin = plugin
         self.port = port
         self.uuid = uuid
@@ -56,7 +56,7 @@ public final class StreamDeckPlugin {
     /// Look up the action type based on the UUID.
     /// - Parameter uuid: The UUID of the action.
     /// - Returns: The action's type, if available.
-    public func action(forID uuid: String) -> Action.Type? {
+	public func action(forID uuid: String) -> (any Action.Type)? {
         type(of: plugin).actions.first { $0.uuid == uuid }
     }
     
@@ -91,7 +91,13 @@ public final class StreamDeckPlugin {
     }
     
     /// Return an action by its context.
-    public subscript (context: String) -> Action? { instances[context] }
+	public subscript (context: String) -> (any Action)? { instances[context] }
+
+	public subscript (context: String?) -> (any Action)? {
+		guard let context else { return nil }
+		return instances[context]
+	}
+
     
     // MARK: - WebSocket Methods
     /// Continually receive messages from the socket.
@@ -126,13 +132,12 @@ public final class StreamDeckPlugin {
         guard let data = readMessage(message) else {
 			NSLog("Warning: WebSocket sent empty message")
 			return
-
 		}
         
         // Decode the event from the data
         do {
-            let eventKey = try decoder.decode(ReceivableEvent.self, from: data).event
-            try parseEvent(event: eventKey, data: data)
+            let eventKey = try decoder.decode(ReceivableEvent.self, from: data)
+			try parseEvent(event: eventKey.event, context: eventKey.context, data: data)
         } catch {
 			NSLog("Decoding Error: \(error.localizedDescription)")
         }
@@ -223,7 +228,7 @@ public final class StreamDeckPlugin {
     /// - Parameters:
     ///   - event: The event key.
     ///   - data: The JSON data.
-    func parseEvent(event: ReceivableEvent.EventKey, data: Data) throws {
+	func parseEvent(event: ReceivableEvent.EventKey, context: String?, data: Data) throws {
 
         switch event {
             
@@ -235,9 +240,10 @@ public final class StreamDeckPlugin {
             plugin.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
         
         case .didReceiveGlobalSettings:
-            let action = try decoder.decode(GlobalSettingsEvent.self, from: data)
 			NSLog("Forwarding \(event) to PluginDelegate")
-            plugin.didReceiveGlobalSettings(action.payload.settings)
+
+			// TODO: Decode plugin settings
+			try plugin.decodeGlobalSettings(data, using: decoder)
         
         case .keyDown:
             let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)

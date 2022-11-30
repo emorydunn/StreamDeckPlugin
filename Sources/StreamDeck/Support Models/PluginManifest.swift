@@ -191,7 +191,7 @@ struct PluginManifest: Codable {
         self.actions = actions
     }
     
-    init(plugin: PluginDelegate.Type) {
+    init(plugin: any PluginDelegate.Type) {
         self.name = plugin.name
         self.description = plugin.description
         self.category = plugin.category
@@ -300,7 +300,7 @@ struct PluginAction: Codable {
         }
     }
     
-    init(action: Action.Type) {
+    init(action: any Action.Type) {
         self.name = action.name
         self.uuid = action.uuid
         self.icon = action.icon

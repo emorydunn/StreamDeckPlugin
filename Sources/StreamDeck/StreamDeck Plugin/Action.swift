@@ -13,6 +13,11 @@ import AppKit
 /// The action type is shown in the actions list and a new instance is initiated when the user adds an action to a key.
 public protocol Action {
 
+	/// Settings returned by the Stream Deck application.
+	///
+	/// If your action does not use settings, simply use `NoSettings`.
+	associatedtype Settings: Codable
+
     // MARK: - Action Properties
     
     /// The name of the action. This string is visible to the user in the actions list.
