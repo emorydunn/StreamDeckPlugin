@@ -148,6 +148,14 @@ public struct GlobalSettingsEvent<S: Decodable>: Decodable {
 // MARK: Appear Events
 
 /// Information received about a `willAppear` or `willDisappear` event.
+public struct InstanceAppearEvent: Decodable, Hashable, Locatable {
+
+	/// The coordinates of the action triggered.
+	public let coordinates: Coordinates?
+
+}
+
+/// Information received about a `willAppear` or `willDisappear` event.
 public struct AppearEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
     
     /// This json object contains data that you can set and are stored persistently.

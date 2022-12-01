@@ -270,12 +270,11 @@ public final class StreamDeckPlugin {
             
         case .willAppear:
 			NSLog("Forwarding \(event) to \(context ?? "no context")")
-			guard let result = try self[context]?.decodeWillAppear(data, using: decoder) else {
-				return
-			}
-//            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+			let action = try decoder.decode(ActionEvent<InstanceAppearEvent>.self, from: data)
 
-			self.registerInstance(actionID: result.action, context: result.context, coordinates: result.coordinates)
+			self.registerInstance(actionID: action.action, context: action.context, coordinates: action.payload.coordinates)
+
+			try self[context]?.decodeWillAppear(data, using: decoder)
 //
 //            self[action.context]?.willAppear(device: action.device, payload: action.payload)
 //            plugin.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
