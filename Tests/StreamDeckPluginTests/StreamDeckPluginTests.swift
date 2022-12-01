@@ -8,35 +8,35 @@ final class EventsReceivedTests: XCTestCase {
     func test_keyDown() {
         let data = TestEvent.keyDown
         
-        XCTAssertNoThrow(try decoder.decode(ActionEvent<KeyEvent>.self, from: data))
+        XCTAssertNoThrow(try decoder.decode(ActionEvent<KeyEvent<NoSettings>>.self, from: data))
         
     }
     
     func test_keyUp() {
         let data = TestEvent.keyUp
         
-        XCTAssertNoThrow(try decoder.decode(ActionEvent<KeyEvent>.self, from: data))
+        XCTAssertNoThrow(try decoder.decode(ActionEvent<KeyEvent<NoSettings>>.self, from: data))
         
     }
     
     func test_willAppear() {
         let data = TestEvent.willAppear
         
-        XCTAssertNoThrow(try decoder.decode(ActionEvent<AppearEvent>.self, from: data))
+        XCTAssertNoThrow(try decoder.decode(ActionEvent<AppearEvent<NoSettings>>.self, from: data))
         
     }
     
     func test_willDisappear() {
         let data = TestEvent.willDisappear
         
-        XCTAssertNoThrow(try decoder.decode(ActionEvent<AppearEvent>.self, from: data))
+        XCTAssertNoThrow(try decoder.decode(ActionEvent<AppearEvent<NoSettings>>.self, from: data))
         
     }
     
     func test_titleParametersDidChange() {
         let data = TestEvent.titleParametersDidChange
         
-        XCTAssertNoThrow(try decoder.decode(ActionEvent<TitleInfo>.self, from: data))
+        XCTAssertNoThrow(try decoder.decode(ActionEvent<TitleInfo<NoSettings>>.self, from: data))
         
     }
     
