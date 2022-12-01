@@ -48,7 +48,7 @@ public final class StreamDeckPlugin {
         let url = URL(string: "ws://localhost:\(port)")!
         self.task = URLSession.shared.webSocketTask(with: url)
         
-        task.resume()
+//        task.resume()
     }
     
     // MARK: - InstanceManager
@@ -62,32 +62,32 @@ public final class StreamDeckPlugin {
     
     /// Register a new instance of an action from a `willAppear` event.
     /// - Parameter event: The event with information about the instance.
-    public func registerInstance(_ event: ActionEvent<AppearEvent>) {
+	public func registerInstance(actionID: String, context: String, coordinates: Coordinates?) {
         
         // Check if the instance already exists
-        guard instances[event.context] == nil else {
+        guard instances[context] == nil else {
             NSLog("This instance has already been registered.")
             return
         }
         
         // Look up the action
-        guard let actionType = action(forID: event.action) else {
-            NSLog("No action available with UUID '\(event.action)'.")
+        guard let actionType = action(forID: actionID) else {
+            NSLog("No action available with UUID '\(actionID)'.")
             return
         }
         
         // Initialize a new instance
-        instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
+        instances[context] = actionType.init(context: context, coordinates: coordinates)
         
         NSLog("Initialized a new instance of '\(actionType.uuid)'")
     }
     
     /// Remove an instance of an action from a `willDisappear` event.
     /// - Parameter event: The event with information about the instance.
-    public func removeInstance(_ event: ActionEvent<AppearEvent>) {
-        
-        NSLog("Removing instance of '\(event.action)'")
-        instances[event.context] = nil
+    public func removeInstance(_ context: String?) {
+		guard let context else { return }
+        NSLog("Removing instance of '\(context)'")
+        instances[context] = nil
     }
     
     /// Return an action by its context.
@@ -102,6 +102,9 @@ public final class StreamDeckPlugin {
     // MARK: - WebSocket Methods
     /// Continually receive messages from the socket.
     func monitorSocket() {
+
+		task.resume()
+
         self.task.receive { [weak self] result in
 
             // Handle a new message
@@ -233,54 +236,66 @@ public final class StreamDeckPlugin {
         switch event {
             
         case .didReceiveSettings:
-            let action = try decoder.decode(SettingsEvent.self, from: data)
+//            let action = try decoder.decode(SettingsEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to \(action.context)")
-            self[action.context]?.didReceiveSettings(device: action.device, payload: action.payload)
-            plugin.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			try self[context]?.decodeSettings(data, using: decoder)
+
+//            self[action.context]?.didReceiveSettings(device: action.device, payload: action.payload)
+//            plugin.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
         
         case .didReceiveGlobalSettings:
 			NSLog("Forwarding \(event) to PluginDelegate")
-
-			// TODO: Decode plugin settings
 			try plugin.decodeGlobalSettings(data, using: decoder)
         
         case .keyDown:
-            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
+//            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
 
-			NSLog("Forwarding \(event) to \(action.context)")
-            self[action.context]?.keyDown(device: action.device, payload: action.payload)
-            plugin.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			try self[context]?.decodeKeyDown(data, using: decoder)
+
+//            self[action.context]?.keyDown(device: action.device, payload: action.payload)
+//            plugin.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
         
         case .keyUp:
-            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-
-			NSLog("Forwarding \(event) to \(action.context)")
-            self[action.context]?.keyUp(device: action.device, payload: action.payload)
-            plugin.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			try self[context]?.decodeKeyUp(data, using: decoder)
+//            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
+//
+//			NSLog("Forwarding \(event) to \(action.context)")
+//            self[action.context]?.keyUp(device: action.device, payload: action.payload)
+//            plugin.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
             
         case .willAppear:
-            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-            
-            self.registerInstance(action)
-            
-            self[action.context]?.willAppear(device: action.device, payload: action.payload)
-            plugin.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			guard let result = try self[context]?.decodeWillAppear(data, using: decoder) else {
+				return
+			}
+//            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+
+			self.registerInstance(actionID: result.action, context: result.context, coordinates: result.coordinates)
+//
+//            self[action.context]?.willAppear(device: action.device, payload: action.payload)
+//            plugin.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
         
         case .willDisappear:
-            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			try self[context]?.decodeWillDisappear(data, using: decoder)
+//            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
+//
+//            self[action.context]?.willDisappear(device: action.device, payload: action.payload)
+//            plugin.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
             
-            self[action.context]?.willDisappear(device: action.device, payload: action.payload)
-            plugin.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
-            
-            self.removeInstance(action)
+            self.removeInstance(context)
         
         case .titleParametersDidChange:
-            let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
-
-			NSLog("Forwarding \(event) to \(action.context)")
-            self[action.context]?.titleParametersDidChange(device: action.device, info: action.payload)
-            plugin.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			try self[context]?.decodeTitleParametersDidChange(data, using: decoder)
+//            let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
+//
+//			NSLog("Forwarding \(event) to \(action.context)")
+//            self[action.context]?.titleParametersDidChange(device: action.device, info: action.payload)
+//            plugin.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
             
         case .deviceDidConnect:
             let action = try decoder.decode(DeviceConnectionEvent.self, from: data)

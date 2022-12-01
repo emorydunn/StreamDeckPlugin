@@ -7,4 +7,4 @@
 
 import Foundation
 
-public struct NoSettings: Codable { }
+public struct NoSettings: Codable, Hashable { }

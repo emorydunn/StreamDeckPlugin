@@ -31,7 +31,13 @@ public enum SendableEventKey: String, Codable {
 /// The root object to decode a received event.
 public struct ReceivableEvent: Decodable {
     let event: EventKey
+	let context: String?
 }
+
+//public struct TopLevelEvent: Decodable {
+//	let event: ReceivableEvent.EventKey
+//	let context: String?
+//}
 
 /// Keys for received events.
 extension ReceivableEvent {
@@ -96,7 +102,7 @@ public struct DeviceConnectionEvent: Decodable {
 // MARK: Settings Events
 
 /// Action instance settings received after calling `getSettings()`.
-public struct SettingsEvent: Decodable {
+public struct SettingsEvent<S: Decodable>: Decodable {
     /// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
     public let action: String
     
@@ -110,9 +116,9 @@ public struct SettingsEvent: Decodable {
     public let payload: Payload
     
     /// Container for the settings data.
-    public struct Payload: Decodable, Locatable, EventSettings {
+    public struct Payload: Decodable, Locatable {
         /// This json object contains data that you can set and are stored persistently.
-        public let settings: [String: String]
+        public let settings: S
         
         /// The coordinates of the action triggered.
         public let coordinates: Coordinates?
@@ -128,24 +134,24 @@ public struct SettingsEvent: Decodable {
 }
 
 /// Global settings received after calling `getGlobalSettings()`.
-public struct GlobalSettingsEvent: Decodable {
+public struct GlobalSettingsEvent<S: Decodable>: Decodable {
     /// The payload of the event.
     public let payload: Payload
     
     /// Container for the settings data.
-    public struct Payload: Decodable, EventSettings {
+	public struct Payload: Decodable {
         /// This json object contains data that you can set and are stored persistently.
-        public let settings: [String: String]
+        public let settings: S
     }
 }
 
 // MARK: Appear Events
 
 /// Information received about a `willAppear` or `willDisappear` event.
-public struct AppearEvent: Decodable, Hashable, Locatable, EventSettings {
+public struct AppearEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
     
     /// This json object contains data that you can set and are stored persistently.
-    public let settings: [String: String]
+    public let settings: S
     
     /// The coordinates of the action triggered.
     public let coordinates: Coordinates?
@@ -162,10 +168,10 @@ public struct AppearEvent: Decodable, Hashable, Locatable, EventSettings {
 
 // MARK: Key Events
 /// Information received about a `keyUp` or `keyDown` event.
-public struct KeyEvent: Decodable, Hashable, Locatable, EventSettings {
+public struct KeyEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
     
     /// This json object contains data that you can set and are stored persistently.
-    public let settings: [String: String]
+    public let settings: S
     
     /// The coordinates of the action triggered.
     public let coordinates: Coordinates?
