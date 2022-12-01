@@ -47,8 +47,7 @@ public final class StreamDeckPlugin {
         
         let url = URL(string: "ws://localhost:\(port)")!
         self.task = URLSession.shared.webSocketTask(with: url)
-        
-//        task.resume()
+
     }
     
     // MARK: - InstanceManager
@@ -103,7 +102,10 @@ public final class StreamDeckPlugin {
     /// Continually receive messages from the socket.
     func monitorSocket() {
 
-		task.resume()
+		if task.state == .suspended {
+			NSLog("Connecting to Stream Deck application")
+			task.resume()
+		}
 
         self.task.receive { [weak self] result in
 
