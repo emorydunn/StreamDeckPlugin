@@ -1,0 +1,24 @@
+{
+  "action": "com.elgato.example.titleParametersDidChange",
+  "event": "titleParametersDidChange",
+  "context": "opaqueValue",
+  "device": "opaqueValue",
+  "payload": {
+    "coordinates": {
+      "column": 3,
+      "row": 1
+    },
+    "settings": {},
+    "state": 0,
+    "title": "",
+    "titleParameters": {
+      "fontFamily": "",
+      "fontSize": 12,
+      "fontStyle": "",
+      "fontUnderline": false,
+      "showTitle": true,
+      "titleAlignment": "bottom",
+      "titleColor": "#ffffff"
+    }
+  }
+}

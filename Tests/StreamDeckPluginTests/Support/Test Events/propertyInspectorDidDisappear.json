@@ -1,0 +1,6 @@
+{
+  "action": "com.elgato.example.propertyInspectorDidDisappear",
+  "event": "propertyInspectorDidDisappear",
+  "context": "opaqueValue",
+  "device": "opaqueValue"
+}

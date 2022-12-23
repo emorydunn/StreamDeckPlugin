@@ -9,7 +9,7 @@ import Foundation
 
 
 /// Information about the title of an action.
-public struct TitleInfo: Decodable, Locatable, EventSettings {
+public struct TitleInfo<S: Decodable>: Decodable, Locatable {
     
     /// The new title.
     public let title: String
@@ -24,7 +24,7 @@ public struct TitleInfo: Decodable, Locatable, EventSettings {
     public let coordinates: Coordinates?
     
     /// This json object contains data that you can set and is stored persistently.
-    public let settings: [String: String]
+    public let settings: S
     
     /// Font parameters.
     public struct Parameters: Decodable {

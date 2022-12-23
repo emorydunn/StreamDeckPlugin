@@ -14,6 +14,11 @@ struct PluginCount: EnvironmentKey {
 }
 
 class TestAction: Action {
+
+	struct Settings: Codable, Hashable {
+		let someKey: String
+	}
+
     static var name: String = "TestAction"
     
     static var uuid: String = "test.action"
@@ -39,13 +44,17 @@ class TestAction: Action {
         self.coordinates = coordinates
     }
     
-    func keyDown(device: String, payload: KeyEvent) {
+    func keyDown(device: String, payload: KeyEvent<Settings>) {
         
     }
 
 }
 
 class TestPlugin: PluginDelegate {
+
+	struct Settings: Codable, Hashable {
+		let someKey: String
+	}
     
     // MARK: Manifest
     static var name: String = "Test Plugin"
@@ -82,7 +91,7 @@ class TestPlugin: PluginDelegate {
     
     @Environment(PluginCount.self) var count: Int
     
-    static var actions: [Action.Type] = [
+    static var actions: [any Action.Type] = [
         
     ]
 
@@ -94,19 +103,19 @@ class TestPlugin: PluginDelegate {
         fatalError("init(port:uuid:event:info:) has not been implemented")
     }
     
-    func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent.Payload) {}
+	func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent<Settings>.Payload) {}
     
-    func didReceiveGlobalSettings(_ settings: [String: String]) {}
+    func didReceiveGlobalSettings(_ settings: Settings) {}
     
-    func willAppear(action: String, context: String, device: String, payload: AppearEvent) {}
+    func willAppear(action: String, context: String, device: String, payload: AppearEvent<Settings>) {}
     
-    func willDisappear(action: String, context: String, device: String, payload: AppearEvent) {}
+    func willDisappear(action: String, context: String, device: String, payload: AppearEvent<Settings>) {}
     
-    func keyDown(action: String, context: String, device: String, payload: KeyEvent) {}
+    func keyDown(action: String, context: String, device: String, payload: KeyEvent<Settings>) {}
     
-    func keyUp(action: String, context: String, device: String, payload: KeyEvent) {}
+    func keyUp(action: String, context: String, device: String, payload: KeyEvent<Settings>) {}
     
-    func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo) {}
+    func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo<Settings>) {}
     
     func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) {}
     

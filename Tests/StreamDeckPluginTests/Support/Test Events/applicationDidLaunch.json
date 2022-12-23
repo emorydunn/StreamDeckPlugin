@@ -1,0 +1,6 @@
+{
+  "event": "applicationDidLaunch",
+  "payload": {
+    "application": "com.test.launch"
+  }
+}

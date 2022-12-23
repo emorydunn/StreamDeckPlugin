@@ -17,6 +17,7 @@ public protocol Locatable {
 }
 
 /// An event which includes the action's settings.
+@available(*, deprecated)
 public protocol EventSettings {
     
     /// The event's settings.
