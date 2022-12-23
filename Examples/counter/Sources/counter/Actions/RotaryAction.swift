@@ -24,13 +24,10 @@ class RotaryAction: Action {
 
 	static var controllers: [ControllerType] = [.encoder]
 
-	static var encoder: RotaryEncoder? = StreamDeck.RotaryEncoder(stackColor: "#f1184c",
-																  icon: "Icons/actionIcon",
-																  layout: .b,
-																  triggerDescription: RotaryEncoder.TriggerDescription(rotate: "Count",
-																													   push: "Reset",
-																													   touch: "Unused",
-																													   longTouch: "Unused"))
+	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .b,
+													   stackColor: "#f1184c",
+													   rotate: "Count",
+													   push: "Reset")
 
 	static var propertyInspectorPath: String?
 

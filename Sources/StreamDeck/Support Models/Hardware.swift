@@ -88,12 +88,35 @@ public enum ControllerType: String, Codable, CustomStringConvertible {
 
 /// Rotary encoder configuration.
 public struct RotaryEncoder: Codable {
-	let stackColor: String
-	let icon: String
+	let stackColor: String?
+	let icon: String?
 	let layout: Layout
 	let triggerDescription: TriggerDescription
 
-	public init(stackColor: String, icon: String, layout: RotaryEncoder.Layout, triggerDescription: RotaryEncoder.TriggerDescription) {
+	/// Initiate an encoder layout.
+	/// - Parameters:
+	///   - layout: The layout for the screen above the encoder.
+	///   - stackColor: A color of some sort
+	///   - icon: The icon on screen.
+	///   - rotate: The action description for rotating the dial.
+	///   - push: The action description for pressing the dial.
+	///   - touch: The action description for tapping the touch screen.
+	///   - longTouch: The action description for long pressing on the touch screen.
+	public init(layout: RotaryEncoder.Layout,
+				stackColor: String? = nil,
+				icon: String? = nil,
+				rotate: String? = nil,
+				push: String? = nil,
+				touch: String? = nil,
+				longTouch: String? = nil) {
+
+		self.stackColor = stackColor
+		self.icon = icon
+		self.layout = layout
+		self.triggerDescription = TriggerDescription(rotate: rotate, push: push, touch: touch, longTouch: longTouch)
+	}
+
+	public init(layout: RotaryEncoder.Layout, stackColor: String? = nil, icon: String? = nil, triggerDescription: RotaryEncoder.TriggerDescription) {
 		self.stackColor = stackColor
 		self.icon = icon
 		self.layout = layout
@@ -101,12 +124,12 @@ public struct RotaryEncoder: Codable {
 	}
 
 	public struct TriggerDescription: Codable {
-		let rotate: String
-		let push: String
-		let touch: String
-		let longTouch: String
+		let rotate: String?
+		let push: String?
+		let touch: String?
+		let longTouch: String?
 
-		public init(rotate: String, push: String, touch: String, longTouch: String) {
+		public init(rotate: String? = nil, push: String? = nil, touch: String? = nil, longTouch: String? = nil) {
 			self.rotate = rotate
 			self.push = push
 			self.touch = touch
