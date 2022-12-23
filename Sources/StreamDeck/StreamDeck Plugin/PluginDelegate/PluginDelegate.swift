@@ -17,7 +17,7 @@ public protocol PluginDelegate {
 	/// Settings returned by the Stream Deck application.
 	///
 	/// If your plugin does not use global settings, simply use `NoSettings`.
-	associatedtype Settings: Codable
+	associatedtype Settings: Codable & Hashable
 
     // MARK: Manifest
     
