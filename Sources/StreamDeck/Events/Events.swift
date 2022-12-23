@@ -26,6 +26,14 @@ public enum SendableEventKey: String, Codable {
     case sendToPropertyInspector
 }
 
+/// A event that is sent to the Stream Deck software. 
+struct SendableEvent<P: Encodable>: Encodable {
+	let event: SendableEventKey
+	let action: String?
+	let context: String?
+	let payload: P?
+}
+
 // MARK: - Received
 
 /// The root object to decode a received event.

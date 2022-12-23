@@ -16,8 +16,18 @@ public extension PluginDelegate {
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
+	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(in context: String, to settings: [String: Any]) {
-		// TODO: Adopt Settings
+		StreamDeckPlugin.shared.sendEvent(.setSettings,
+					  context: context,
+					  payload: settings)
+	}
+
+	/// Save data persistently for the action's instance.
+	/// - Parameters:
+	///   - context: An opaque value identifying the instance's action or Property Inspector.
+	///   - settings: A json object which is persistently saved for the action's instance.
+	func setSettings<P: Encodable>(in context: String, to settings: P) {
 		StreamDeckPlugin.shared.sendEvent(.setSettings,
 					  context: context,
 					  payload: settings)
