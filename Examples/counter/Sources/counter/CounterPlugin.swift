@@ -10,6 +10,8 @@ import StreamDeck
 
 @main
 class CounterPlugin: PluginDelegate {
+
+	typealias Settings = NoSettings
     
     // MARK: Manifest
     static var name: String = "Counter"
@@ -42,7 +44,7 @@ class CounterPlugin: PluginDelegate {
     
     static var codePathWin: String?
     
-    static var actions: [Action.Type] = [
+    static var actions: [any Action.Type] = [
         IncrementAction.self,
         DecrementAction.self
     ]
@@ -53,7 +55,7 @@ class CounterPlugin: PluginDelegate {
         NSLog("CounterPlugin init!")
     }
     
-    func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
+    func keyDown(action: String, context: String, device: String, payload: KeyEvent<Settings>) {
         StreamDeckPlugin.shared.instances.values.forEach {
             $0.setTitle(to: "\(count)", target: nil, state: nil)
         }

@@ -9,6 +9,8 @@ import Foundation
 import StreamDeck
 
 class IncrementAction: Action {
+
+	typealias Settings = NoSettings
     
     static var name: String = "Increment"
     
@@ -30,16 +32,16 @@ class IncrementAction: Action {
 
     var context: String
     
-    var coordinates: Coordinates
+	var coordinates: StreamDeck.Coordinates?
     
     @Environment(PluginCount.self) var count: Int
     
-    required init(context: String, coordinates: Coordinates) {
+    required init(context: String, coordinates: StreamDeck.Coordinates?) {
         self.context = context
         self.coordinates = coordinates
     }
     
-    func keyDown(device: String, payload: KeyEvent) {
+	func keyDown(device: String, payload: KeyEvent<Settings>) {
         count += 1
     }
 
