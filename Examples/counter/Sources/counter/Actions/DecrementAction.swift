@@ -43,6 +43,10 @@ class DecrementAction: Action {
     
     func keyDown(device: String, payload: KeyEvent<Settings>) {
         count -= 1
+
+		StreamDeckPlugin.shared.instances.values.forEach {
+			$0.setTitle(to: "\(count)", target: nil, state: nil)
+		}
     }
 
 }

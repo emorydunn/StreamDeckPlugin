@@ -21,6 +21,7 @@ class IncrementAction: Action {
     static var states: [PluginActionState]? = [
         PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
     ]
+
     
     static var propertyInspectorPath: String?
     
@@ -43,6 +44,10 @@ class IncrementAction: Action {
     
 	func keyDown(device: String, payload: KeyEvent<Settings>) {
         count += 1
+
+		StreamDeckPlugin.shared.instances.values.forEach {
+			$0.setTitle(to: "\(count)", target: nil, state: nil)
+		}
     }
 
 }
