@@ -254,6 +254,10 @@ struct PluginAction: Codable {
     ///
     /// In addition, it is possible to force the action to switch its state by sending a setState event.
     let states: [PluginActionState]
+
+	let controllers: [ControllerType]
+
+	let encoder: RotaryEncoder?
     
     /// This can override PropertyInspectorPath member from the plugin if you wish to have different PropertyInspectorPath based on the action.
     ///
@@ -279,6 +283,8 @@ struct PluginAction: Codable {
                   uuid: String,
                   icon: String,
                   states: [PluginActionState]? = nil,
+		 controllers: [ControllerType],
+		 encoder: RotaryEncoder?,
                   propertyInspectorPath: String? = nil,
                   supportedInMultiActions: Bool? = nil,
                   tooltip: String? = nil,
@@ -298,6 +304,9 @@ struct PluginAction: Codable {
                 PluginActionState(image: icon)
             ]
         }
+
+		self.controllers = controllers
+		self.encoder = encoder
     }
     
     init(action: any Action.Type) {
@@ -316,6 +325,9 @@ struct PluginAction: Codable {
                 PluginActionState(image: icon)
             ]
         }
+
+		self.controllers = action.controllers
+		self.encoder = action.encoder
         
     }
     

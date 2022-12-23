@@ -74,3 +74,48 @@ public struct Size: Decodable {
     /// Number of rows a device has.
     public let rows: Int
 }
+
+/// The available controller types.
+public enum ControllerType: String, Codable, CustomStringConvertible {
+
+	case keypad = "Keypad"
+	case encoder = "Encoder"
+
+	public var description: String {
+		rawValue
+	}
+}
+
+/// Rotary encoder configuration.
+public struct RotaryEncoder: Codable {
+	let stackColor: String
+	let icon: String
+	let layout: Layout
+	let triggerDescription: TriggerDescription
+
+	public init(stackColor: String, icon: String, layout: RotaryEncoder.Layout, triggerDescription: RotaryEncoder.TriggerDescription) {
+		self.stackColor = stackColor
+		self.icon = icon
+		self.layout = layout
+		self.triggerDescription = triggerDescription
+	}
+
+	public struct TriggerDescription: Codable {
+		let rotate: String
+		let push: String
+		let touch: String
+		let longTouch: String
+
+		public init(rotate: String, push: String, touch: String, longTouch: String) {
+			self.rotate = rotate
+			self.push = push
+			self.touch = touch
+			self.longTouch = longTouch
+		}
+	}
+
+	public enum Layout: String, Codable {
+		case a = "$A1"
+		case b = "$B1"
+	}
+}

@@ -52,6 +52,12 @@ public protocol Action {
     ///
     /// - Note: If no states are specified the manifest will generate a single state using the `Action`'s icon. 
     static var states: [PluginActionState]? { get }
+
+	// - TODO: Update with full description when available
+	/// The control types the action supports
+	static var controllers: [ControllerType] { get }
+
+	static var encoder: RotaryEncoder? { get }
     
     /// This can override PropertyInspectorPath member from the plugin if you wish to have different PropertyInspectorPath based on the action.
     ///
@@ -120,6 +126,12 @@ public protocol Action {
     ///   - device: An opaque value identifying the device.
     ///   - payload: The event payload sent by the server.
     func keyUp(device: String, payload: KeyEvent<Settings>)
+
+	func dialRotate(device: String, payload: EncoderEvent<Settings>)
+
+	func dialPress(device: String, payload: EncoderPressEvent<Settings>)
+
+	func touchTap(device: String, payload: TouchTapEvent<Settings>)
     
     /// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
     /// - Parameters:

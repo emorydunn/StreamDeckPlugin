@@ -273,36 +273,41 @@ public final class StreamDeckPlugin {
         switch event {
             
         case .didReceiveSettings:
-//            let action = try decoder.decode(SettingsEvent.self, from: data)
 
 			NSLog("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeSettings(data, using: decoder)
 
-//            self[action.context]?.didReceiveSettings(device: action.device, payload: action.payload)
-//            plugin.didReceiveSettings(action: action.action, context: action.context, device: action.device, payload: action.payload)
-        
         case .didReceiveGlobalSettings:
 			NSLog("Forwarding \(event) to PluginDelegate")
 			try plugin.decodeGlobalSettings(data, using: decoder)
         
         case .keyDown:
-//            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-
 			NSLog("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeKeyDown(data, using: decoder)
 
-//            self[action.context]?.keyDown(device: action.device, payload: action.payload)
-//            plugin.keyDown(action: action.action, context: action.context, device: action.context, payload: action.payload)
-        
         case .keyUp:
 			NSLog("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeKeyUp(data, using: decoder)
-//            let action = try decoder.decode(ActionEvent<KeyEvent>.self, from: data)
-//
-//			NSLog("Forwarding \(event) to \(action.context)")
-//            self[action.context]?.keyUp(device: action.device, payload: action.payload)
-//            plugin.keyUp(action: action.action, context: action.context, device: action.context, payload: action.payload)
-            
+
+		case .dialRotate:
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+
+			try self[context]?.decodeDialRotate(data, using: decoder)
+
+		case .dialPress:
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+
+			try self[context]?.decodeDialPress(data, using: decoder)
+
+		case .touchTap:
+			NSLog("Forwarding \(event) to \(context ?? "no context")")
+
+			try self[context]?.decodeTouchTap(data, using: decoder)
+
+			if let json = String(data: data, encoding: .utf8) {
+				NSLog(json)
+			}
+
         case .willAppear:
 			NSLog("Forwarding \(event) to \(context ?? "no context")")
 			let action = try decoder.decode(ActionEvent<InstanceAppearEvent>.self, from: data)

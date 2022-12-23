@@ -9,6 +9,11 @@ import Foundation
 
 extension Action {
 
+	// MARK: Defaults
+	public static var controllers: [ControllerType] { [.keypad] }
+
+	public static var encoder: RotaryEncoder? { nil }
+
 	/// The Action's UUID.
 	public var uuid: String {
 		type(of: self).uuid
@@ -58,7 +63,42 @@ extension Action {
 		willAppear(device: action.device, payload: action.payload)
 
 		NSLog("Action \(#function)")
-//		return (action: action.action, context: action.context, coordinates: action.payload.coordinates)
+	}
+
+	/// Decode and deliver a dial rotation event.
+	/// - Parameters:
+	///   - data: Event data
+	///   - decoder: The decoder to use
+	func decodeDialRotate(_ data: Data, using decoder: JSONDecoder) throws {
+		let action = try decoder.decode(ActionEvent<EncoderEvent<Settings>>.self, from: data)
+
+		dialRotate(device: action.device, payload: action.payload)
+
+		NSLog("Action \(#function)")
+	}
+
+	/// Decode and deliver a dial rotation event.
+	/// - Parameters:
+	///   - data: Event data
+	///   - decoder: The decoder to use
+	func decodeDialPress(_ data: Data, using decoder: JSONDecoder) throws {
+		let action = try decoder.decode(ActionEvent<EncoderPressEvent<Settings>>.self, from: data)
+
+		dialPress(device: action.device, payload: action.payload)
+
+		NSLog("Action \(#function)")
+	}
+
+	/// Decode and deliver a dial rotation event.
+	/// - Parameters:
+	///   - data: Event data
+	///   - decoder: The decoder to use
+	func decodeTouchTap(_ data: Data, using decoder: JSONDecoder) throws {
+		let action = try decoder.decode(ActionEvent<TouchTapEvent<Settings>>.self, from: data)
+
+		touchTap(device: action.device, payload: action.payload)
+
+		NSLog("Action \(#function)")
 	}
 
 	/// Decode and deliver a key down event.

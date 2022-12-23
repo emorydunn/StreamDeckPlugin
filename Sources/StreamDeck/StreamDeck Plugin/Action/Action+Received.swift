@@ -45,6 +45,12 @@ public extension Action {
 	///   - payload: The event payload sent by the server.
 	func keyUp(device: String, payload: KeyEvent<Settings>) { }
 
+	func dialRotate(device: String, payload: EncoderEvent<Settings>) { }
+
+	func dialPress(device: String, payload: EncoderPressEvent<Settings>) { }
+
+	func touchTap(device: String, payload: TouchTapEvent<Settings>) { }
+
 	/// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.

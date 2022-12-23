@@ -24,6 +24,7 @@ public enum SendableEventKey: String, Codable {
     case setState
     case switchToProfile
     case sendToPropertyInspector
+	case setFeedback
 }
 
 /// A event that is sent to the Stream Deck software. 
@@ -54,6 +55,9 @@ extension ReceivableEvent {
         case didReceiveGlobalSettings
         case keyDown
         case keyUp
+		case dialRotate
+		case dialPress
+		case touchTap
         case willAppear
         case willDisappear
         case titleParametersDidChange
@@ -182,7 +186,7 @@ public struct AppearEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatab
     
 }
 
-// MARK: Key Events
+// MARK: Controller Events
 /// Information received about a `keyUp` or `keyDown` event.
 public struct KeyEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
     
@@ -207,6 +211,53 @@ public struct KeyEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable 
     /// Boolean indicating if the action is inside a Multi Action.
     public let isInMultiAction: Bool
     
+}
+
+/// Information received about a rotary encoder event.
+public struct EncoderEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
+
+	/// This json object contains data that you can set and are stored persistently.
+	public let settings: S
+
+	public let controller: ControllerType
+
+	/// The coordinates of the action triggered.
+	public let coordinates: Coordinates?
+
+	public let pressed: Bool
+
+	public let ticks: Int
+}
+
+/// Information received about a rotary encoder event.
+public struct EncoderPressEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
+
+	/// This json object contains data that you can set and are stored persistently.
+	public let settings: S
+
+	public let controller: ControllerType
+
+	/// The coordinates of the action triggered.
+	public let coordinates: Coordinates?
+
+	public let pressed: Bool
+}
+
+/// Information received about a `keyUp` or `keyDown` event.
+public struct TouchTapEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatable {
+
+	/// This json object contains data that you can set and are stored persistently.
+	public let settings: S
+
+	public let controller: ControllerType
+
+	/// The coordinates of the action triggered.
+	public let coordinates: Coordinates?
+
+	public let hold: Bool
+
+	public let tapPos: [Int]
+
 }
 
 
