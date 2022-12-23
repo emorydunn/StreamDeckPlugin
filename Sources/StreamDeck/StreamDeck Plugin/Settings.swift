@@ -7,4 +7,5 @@
 
 import Foundation
 
+/// A struct that indicates an action has no settings. 
 public struct NoSettings: Codable, Hashable { }

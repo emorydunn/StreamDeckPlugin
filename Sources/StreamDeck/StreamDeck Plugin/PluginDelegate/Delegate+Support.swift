@@ -12,6 +12,9 @@ public extension PluginDelegate {
 	/// The default implementation of `static PluginDelegate.pluginWasCreated()`
 	static func pluginWasCreated() { }
 
+	/// The default `main` function.
+	///
+	/// This method configures the plugin, calls `pluginWasCreated()`, and then registers the plugin.
 	static func main() {
 		pluginWasCreated()
 

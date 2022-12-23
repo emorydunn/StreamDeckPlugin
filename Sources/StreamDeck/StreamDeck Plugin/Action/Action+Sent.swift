@@ -17,7 +17,7 @@ public extension Action {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings(to settings: [String: Any]) {
-
+		// TODO: Adopt Settings
 		StreamDeckPlugin.shared.sendEvent(.setSettings,
 					  context: context,
 					  payload: settings)
