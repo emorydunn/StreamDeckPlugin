@@ -53,10 +53,11 @@ public protocol Action {
     /// - Note: If no states are specified the manifest will generate a single state using the `Action`'s icon. 
     static var states: [PluginActionState]? { get }
 
-	// - TODO: Update with full description when available
-	/// The control types the action supports
+
+	/// Specifies an array of controllers. Valid values include "Keypad" and "Encoder". ["Keypad"] by default.
 	static var controllers: [ControllerType] { get }
 
+	/// An object containing encoder information.
 	static var encoder: RotaryEncoder? { get }
     
     /// This can override PropertyInspectorPath member from the plugin if you wish to have different PropertyInspectorPath based on the action.
@@ -77,6 +78,9 @@ public protocol Action {
     ///
     /// This can be used for plugin that only works with a specific profile. True by default.
     static var visibleInActionsList: Bool? { get }
+
+	/// Boolean to disable the title field for users in the property inspector. True by default.
+	static var userTitleEnabled: Bool? { get }
     
     // MARK: - Instance Properties
 
