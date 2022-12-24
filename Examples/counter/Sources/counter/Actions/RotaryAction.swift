@@ -24,7 +24,7 @@ class RotaryAction: Action {
 
 	static var controllers: [ControllerType] = [.encoder]
 
-	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .b,
+	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .icon,
 													   stackColor: "#f1184c",
 													   rotate: "Count",
 													   push: "Reset")
