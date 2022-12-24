@@ -183,6 +183,9 @@ public struct AppearEvent<S: Decodable & Hashable>: Decodable, Hashable, Locatab
 
     /// Boolean indicating if the action is inside a Multi Action.
     public let isInMultiAction: Bool
+
+	/// Holds the name of the controller of the current action.
+	public let controller: ControllerType
     
 }
 
@@ -224,8 +227,12 @@ public struct EncoderEvent<S: Decodable & Hashable>: Decodable, Hashable, Locata
 	/// The coordinates of the action triggered.
 	public let coordinates: Coordinates?
 
+	/// Boolean which is `true` on rotation when encoder pressed.
 	public let pressed: Bool
 
+	/// The integer which holds the number of "ticks" on encoder rotation.
+	///
+	/// Positive values are for clockwise rotation, negative values are for counterclockwise rotation, zero value is never happen.
 	public let ticks: Int
 }
 
@@ -240,6 +247,7 @@ public struct EncoderPressEvent<S: Decodable & Hashable>: Decodable, Hashable, L
 	/// The coordinates of the action triggered.
 	public let coordinates: Coordinates?
 
+	/// Boolean which is `true` on encoder pressed, else `false` on released
 	public let pressed: Bool
 }
 
@@ -254,8 +262,10 @@ public struct TouchTapEvent<S: Decodable & Hashable>: Decodable, Hashable, Locat
 	/// The coordinates of the action triggered.
 	public let coordinates: Coordinates?
 
+	/// Boolean which is `true` when long tap happened
 	public let hold: Bool
 
+	/// The array which holds (x, y) coordinates as a position of tap inside of LCD slot associated with action.
 	public let tapPos: [Int]
 
 }
