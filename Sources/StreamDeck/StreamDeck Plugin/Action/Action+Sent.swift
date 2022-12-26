@@ -188,7 +188,7 @@ public extension Action {
 
 	/// The plugin can send a `setFeedback` event to the Stream Deck application to dynamically change properties of items on the Stream Deck + touch display layout.
 	func setFeedback(_ payload: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
+		StreamDeckPlugin.shared.sendEvent(.setFeedback,
 										  context: context,
 										  payload: payload)
 	}
@@ -197,8 +197,8 @@ public extension Action {
 	///
 	/// `setFeedbackLayout` can use the `id` of a built-in layout or a relative path to a custom layout JSON file.
 	/// - Parameter layout: The layout to set.
-	func setFeedbackLayout(_ layout: RotaryEncoder.Layout) {
-		let payload: [String: Any] = ["layout": layout.layoutName]
+	func setFeedbackLayout(_ layout: LayoutName) {
+		let payload: [String: Any] = ["layout": layout.id]
 
 		StreamDeckPlugin.shared.sendEvent(.setFeedbackLayout,
 										  context: context,
