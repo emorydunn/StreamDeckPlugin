@@ -35,6 +35,8 @@ class TestAction: Action {
     
     static var visibleInActionsList: Bool?
 
+	static var userTitleEnabled: Bool?
+
     var context: String
     
     var coordinates: Coordinates?
