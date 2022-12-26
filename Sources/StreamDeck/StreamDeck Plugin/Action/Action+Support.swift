@@ -14,6 +14,16 @@ extension Action {
 
 	public static var encoder: RotaryEncoder? { nil }
 
+	public static var userTitleEnabled: Bool? { nil }
+
+	public static var propertyInspectorPath: String? { nil }
+
+	public static var supportedInMultiActions: Bool? { nil }
+
+	public static var tooltip: String? { nil }
+
+	public static var visibleInActionsList: Bool? { nil }
+
 	/// The Action's UUID.
 	public var uuid: String {
 		type(of: self).uuid
