@@ -269,7 +269,6 @@ struct PluginAction: Codable {
     /// True by default.
     let supportedInMultiActions: Bool?
     
-    
     /// The string displayed as tooltip when the user leaves the mouse over your action in the actions list.
     let tooltip: String?
     
@@ -277,59 +276,64 @@ struct PluginAction: Codable {
     ///
     /// This can be used for plugin that only works with a specific profile. True by default.
     let visibleInActionsList: Bool?
+
+	let userTitleEnabled: Bool?
     
     /// Initialize a new action.
-    init(name: String,
-                  uuid: String,
-                  icon: String,
-                  states: [PluginActionState]? = nil,
+	init(name: String,
+		 uuid: String,
+		 icon: String,
+		 states: [PluginActionState]? = nil,
 		 controllers: [ControllerType],
 		 encoder: RotaryEncoder?,
-                  propertyInspectorPath: String? = nil,
-                  supportedInMultiActions: Bool? = nil,
-                  tooltip: String? = nil,
-                  visibleInActionsList: Bool? = nil) {
-        self.name = name
-        self.uuid = uuid
-        self.icon = icon
-        self.propertyInspectorPath = propertyInspectorPath
-        self.supportedInMultiActions = supportedInMultiActions
-        self.tooltip = tooltip
-        self.visibleInActionsList = visibleInActionsList
-        
-        if let states = states {
-            self.states = states
-        } else {
-            self.states = [
-                PluginActionState(image: icon)
-            ]
-        }
+		 propertyInspectorPath: String? = nil,
+		 supportedInMultiActions: Bool? = nil,
+		 tooltip: String? = nil,
+		 visibleInActionsList: Bool? = nil,
+		 userTitleEnabled: Bool? = nil) {
+		self.name = name
+		self.uuid = uuid
+		self.icon = icon
+		self.propertyInspectorPath = propertyInspectorPath
+		self.supportedInMultiActions = supportedInMultiActions
+		self.tooltip = tooltip
+		self.visibleInActionsList = visibleInActionsList
+		self.userTitleEnabled = userTitleEnabled
+
+		if let states = states {
+			self.states = states
+		} else {
+			self.states = [
+				PluginActionState(image: icon)
+			]
+		}
 
 		self.controllers = controllers
 		self.encoder = encoder
-    }
+	}
     
-    init(action: any Action.Type) {
-        self.name = action.name
-        self.uuid = action.uuid
-        self.icon = action.icon
-        self.propertyInspectorPath = action.propertyInspectorPath
-        self.supportedInMultiActions = action.supportedInMultiActions
-        self.tooltip = action.tooltip
-        self.visibleInActionsList = action.visibleInActionsList
+	init(action: any Action.Type) {
+		self.name = action.name
+		self.uuid = action.uuid
+		self.icon = action.icon
+		self.propertyInspectorPath = action.propertyInspectorPath
+		self.supportedInMultiActions = action.supportedInMultiActions
+		self.tooltip = action.tooltip
+		self.visibleInActionsList = action.visibleInActionsList
+		self.userTitleEnabled = action.userTitleEnabled
 
-        if let states = action.states {
-            self.states = states
-        } else {
-            self.states = [
-                PluginActionState(image: icon)
-            ]
-        }
+		if let states = action.states {
+			self.states = states
+		} else {
+			self.states = [
+				PluginActionState(image: icon)
+			]
+		}
 
 		self.controllers = action.controllers
 		self.encoder = action.encoder
-        
-    }
+
+	}
     
 }
 
