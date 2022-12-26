@@ -14,6 +14,8 @@ public struct RotaryEncoder: Codable {
 	let stackColor: String?
 
 	/// The default icon found in the property inspector, dial stack image, and the layout. If no icon is set Stream Deck will use the action list icon.
+	///
+	/// - Note: The icon path in the manifest should not include the file extension.
 	let icon: String?
 
 	/// The default background image for the encoders touch display slot.
@@ -33,7 +35,7 @@ public struct RotaryEncoder: Codable {
 	/// - Parameters:
 	///   - layout: The layout for the screen above the encoder.
 	///   - stackColor: A color of some sort
-	///   - icon: The icon on screen.
+	///   - icon: The icon on screen. Do not include the file extension.
 	///   - rotate: The action description for rotating the dial.
 	///   - push: The action description for pressing the dial.
 	///   - touch: The action description for tapping the touch screen.
