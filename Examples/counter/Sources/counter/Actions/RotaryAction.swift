@@ -36,6 +36,8 @@ class RotaryAction: Action {
 
 	@Environment(PluginCount.self) var count: Int
 
+	var valueLayout = true
+
 	required init(context: String, coordinates: StreamDeck.Coordinates?) {
 		self.context = context
 		self.coordinates = coordinates
@@ -75,6 +77,15 @@ class RotaryAction: Action {
 
 	func touchTap(device: String, payload: TouchTapEvent<NoSettings>) {
 		NSLog("Touch Tap: \(payload.hold)")
+
+		if valueLayout {
+			setFeedbackLayout(.icon)
+		} else {
+			setFeedbackLayout(.value)
+		}
+
+		valueLayout.toggle()
+
 	}
 
 }
