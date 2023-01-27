@@ -12,11 +12,11 @@ import ArgumentParser
 struct StreamDeckKey: CodingKey {
 	var stringValue: String
 	var intValue: Int?
-
+	
 	init(key: CodingKey) {
 		self.init(stringValue: key.stringValue)!
 	}
-
+	
 	init?(stringValue: String) {
 		switch stringValue {
 		case "sdkVersion":
@@ -31,7 +31,7 @@ struct StreamDeckKey: CodingKey {
 		}
 		self.intValue = nil
 	}
-
+	
 	init?(intValue: Int) {
 		self.stringValue = String(intValue)
 		self.intValue = intValue

@@ -9,11 +9,11 @@ import Foundation
 import ArgumentParser
 
 extension URL: ExpressibleByArgument {
-    
-    /// Create a URL from a command line argument.
-    ///
-    /// Calls `URL.init(fileURLWithPath:)`
-    public init?(argument: String) {
-        self = URL(fileURLWithPath: argument)
-    }
+
+	/// Create a URL from a command line argument.
+	///
+	/// Calls `URL.init(fileURLWithPath:)`
+	public init?(argument: String) {
+		self = URL(fileURLWithPath: argument)
+	}
 }
