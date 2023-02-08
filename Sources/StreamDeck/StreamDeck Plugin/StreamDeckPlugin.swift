@@ -377,10 +377,8 @@ public final class StreamDeckPlugin {
             plugin.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
         
         case .sendToPlugin:
-            let action = try decoder.decode(SendToPluginEvent.self, from: data)
-
-			NSLog("Forwarding \(event) to PluginDelegate")
-            plugin.sentToPlugin(context: action.context, action: action.action, payload: action.payload)
+            NSLog("Forwarding \(event) to \(context ?? "no context")")
+            try self[context]?.decodeSentToPlugin(data, using: decoder)
         }
     }
 }

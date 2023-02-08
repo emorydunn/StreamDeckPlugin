@@ -33,6 +33,9 @@ extension Action {
 	func decodeKeyDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
 
+        let str = String(decoding: data, as: UTF8.self)
+        NSLog("Redpanda Zero Keydown: \(str)")
+        
 		NSLog("Action \(#function)")
 		keyDown(device: action.device, payload: action.payload)
 	}
@@ -82,7 +85,15 @@ extension Action {
 		NSLog("Action \(#function)")
 		titleParametersDidChange(device: action.device, info: action.payload)
 	}
-
+    
+    /// Decode and deliver a sent to plugin event.
+    /// - Parameters:
+    ///   - data: Event data
+    ///   - decoder: The decoder to use
+    func decodeSentToPlugin(_ data: Data, using decoder: JSONDecoder) throws {
+        let action = try decoder.decode(SendToPluginEvent.self, from: data)
+        sentToPlugin(payload: action.payload)
+    }
 }
 
 
