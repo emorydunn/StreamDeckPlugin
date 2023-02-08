@@ -39,7 +39,7 @@ extension Action {
 		keyDown(device: action.device, payload: action.payload)
 	}
 
-	/// Decode and deliver a key down event.
+	/// Decode and deliver a key up event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -50,7 +50,7 @@ extension Action {
 		keyUp(device: action.device, payload: action.payload)
 	}
 
-	/// Decode and deliver a key down event.
+	/// Decode and deliver a will appear event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -63,7 +63,7 @@ extension Action {
 //		return (action: action.action, context: action.context, coordinates: action.payload.coordinates)
 	}
 
-	/// Decode and deliver a key down event.
+	/// Decode and deliver a will dissapear  event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -74,7 +74,7 @@ extension Action {
 		willDisappear(device: action.device, payload: action.payload)
 	}
 
-	/// Decode and deliver a key down event.
+	/// Decode and deliver a title parameters did change event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
