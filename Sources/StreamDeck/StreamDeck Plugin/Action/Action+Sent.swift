@@ -9,9 +9,9 @@ import Foundation
 import AppKit
 
 public extension Action {
-
+	
 	// MARK: Sent
-
+	
 	/// Save data persistently for the action's instance.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -19,35 +19,35 @@ public extension Action {
 	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(to settings: [String: Any]) {
 		StreamDeckPlugin.shared.sendEvent(.setSettings,
-					  context: context,
-					  payload: settings)
+										  context: context,
+										  payload: settings)
 	}
-
+	
 	/// Save data persistently for the action's instance.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings(to settings: Settings) {
 		StreamDeckPlugin.shared.sendEvent(.setSettings,
-					  context: context,
-					  payload: settings)
+										  context: context,
+										  payload: settings)
 	}
-
+	
 	/// Request the persistent data for the action's instance.
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	func getSettings() {
 		StreamDeckPlugin.shared.sendEvent(.getSettings,
-					  context: context,
-					  payload: nil)
+										  context: context,
+										  payload: nil)
 	}
-
+	
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
 		NSLog("EVENT: Sending log message: \(message)")
 		StreamDeckPlugin.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
 	}
-
+	
 	/// Write a debug log to the logs file.
 	/// - Parameters:
 	///   - items: Zero or more items to print.
@@ -56,10 +56,10 @@ public extension Action {
 		let message = items.map {
 			String(describing: $0)
 		}.joined(separator: separator)
-
+		
 		logMessage(message)
 	}
-
+	
 	/// Dynamically change the title of an instance of an action.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -68,16 +68,16 @@ public extension Action {
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setTitle(to title: String?, target: Target? = nil, state: Int? = nil) {
 		var payload: [String: Any] = [:]
-
+		
 		payload["title"] = title
 		payload["target"] = target?.rawValue
 		payload["state"] = state
-
+		
 		StreamDeckPlugin.shared.sendEvent(.setTitle,
-					  context: context,
-					  payload: payload)
+										  context: context,
+										  payload: payload)
 	}
-
+	
 	/// Dynamically change the image displayed by an instance of an action.
 	///
 	/// The image is automatically encoded to a prefixed base64 string.
@@ -89,16 +89,16 @@ public extension Action {
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(to image: NSImage?, target: Target? = nil, state: Int? = nil) {
 		var payload: [String: Any] = [:]
-
+		
 		payload["image"] = image?.base64String
 		payload["target"] = target?.rawValue
 		payload["state"] = state
-
+		
 		StreamDeckPlugin.shared.sendEvent(.setImage,
-					  context: context,
-					  payload: payload)
+										  context: context,
+										  payload: payload)
 	}
-
+	
 	/// Dynamically change the image displayed by an instance of an action.
 	///
 	/// The image is automatically encoded to a prefixed base64 string.
@@ -118,13 +118,13 @@ public extension Action {
 			setImage(to: nil, target: target, state: state)
 			return
 		}
-
+		
 		let image = NSImage(contentsOf: imageURL)
-
+		
 		setImage(to: image, target: target, state: state)
 	}
-
-
+	
+	
 	/// Dynamically change the image displayed by an instance of an action.
 	///
 	/// The image is automatically encoded to a prefixed base64 string.
@@ -136,43 +136,43 @@ public extension Action {
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
 		var payload: [String: Any] = [:]
-
+		
 		if let svg = svg {
 			payload["image"] = "data:image/svg+xml;charset=utf8,\(svg)"
 		}
-
+		
 		payload["target"] = target?.rawValue
 		payload["state"] = state
-
+		
 		StreamDeckPlugin.shared.sendEvent(.setImage,
-					  context: context,
-					  payload: payload)
+										  context: context,
+										  payload: payload)
 	}
-
+	
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert() {
 		StreamDeckPlugin.shared.sendEvent(.showAlert, context: context, payload: nil)
 	}
-
+	
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk() {
 		StreamDeckPlugin.shared.sendEvent(.showOK, context: context, payload: nil)
 	}
-
+	
 	/// Change the state of the action's instance supporting multiple states.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setState(to state: Int) {
 		let payload: [String: Any] = ["state": state]
-
+		
 		StreamDeckPlugin.shared.sendEvent(.setState,
-					  context: context,
-					  payload: payload)
+										  context: context,
+										  payload: payload)
 	}
-
+	
 	/// Send a payload to the Property Inspector.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -181,6 +181,26 @@ public extension Action {
 	func sendToPropertyInspector(payload: [String: Any]) {
 		StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
 										  action: uuid,
+										  context: context,
+										  payload: payload)
+	}
+	
+	
+	/// The plugin can send a `setFeedback` event to the Stream Deck application to dynamically change properties of items on the Stream Deck + touch display layout.
+	func setFeedback(_ payload: [String: Any]) {
+		StreamDeckPlugin.shared.sendEvent(.setFeedback,
+										  context: context,
+										  payload: payload)
+	}
+	
+	/// The plugin can send a `setFeedbackLayout` event to the Stream Deck application to dynamically change the current Stream Deck + touch display layout.
+	///
+	/// `setFeedbackLayout` can use the `id` of a built-in layout or a relative path to a custom layout JSON file.
+	/// - Parameter layout: The layout to set.
+	func setFeedbackLayout(_ layout: LayoutName) {
+		let payload: [String: Any] = ["layout": layout.id]
+		
+		StreamDeckPlugin.shared.sendEvent(.setFeedbackLayout,
 										  context: context,
 										  payload: payload)
 	}

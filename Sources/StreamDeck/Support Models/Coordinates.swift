@@ -9,10 +9,10 @@ import Foundation
 
 /// The coordinates of the action triggered.
 public struct Coordinates: Decodable, Hashable {
-    
-    /// The column.
-    public let column: Int
-    
-    /// The row.
-    public let row: Int
+	
+	/// The column.
+	public let column: Int
+	
+	/// The row.
+	public let row: Int
 }

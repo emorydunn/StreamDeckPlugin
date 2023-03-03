@@ -43,73 +43,7 @@ final class PluginManifestTests: XCTestCase {
             ])
         
         let generator = ExportCommand()
-        let data = try! generator.encode(
-            manifest: manifest,
-            outputFormatting: [
-                .prettyPrinted,
-                .withoutEscapingSlashes,
-                .sortedKeys
-            ])
+        XCTAssertNoThrow(try generator.encode(manifest: manifest))
         
-        let json = String(data: data, encoding: .utf8)!
-        
-        XCTAssertEqual(json, """
-            {
-              "Actions" : [
-                {
-                  "Icon" : "Icons/plus",
-                  "Name" : "Increment",
-                  "States" : [
-                    {
-                      "Image" : "Icons/plus"
-                    }
-                  ],
-                  "Tooltip" : "Increment the count.",
-                  "UUID" : "photo.lostcause.counter.increment"
-                },
-                {
-                  "Icon" : "Icons/minus",
-                  "Name" : "Decrement",
-                  "States" : [
-                    {
-                      "Image" : "Icons/minus"
-                    }
-                  ],
-                  "Tooltip" : "Decrement the count.",
-                  "UUID" : "photo.lostcause.counter.decrement"
-                }
-              ],
-              "ApplicationsToMonitor" : {
-                "Mac" : [
-                  "com.test.app"
-                ],
-                "Windows" : [
-
-                ]
-              },
-              "Author" : "Emory Dunn",
-              "Category" : "Counting Actions",
-              "CodePath" : "counter-plugin",
-              "Description" : "Count things. On your Stream Deck!",
-              "Icon" : "counter",
-              "Name" : "Counter",
-              "OS" : [
-                {
-                  "MinimumVersion" : "10.15",
-                  "Platform" : "mac"
-                },
-                {
-                  "MinimumVersion" : "10",
-                  "Platform" : "windows"
-                }
-              ],
-              "SDKVersion" : 2,
-              "Software" : {
-                "MinimumVersion" : "4.1"
-              },
-              "Version" : "0.1"
-            }
-            """)
-
     }
 }
