@@ -36,6 +36,8 @@ public struct TitleInfo<S: Decodable>: Decodable, Locatable {
 		public let fontSize: Int
 		
 		/// The font style for the title.
+		///
+		/// - Note: If an unknown font style is sent this property is `nil`.
 		public let fontStyle: FontStyle
 		
 		/// Boolean indicating an underline under the title.
