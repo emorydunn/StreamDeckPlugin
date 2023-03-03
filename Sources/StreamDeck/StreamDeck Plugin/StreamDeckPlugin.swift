@@ -144,6 +144,15 @@ public final class StreamDeckPlugin {
 		do {
 			let eventKey = try decoder.decode(ReceivableEvent.self, from: data)
 			try parseEvent(event: eventKey.event, context: eventKey.context, data: data)
+		} catch let error as DecodingError {
+			let json = String(data: data, encoding: .utf8) ?? "could not read string from JSON"
+
+			NSLog("""
+			Decoding Error:
+			\(error)
+			\(json)
+			""")
+
 		} catch {
 			let json = String(data: data, encoding: .utf8) ?? "could not read string from JSON"
 			NSLog("Decoding Error: \(error.localizedDescription)\n\(json)")
