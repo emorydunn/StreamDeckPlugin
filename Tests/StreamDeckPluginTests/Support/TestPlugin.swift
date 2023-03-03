@@ -26,6 +26,10 @@ class TestAction: Action {
     static var icon: String = "Icons/test"
     
     static var states: [PluginActionState]?
+
+	static var controllers: [StreamDeck.ControllerType] = [.keypad]
+
+	static var encoder: StreamDeck.RotaryEncoder? = nil
     
     static var propertyInspectorPath: String?
     
