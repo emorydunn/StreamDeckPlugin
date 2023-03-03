@@ -263,20 +263,4 @@ final class PluginEventTests: XCTestCase {
 
     }
     
-    func testSendToPlugin() {
-        class EventTestPlugin: TestPlugin {
-            override func sentToPlugin(context: String, action: String, payload: [String : String]) {
-                XCTAssertEqual(action, "com.elgato.example.sendToPlugin")
-                eventExp.fulfill()
-            }
-            
-        }
-        
-        let event = ReceivableEvent.EventKey.sendToPlugin
-        let data = TestEvent.sendToPlugin
-
-        let delegate = EventTestPlugin(expectation(description: #function))
-        wait(for: event, data: data, delegate: delegate)
-
-    }
 }

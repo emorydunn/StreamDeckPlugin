@@ -4,6 +4,7 @@
   "context": "opaqueValue",
   "device": "opaqueValue",
   "payload": {
+	"controller": "Keypad",
     "settings": {},
     "coordinates": {
       "column": 3,

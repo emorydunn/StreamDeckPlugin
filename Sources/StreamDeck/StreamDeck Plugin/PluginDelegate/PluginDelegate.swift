@@ -210,6 +210,7 @@ public protocol PluginDelegate {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
 	///   - payload: A json object that will be received by the plugin.
+	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
 	func sentToPlugin(context: String, action: String, payload: [String: String])
 	
 	/// Called immediately after `main()`. 
