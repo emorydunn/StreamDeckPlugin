@@ -69,10 +69,13 @@ extension Action {
 	func decodeKeyDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
 
+        let str = String(decoding: data, as: UTF8.self)
+        
+		NSLog("Action \(#function)")
 		keyDown(device: action.device, payload: action.payload)
 	}
-	
-	/// Decode and deliver a key down event.
+
+	/// Decode and deliver a key up event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -81,8 +84,8 @@ extension Action {
 
 		keyUp(device: action.device, payload: action.payload)
 	}
-	
-	/// Decode and deliver a key down event.
+
+	/// Decode and deliver a will appear event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -121,8 +124,8 @@ extension Action {
 		
 		touchTap(device: action.device, payload: action.payload)
 	}
-	
-	/// Decode and deliver a key down event.
+
+	/// Decode and deliver a will dissapear  event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -131,8 +134,8 @@ extension Action {
 
 		willDisappear(device: action.device, payload: action.payload)
 	}
-	
-	/// Decode and deliver a key down event.
+
+	/// Decode and deliver a title parameters did change event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -141,7 +144,15 @@ extension Action {
 
 		titleParametersDidChange(device: action.device, info: action.payload)
 	}
-	
+
+    /// Decode and deliver a sent to plugin event.
+    /// - Parameters:
+    ///   - data: Event data
+    ///   - decoder: The decoder to use
+    func decodeSentToPlugin(_ data: Data, using decoder: JSONDecoder) throws {
+        let action = try decoder.decode(SendToPluginEvent.self, from: data)
+        sentToPlugin(payload: action.payload)
+    }
 }
 
 
