@@ -7,13 +7,35 @@
 
 import Foundation
 
+public protocol KeyAction: Action { }
+
+extension KeyAction {
+	public static var controllers: [ControllerType] { [.keypad] }
+
+	public static var encoder: RotaryEncoder? { nil }
+}
+
+public protocol StatelessKeyAction: Action { }
+
+extension StatelessKeyAction {
+	public static var controllers: [ControllerType] { [.keypad] }
+
+	public static var encoder: RotaryEncoder? { nil }
+
+	public static var states: [PluginActionState]? { nil }
+}
+
+public protocol EncoderAction: Action { }
+
+extension EncoderAction {
+	public static var controllers: [ControllerType] { [.encoder] }
+
+	public static var states: [StreamDeck.PluginActionState]? { nil }
+}
+
 extension Action {
 	
 	// MARK: Defaults
-	public static var controllers: [ControllerType] { [.keypad] }
-	
-	public static var encoder: RotaryEncoder? { nil }
-	
 	public static var userTitleEnabled: Bool? { nil }
 	
 	public static var propertyInspectorPath: String? { nil }
@@ -36,8 +58,7 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeSettings(_ data: Data, using decoder: JSONDecoder) throws {
 		let settings = try decoder.decode(SettingsEvent<Settings>.self, from: data)
-		
-		NSLog("Action \(#function)")
+
 		didReceiveSettings(device: settings.device, payload: settings.payload)
 	}
 	
@@ -47,8 +68,7 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeKeyDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
-		
-		NSLog("Action \(#function)")
+
 		keyDown(device: action.device, payload: action.payload)
 	}
 	
@@ -58,8 +78,7 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeKeyUp(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
-		
-		NSLog("Action \(#function)")
+
 		keyUp(device: action.device, payload: action.payload)
 	}
 	
@@ -71,8 +90,6 @@ extension Action {
 		let action = try decoder.decode(ActionEvent<AppearEvent<Settings>>.self, from: data)
 		
 		willAppear(device: action.device, payload: action.payload)
-		
-		NSLog("Action \(#function)")
 	}
 	
 	/// Decode and deliver a dial rotation event.
@@ -83,8 +100,6 @@ extension Action {
 		let action = try decoder.decode(ActionEvent<EncoderEvent<Settings>>.self, from: data)
 		
 		dialRotate(device: action.device, payload: action.payload)
-		
-		NSLog("Action \(#function)")
 	}
 	
 	/// Decode and deliver a dial rotation event.
@@ -95,8 +110,6 @@ extension Action {
 		let action = try decoder.decode(ActionEvent<EncoderPressEvent<Settings>>.self, from: data)
 		
 		dialPress(device: action.device, payload: action.payload)
-		
-		NSLog("Action \(#function)")
 	}
 	
 	/// Decode and deliver a dial rotation event.
@@ -107,8 +120,6 @@ extension Action {
 		let action = try decoder.decode(ActionEvent<TouchTapEvent<Settings>>.self, from: data)
 		
 		touchTap(device: action.device, payload: action.payload)
-		
-		NSLog("Action \(#function)")
 	}
 	
 	/// Decode and deliver a key down event.
@@ -117,8 +128,7 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeWillDisappear(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<AppearEvent<Settings>>.self, from: data)
-		
-		NSLog("Action \(#function)")
+
 		willDisappear(device: action.device, payload: action.payload)
 	}
 	
@@ -128,8 +138,6 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeTitleParametersDidChange(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<TitleInfo<Settings>>.self, from: data)
-		
-		NSLog("Action \(#function)")
 
 		titleParametersDidChange(device: action.device, info: action.payload)
 	}
