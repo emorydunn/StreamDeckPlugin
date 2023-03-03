@@ -130,6 +130,7 @@ extension Action {
 		let action = try decoder.decode(ActionEvent<TitleInfo<Settings>>.self, from: data)
 		
 		NSLog("Action \(#function)")
+
 		titleParametersDidChange(device: action.device, info: action.payload)
 	}
 	
