@@ -22,6 +22,10 @@ class DecrementAction: Action {
 		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
 	]
 
+	static var controllers: [ControllerType] = [.encoder]
+
+	static var encoder: RotaryEncoder? = nil;
+
 	var context: String
 
 	var coordinates: StreamDeck.Coordinates?
