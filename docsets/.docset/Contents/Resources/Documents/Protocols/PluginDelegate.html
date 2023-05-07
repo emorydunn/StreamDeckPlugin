@@ -1,0 +1,3123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>PluginDelegate Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/PluginDelegate" class="dashAnchor"></a>
+    <a title="PluginDelegate Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/emorydunn/StreamDeckPlugin"><img src="../img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        PluginDelegate Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/StreamDeckPlugin.html">StreamDeckPlugin</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/Alignment.html">Alignment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/ControllerType.html">ControllerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/DeviceType.html">DeviceType</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FontFamily.html">FontFamily</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/FontStyle.html">FontStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Language.html">Language</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Platform.html">Platform</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/PluginPlatform.html">PluginPlatform</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SendableEventKey.html">SendableEventKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/Target.html">Target</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSImage.html">NSImage</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/PluginManifest.html">PluginManifest</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/URL.html">URL</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/Action.html">Action</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EncoderAction.html">EncoderAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EnvironmentKey.html">EnvironmentKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/EventSettings.html">EventSettings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/KeyAction.html">KeyAction</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Locatable.html">Locatable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/PluginDelegate.html">PluginDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/StatelessKeyAction.html">StatelessKeyAction</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/ActionEvent.html">ActionEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AppearEvent.html">AppearEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ApplicationEvent.html">ApplicationEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ApplicationEvent/App.html">– App</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ApplicationsToMonitor.html">ApplicationsToMonitor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Coordinates.html">Coordinates</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DeviceConnectionEvent.html">DeviceConnectionEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/DeviceInfo.html">DeviceInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EncoderEvent.html">EncoderEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EncoderPressEvent.html">EncoderPressEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Environment.html">Environment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/EnvironmentValues.html">EnvironmentValues</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Event.html">Event</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/GlobalSettingsEvent.html">GlobalSettingsEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/GlobalSettingsEvent/Payload.html">– Payload</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/InstanceAppearEvent.html">InstanceAppearEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/KeyEvent.html">KeyEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/LayoutName.html">LayoutName</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginActionState.html">PluginActionState</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginCommand.html">PluginCommand</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginInfo.html">PluginInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginOS.html">PluginOS</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginProfile.html">PluginProfile</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginRegistrationInfo.html">PluginRegistrationInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PluginSoftware.html">PluginSoftware</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/PropertyInspectorEvent.html">PropertyInspectorEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ReceivableEvent.html">ReceivableEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ReceivableEvent/EventKey.html">– EventKey</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/RotaryEncoder.html">RotaryEncoder</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SendToPluginEvent.html">SendToPluginEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SettingsEvent.html">SettingsEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/SettingsEvent/Payload.html">– Payload</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Size.html">Size</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/StreamDeckApp.html">StreamDeckApp</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TitleInfo.html">TitleInfo</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TitleInfo/Parameters.html">– Parameters</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TouchTapEvent.html">TouchTapEvent</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/TriggerDescription.html">TriggerDescription</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>PluginDelegate</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">PluginDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>The <code>PluginDelegate</code> represents the entry point to to your plugin and is used to generate the manifest.</p>
+
+<p>Your plugin&rsquo;s <code>@main</code> type should conform to <code>PluginDelegate</code> in order for the framework to handle plugin
+lifecycle and command line events.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP8SettingsQa"></a>
+                    <a name="//apple_ref/swift/Alias/Settings" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP8SettingsQa">Settings</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Settings returned by the Stream Deck application.</p>
+
+<p>If your plugin does not use global settings, simply use <code><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></code>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">associatedtype</span> <span class="kt">Settings</span> <span class="p">:</span> <span class="kt">Decodable</span><span class="p">,</span> <span class="kt">Encodable</span><span class="p">,</span> <span class="kt">Hashable</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Manifest"></a>
+                <a name="//apple_ref/swift/Section/Manifest" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Manifest"></a>
+                  <h3 class="section-name"><span>Manifest</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP4nameSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/name" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP4nameSSvpZ">name</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The name of the plugin.</p>
+
+<p>This string is displayed to the user in the Stream Deck store.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP11descriptionSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/description" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP11descriptionSSvpZ">description</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides a general description of what the plugin does.</p>
+
+<p>This string is displayed to the user in the Stream Deck store.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">description</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP8categorySSSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/category" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP8categorySSSgvpZ">category</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The name of the custom category in which the actions should be listed.</p>
+
+<p>This string is visible to the user in the actions list. If you don&rsquo;t provide a category, the actions will appear inside a &ldquo;Custom&rdquo; category.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">category</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP12categoryIconSSSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/categoryIcon" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP12categoryIconSSSgvpZ">categoryIcon</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The relative path to a PNG image without the .png extension.</p>
+
+<p>This image is used in the actions list. The PNG image should be a 28pt x 28pt image.
+You should provide @1x and @2x versions of the image.
+The Stream Deck application takes care of loading the appropriate version of the image.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">categoryIcon</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP6authorSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/author" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP6authorSSvpZ">author</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The author of the plugin.</p>
+
+<p>This string is displayed to the user in the Stream Deck store.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">author</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP4iconSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/icon" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP4iconSSvpZ">icon</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The relative path to a PNG image without the .png extension.</p>
+
+<p>This image is displayed in the Plugin Store window. The PNG image should be a 72pt x 72pt image.
+You should provide @1x and @2x versions of the image.
+The Stream Deck application takes care of loading the appropriate version of the image.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">icon</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP3url10Foundation3URLVSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/url" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP3url10Foundation3URLVSgvpZ">url</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A URL displayed to the user if he wants to get more info about the plugin.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP7versionSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/version" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP7versionSSvpZ">version</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The version of the plugin which can only contain digits and periods.</p>
+
+<p>This is used for the software update mechanism.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">version</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP2osSayAA0C2OSVGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/os" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP2osSayAA0C2OSVGvpZ">os</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">os</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Structs/PluginOS.html">PluginOS</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP21applicationsToMonitorAA012ApplicationsfG0VSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/applicationsToMonitor" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP21applicationsToMonitorAA012ApplicationsfG0VSgvpZ">applicationsToMonitor</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>List of application identifiers to monitor (applications launched or terminated).</p>
+
+<p>See the <a href="https://developer.elgato.com/documentation/stream-deck/sdk/events-received/#applicationdidlaunch">applicationDidLaunch</a> and <a href="https://developer.elgato.com/documentation/stream-deck/sdk/events-received/#applicationdidterminate">applicationDidTerminate</a> events.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">applicationsToMonitor</span><span class="p">:</span> <span class="kt"><a href="../Structs/ApplicationsToMonitor.html">ApplicationsToMonitor</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP8softwareAA0C8SoftwareVvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/software" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP8softwareAA0C8SoftwareVvpZ">software</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates which version of the Stream Deck application is required to install the plugin.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">software</span><span class="p">:</span> <span class="kt"><a href="../Structs/PluginSoftware.html">PluginSoftware</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP10sdkVersionSivpZ"></a>
+                    <a name="//apple_ref/swift/Variable/sdkVersion" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP10sdkVersionSivpZ">sdkVersion</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>This value should be set to 2.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">sdkVersion</span><span class="p">:</span> <span class="kt">Int</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP8codePathSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/codePath" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP8codePathSSvpZ">codePath</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The relative path to the HTML/binary file containing the code of the plugin.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">codePath</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP11codePathMacSSSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/codePathMac" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP11codePathMacSSSgvpZ">codePathMac</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override CodePath for macOS.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">codePathMac</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP11codePathWinSSSgvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/codePathWin" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP11codePathWinSSSgvpZ">codePathWin</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Override CodePath for Windows.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">codePathWin</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP7actionsSayAA6Action_pXpGvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/actions" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP7actionsSayAA6Action_pXpGvpZ">actions</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The actions defined by your plugin.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">actions</span><span class="p">:</span> <span class="p">[</span><span class="n">any</span> <span class="kt"><a href="../Protocols/Action.html">Action</a></span><span class="o">.</span><span class="k">Type</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePxycfc"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePxycfc">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Events%20Received"></a>
+                <a name="//apple_ref/swift/Section/Events Received" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Events%20Received"></a>
+                  <h3 class="section-name"><span>Events Received</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP18didReceiveSettings6action7context6device7payloadySS_S2SAA0G5EventV7PayloadVyAA02NoG0V_GtF"></a>
+                    <a name="//apple_ref/swift/Method/didReceiveSettings(action:context:device:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP18didReceiveSettings6action7context6device7payloadySS_S2SAA0G5EventV7PayloadVyAA02NoG0V_GtF">didReceiveSettings(action:<wbr>context:<wbr>device:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Event received after calling the <code>getSettings</code> API to retrieve the persistent data stored for the action.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">didReceiveSettings</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt"><a href="../Structs/SettingsEvent.html">SettingsEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></span><span class="o">&gt;.</span><span class="kt">Payload</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP24didReceiveGlobalSettingsyySDyS2SGF"></a>
+                    <a name="//apple_ref/swift/Method/didReceiveGlobalSettings(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP24didReceiveGlobalSettingsyySDyS2SGF">didReceiveGlobalSettings(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Event received after calling the <code>getGlobalSettings</code> API to retrieve the global persistent data.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didReceiveGlobalSettings</span><span class="p">(</span><span class="n">_</span> <span class="nv">settings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP24didReceiveGlobalSettingsyy0H0QzF"></a>
+                    <a name="//apple_ref/swift/Method/didReceiveGlobalSettings(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP24didReceiveGlobalSettingsyy0H0QzF">didReceiveGlobalSettings(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Event received after calling the <code>getGlobalSettings</code> API to retrieve the global persistent data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">didReceiveGlobalSettings</span><span class="p">(</span><span class="n">_</span> <span class="nv">settings</span><span class="p">:</span> <span class="kt"><a href="../Protocols/PluginDelegate.html#/s:10StreamDeck14PluginDelegateP8SettingsQa">Settings</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP10willAppear6action7context6device7payloadySS_S2SAA0F5EventVyAA10NoSettingsVGtF"></a>
+                    <a name="//apple_ref/swift/Method/willAppear(action:context:device:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP10willAppear6action7context6device7payloadySS_S2SAA0F5EventVyAA10NoSettingsVGtF">willAppear(action:<wbr>context:<wbr>device:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a <code>willAppear</code> event.</p>
+
+<p>You will see such an event when:</p>
+
+<ul>
+<li>the Stream Deck application is started</li>
+<li>the user switches between profiles</li>
+<li>the user sets a key to use your action</li>
+</ul>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">willAppear</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt"><a href="../Structs/AppearEvent.html">AppearEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action&rsquo;s unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The event payload sent by the server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP13willDisappear6action7context6device7payloadySS_S2SAA11AppearEventVyAA10NoSettingsVGtF"></a>
+                    <a name="//apple_ref/swift/Method/willDisappear(action:context:device:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP13willDisappear6action7context6device7payloadySS_S2SAA11AppearEventVyAA10NoSettingsVGtF">willDisappear(action:<wbr>context:<wbr>device:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When an instance of an action ceases to be displayed on Stream Deck, for example when switching profiles or folders, the plugin will receive a <code>willDisappear</code> event.</p>
+
+<p>You will see such an event when:</p>
+
+<ul>
+<li>the user switches between profiles</li>
+<li>the user deletes an action</li>
+</ul>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">willDisappear</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt"><a href="../Structs/AppearEvent.html">AppearEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action&rsquo;s unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The event payload sent by the server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP7keyDown6action7context6device7payloadySS_S2SAA8KeyEventVyAA10NoSettingsVGtF"></a>
+                    <a name="//apple_ref/swift/Method/keyDown(action:context:device:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP7keyDown6action7context6device7payloadySS_S2SAA8KeyEventVyAA10NoSettingsVGtF">keyDown(action:<wbr>context:<wbr>device:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the user presses a key, the plugin will receive the <code>keyDown</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">keyDown</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt"><a href="../Structs/KeyEvent.html">KeyEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action&rsquo;s unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The event payload sent by the server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP5keyUp6action7context6device7payloadySS_S2SAA8KeyEventVyAA10NoSettingsVGtF"></a>
+                    <a name="//apple_ref/swift/Method/keyUp(action:context:device:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP5keyUp6action7context6device7payloadySS_S2SAA8KeyEventVyAA10NoSettingsVGtF">keyUp(action:<wbr>context:<wbr>device:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the user releases a key, the plugin will receive the <code>keyUp</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">keyUp</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="kt"><a href="../Structs/KeyEvent.html">KeyEvent</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action&rsquo;s unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The event payload sent by the server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP24titleParametersDidChange6action7context6device4infoySS_S2SAA9TitleInfoVyAA10NoSettingsVGtF"></a>
+                    <a name="//apple_ref/swift/Method/titleParametersDidChange(action:context:device:info:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP24titleParametersDidChange6action7context6device4infoySS_S2SAA9TitleInfoVyAA10NoSettingsVGtF">titleParametersDidChange(action:<wbr>context:<wbr>device:<wbr>info:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the user changes the title or title parameters of the instance of an action, the plugin will receive a <code>titleParametersDidChange</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">titleParametersDidChange</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">info</span><span class="p">:</span> <span class="kt"><a href="../Structs/TitleInfo.html">TitleInfo</a></span><span class="o">&lt;</span><span class="kt"><a href="../Structs.html#/s:10StreamDeck10NoSettingsV">NoSettings</a></span><span class="o">&gt;</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action&rsquo;s unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The event payload sent by the server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP16deviceDidConnect_0E4InfoySS_AA06DeviceH0VtF"></a>
+                    <a name="//apple_ref/swift/Method/deviceDidConnect(_:deviceInfo:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP16deviceDidConnect_0E4InfoySS_AA06DeviceH0VtF">deviceDidConnect(_:<wbr>deviceInfo:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When a device is plugged to the computer, the plugin will receive a <code>deviceDidConnect</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deviceDidConnect</span><span class="p">(</span><span class="n">_</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">deviceInfo</span><span class="p">:</span> <span class="kt"><a href="../Structs/DeviceInfo.html">DeviceInfo</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action&rsquo;s unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The event payload sent by the server.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP19deviceDidDisconnectyySSF"></a>
+                    <a name="//apple_ref/swift/Method/deviceDidDisconnect(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP19deviceDidDisconnectyySSF">deviceDidDisconnect(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When a device is unplugged from the computer, the plugin will receive a <code>deviceDidDisconnect</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">deviceDidDisconnect</span><span class="p">(</span><span class="n">_</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP20applicationDidLaunchyySSF"></a>
+                    <a name="//apple_ref/swift/Method/applicationDidLaunch(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP20applicationDidLaunchyySSF">applicationDidLaunch(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A plugin can request in its manifest.json to be notified when some applications are launched or terminated.</p>
+
+<p>In order to do so, the manifest.json should contain an <code><a href="../Structs/ApplicationsToMonitor.html">ApplicationsToMonitor</a></code> object specifying the list of application identifiers to monitor.
+On macOS the application bundle identifier is used while the exe filename is used on Windows.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">applicationDidLaunch</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>application</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the application that has been launched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP23applicationDidTerminateyySSF"></a>
+                    <a name="//apple_ref/swift/Method/applicationDidTerminate(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP23applicationDidTerminateyySSF">applicationDidTerminate(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A plugin can request in its manifest.json to be notified when some applications are launched or terminated.</p>
+
+<p>In order to do so, the manifest.json should contain an <code><a href="../Structs/ApplicationsToMonitor.html">ApplicationsToMonitor</a></code> object specifying the list of application identifiers to monitor.
+On macOS the application bundle identifier is used while the exe filename is used on Windows.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">applicationDidTerminate</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>application</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The identifier of the application that has been launched.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP15systemDidWakeUpyyF"></a>
+                    <a name="//apple_ref/swift/Method/systemDidWakeUp()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP15systemDidWakeUpyyF">systemDidWakeUp()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When the computer is wake up, the plugin will receive the <code>systemDidWakeUp</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">systemDidWakeUp</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP26propertyInspectorDidAppear6action7context6deviceySS_S2StF"></a>
+                    <a name="//apple_ref/swift/Method/propertyInspectorDidAppear(action:context:device:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP26propertyInspectorDidAppear6action7context6deviceySS_S2StF">propertyInspectorDidAppear(action:<wbr>context:<wbr>device:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The plugin will receive a <code>propertyInspectorDidAppear</code> event when the Property Inspector appears.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">propertyInspectorDidAppear</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action unique identifier.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP29propertyInspectorDidDisappear6action7context6deviceySS_S2StF"></a>
+                    <a name="//apple_ref/swift/Method/propertyInspectorDidDisappear(action:context:device:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP29propertyInspectorDidDisappear6action7context6deviceySS_S2StF">propertyInspectorDidDisappear(action:<wbr>context:<wbr>device:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The plugin will receive a <code>propertyInspectorDidDisappear</code> event when the Property Inspector appears.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">propertyInspectorDidDisappear</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">device</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action unique identifier.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>device</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP06sentToC07context6action7payloadySS_SSSDyS2SGtF"></a>
+                    <a name="//apple_ref/swift/Method/sentToPlugin(context:action:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP06sentToC07context6action7payloadySS_SSSDyS2SGtF">sentToPlugin(context:<wbr>action:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The plugin will receive a <code>sendToPlugin</code> event when the Property Inspector sends a <code>sendToPlugin</code> event.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Action events are no longer sent to the plugin")</span>
+<span class="kd">func</span> <span class="nf">sentToPlugin</span><span class="p">(</span><span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">String</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A json object that will be received by the plugin.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegateP16pluginWasCreatedyyFZ"></a>
+                    <a name="//apple_ref/swift/Method/pluginWasCreated()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegateP16pluginWasCreatedyyFZ">pluginWasCreated()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Called immediately after <code><a href="../Protocols/PluginDelegate.html#/s:10StreamDeck14PluginDelegatePAAE4mainyyFZ">main()</a></code>.</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        <p>The default implementation of <code>static PluginDelegate.pluginWasCreated()</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">pluginWasCreated</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Sent"></a>
+                <a name="//apple_ref/swift/Section/Sent" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Sent"></a>
+                  <h3 class="section-name"><span>Sent</span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE11setSettings2in2toySS_SDySSypGtF"></a>
+                    <a name="//apple_ref/swift/Method/setSettings(in:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE11setSettings2in2toySS_SDySSypGtF">setSettings(in:<wbr>to:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save data persistently for the action&rsquo;s instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@available(*, deprecated, message: "Use the Settings API.")</span>
+<span class="kd">func</span> <span class="nf">setSettings</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">settings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>settings</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A json object which is persistently saved for the action&rsquo;s instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE11setSettings2in2toySS_qd__tSERd__lF"></a>
+                    <a name="//apple_ref/swift/Method/setSettings(in:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE11setSettings2in2toySS_qd__tSERd__lF">setSettings(in:<wbr>to:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save data persistently for the action&rsquo;s instance.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="n">setSettings</span><span class="o">&lt;</span><span class="kt">P</span><span class="o">&gt;</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">settings</span><span class="p">:</span> <span class="kt">P</span><span class="p">)</span> <span class="k">where</span> <span class="kt">P</span> <span class="p">:</span> <span class="kt">Encodable</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>settings</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A json object which is persistently saved for the action&rsquo;s instance.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE11getSettings2inySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/getSettings(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE11getSettings2inySS_tF">getSettings(in:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request the persistent data for the action&rsquo;s instance.</p>
+
+<ul>
+<li>context: An opaque value identifying the instance&rsquo;s action or Property Inspector.</li>
+</ul>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getSettings</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE17setGlobalSettingsyySDySSypGF"></a>
+                    <a name="//apple_ref/swift/Method/setGlobalSettings(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE17setGlobalSettingsyySDySSypGF">setGlobalSettings(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Save data securely and globally for the plugin.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setGlobalSettings</span><span class="p">(</span><span class="n">_</span> <span class="nv">settings</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>settings</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A json object which is persistently saved globally.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE17getGlobalSettingsyyF"></a>
+                    <a name="//apple_ref/swift/Method/getGlobalSettings()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE17getGlobalSettingsyyF">getGlobalSettings()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Request the global persistent data.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">getGlobalSettings</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE7openURLyy10Foundation0F0VF"></a>
+                    <a name="//apple_ref/swift/Method/openURL(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE7openURLyy10Foundation0F0VF">openURL(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Open an URL in the default browser.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">openURL</span><span class="p">(</span><span class="n">_</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>url</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The URL to open</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE10logMessageyySSF"></a>
+                    <a name="//apple_ref/swift/Method/logMessage(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE10logMessageyySSF">logMessage(_:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Write a debug log to the logs file.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">logMessage</span><span class="p">(</span><span class="n">_</span> <span class="nv">message</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>message</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A string to write to the logs file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE10logMessage_9separatoryypd_SStF"></a>
+                    <a name="//apple_ref/swift/Method/logMessage(_:separator:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE10logMessage_9separatoryypd_SStF">logMessage(_:<wbr>separator:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Write a debug log to the logs file.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">logMessage</span><span class="p">(</span><span class="n">_</span> <span class="nv">items</span><span class="p">:</span> <span class="kt">Any</span><span class="o">...</span><span class="p">,</span> <span class="nv">separator</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">" "</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>items</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Zero or more items to print.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>separator</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A string to print between each item. The default is a single space (&ldquo; &rdquo;).</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE8setTitle2in2to6target5stateySS_SSSgAA6TargetOSgSiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/setTitle(in:to:target:state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE8setTitle2in2to6target5stateySS_SSSgAA6TargetOSgSiSgtF">setTitle(in:<wbr>to:<wbr>target:<wbr>state:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dynamically change the title of an instance of an action.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setTitle</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">target</span><span class="p">:</span> <span class="kt"><a href="../Enums/Target.html">Target</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>title</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The title to display. If there is no title parameter, the title is reset to the title set by the user.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>target</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Specify if you want to display the title on hardware, software, or both.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE8setImage2in2to6target5stateySS_So7NSImageCSgAA6TargetOSgSiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/setImage(in:to:target:state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE8setImage2in2to6target5stateySS_So7NSImageCSgAA6TargetOSgSiSgtF">setImage(in:<wbr>to:<wbr>target:<wbr>state:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dynamically change the image displayed by an instance of an action.</p>
+
+<p>The image is automatically encoded to a prefixed base64 string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setImage</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">NSImage</span><span class="p">?,</span> <span class="nv">target</span><span class="p">:</span> <span class="kt"><a href="../Enums/Target.html">Target</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An image to display.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>target</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Specify if you want to display the title on hardware, software, or both.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE8setImage2in02toF013withExtension12subdirectory6target5stateySS_SSSgSSAkA6TargetOSgSiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/setImage(in:toImage:withExtension:subdirectory:target:state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE8setImage2in02toF013withExtension12subdirectory6target5stateySS_SSSgSSAkA6TargetOSgSiSgtF">setImage(in:<wbr>toImage:<wbr>withExtension:<wbr>subdirectory:<wbr>target:<wbr>state:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dynamically change the image displayed by an instance of an action.</p>
+
+<p>The image is automatically encoded to a prefixed base64 string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setImage</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">toImage</span> <span class="nv">image</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="n">withExtension</span> <span class="nv">ext</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">subdirectory</span> <span class="nv">subpath</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">target</span><span class="p">:</span> <span class="kt"><a href="../Enums/Target.html">Target</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of an image to display.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ext</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The filename extension of the file to locate.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>subpath</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The subdirectory in the plugin bundle in which to search for images.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>target</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Specify if you want to display the title on hardware, software, or both.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE8setImage2in5toSVG6target5stateySS_SSSgAA6TargetOSgSiSgtF"></a>
+                    <a name="//apple_ref/swift/Method/setImage(in:toSVG:target:state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE8setImage2in5toSVG6target5stateySS_SSSgAA6TargetOSgSiSgtF">setImage(in:<wbr>toSVG:<wbr>target:<wbr>state:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Dynamically change the image displayed by an instance of an action.</p>
+
+<p>The image is automatically encoded to a prefixed base64 string.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setImage</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">toSVG</span> <span class="nv">svg</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">target</span><span class="p">:</span> <span class="kt"><a href="../Enums/Target.html">Target</a></span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">Int</span><span class="p">?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>image</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The SVG to display.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>target</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Specify if you want to display the title on hardware, software, or both.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE9showAlert2inySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/showAlert(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE9showAlert2inySS_tF">showAlert(in:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Temporarily show an alert icon on the image displayed by an instance of an action.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">showAlert</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE6showOk2inySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/showOk(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE6showOk2inySS_tF">showOk(in:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Temporarily show an OK checkmark icon on the image displayed by an instance of an action.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">showOk</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE8setState2in2toySS_SitF"></a>
+                    <a name="//apple_ref/swift/Method/setState(in:to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE8setState2in2toySS_SitF">setState(in:<wbr>to:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Change the state of the action&rsquo;s instance supporting multiple states.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setState</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">to</span> <span class="nv">state</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE15switchToProfile5namedySS_tF"></a>
+                    <a name="//apple_ref/swift/Method/switchToProfile(named:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE15switchToProfile5namedySS_tF">switchToProfile(named:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Switch to one of the preconfigured read-only profiles.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">switchToProfile</span><span class="p">(</span><span class="n">named</span> <span class="nv">name</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>name</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the profile to switch to. The name should be identical to the name provided in the manifest.json file.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE23sendToPropertyInspector2in6action7payloadySS_SSSDySSypGtF"></a>
+                    <a name="//apple_ref/swift/Method/sendToPropertyInspector(in:action:payload:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE23sendToPropertyInspector2in6action7payloadySS_SSSDySSypGtF">sendToPropertyInspector(in:<wbr>action:<wbr>payload:<wbr>)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Send a payload to the Property Inspector.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">sendToPropertyInspector</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="nv">payload</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>An opaque value identifying the instance&rsquo;s action or Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The action unique identifier.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>payload</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A json object that will be received by the Property Inspector.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE4mainyyFZ"></a>
+                    <a name="//apple_ref/swift/Method/main()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE4mainyyFZ">main()</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The default <code>main</code> function.</p>
+
+<p>This method configures the plugin, calls <code><a href="../Protocols/PluginDelegate.html#/s:10StreamDeck14PluginDelegateP16pluginWasCreatedyyFZ">pluginWasCreated()</a></code>, and then registers the plugin.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:10StreamDeck14PluginDelegatePAAE14executableNameSSvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/executableName" class="dashAnchor"></a>
+                    <a class="token" href="#/s:10StreamDeck14PluginDelegatePAAE14executableNameSSvpZ">executableName</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determine the CodePath for the plugin based on the bundles executable&rsquo;s name.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">static</span> <span class="k">var</span> <span class="nv">executableName</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2023 <a class="link" href="http://emorydunn.com" target="_blank" rel="external noopener">Emory Dunn</a>. All rights reserved. (Last updated: 2023-05-07)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
