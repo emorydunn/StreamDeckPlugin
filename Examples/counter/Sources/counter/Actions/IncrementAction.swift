@@ -8,7 +8,7 @@
 import Foundation
 import StreamDeck
 
-class IncrementAction: Action {
+class IncrementAction: KeyAction {
 
 	typealias Settings = NoSettings
 
@@ -21,10 +21,6 @@ class IncrementAction: Action {
 	static var states: [PluginActionState]? = [
 		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
 	]
-
-	static var controllers: [ControllerType] = [.encoder]
-
-	static var encoder: RotaryEncoder? = nil;
 
 	var context: String
 	
