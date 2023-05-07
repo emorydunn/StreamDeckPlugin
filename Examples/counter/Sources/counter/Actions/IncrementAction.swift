@@ -8,7 +8,7 @@
 import Foundation
 import StreamDeck
 
-class IncrementAction: Action {
+class IncrementAction: KeyAction {
 
 	typealias Settings = NoSettings
 
