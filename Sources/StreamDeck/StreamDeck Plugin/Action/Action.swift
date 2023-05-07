@@ -54,7 +54,12 @@ public protocol Action {
 	static var states: [PluginActionState]? { get }
 	
 	
-	/// Specifies an array of controllers. Valid values include "Keypad" and "Encoder". ["Keypad"] by default.
+	/// Specifies an array of controllers.
+	///
+	/// Valid values include "Keypad" and "Encoder".
+	///
+	/// Include "Keypad" to have an action shown for standard StreamDeck keys.
+	/// Include "Encoder" to have an action down for the StreamDeck+ dials. 
 	static var controllers: [ControllerType] { get }
 	
 	/// An object containing encoder information.
