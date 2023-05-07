@@ -8,7 +8,7 @@
 import Foundation
 import StreamDeck
 
-class RotaryAction: Action {
+class RotaryAction: EncoderAction {
 
 	typealias Settings = NoSettings
 
@@ -17,10 +17,6 @@ class RotaryAction: Action {
 	static var uuid: String = "counter.rotary"
 
 	static var icon: String = "Icons/actionIcon"
-
-	static var states: [PluginActionState]?
-
-	static var controllers: [ControllerType] = [.encoder]
 
 	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .value,
 													   stackColor: "#f1184c",
