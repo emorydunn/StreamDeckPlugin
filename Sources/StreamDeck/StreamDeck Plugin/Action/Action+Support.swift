@@ -7,6 +7,12 @@
 
 import Foundation
 
+/// A convenience protocol that provides default values for an `Action`.
+///
+/// Use this protocol to create a standard button action that includes states.
+///
+/// - `controllers` is set to `[.keypad]`
+/// - `encoder` is set to `nil`.
 public protocol KeyAction: Action { }
 
 extension KeyAction {
@@ -15,6 +21,13 @@ extension KeyAction {
 	public static var encoder: RotaryEncoder? { nil }
 }
 
+/// A convenience protocol that provides default values for an `Action`.
+///
+/// Use this protocol to create a standard button action that doesn't include any states.
+///
+/// - `states` is set to `nil`
+/// - `controllers` is set to `[.keypad]`
+/// - `encoder` is set to `nil`.
 public protocol StatelessKeyAction: Action { }
 
 extension StatelessKeyAction {
@@ -25,6 +38,12 @@ extension StatelessKeyAction {
 	public static var states: [PluginActionState]? { nil }
 }
 
+/// A convenience protocol that provides default values for an `Action`.
+///
+/// Use this protocol to create a dial action for the StreamDeck+.
+///
+/// - `states` is set to `nil`
+/// - `controllers` is set to `[.encoder]`
 public protocol EncoderAction: Action { }
 
 extension EncoderAction {
