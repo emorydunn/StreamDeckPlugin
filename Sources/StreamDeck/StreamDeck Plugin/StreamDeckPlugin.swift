@@ -289,7 +289,11 @@ public final class StreamDeckPlugin {
 
 		case .didReceiveGlobalSettings:
 			NSLog("Forwarding \(event) to PluginDelegate")
-			try plugin.decodeGlobalSettings(data, using: decoder)
+			GlobalSettings.shared.updateSettings(fromEvent: data)
+
+			for (_ , instance) in instances {
+				instance.didReceiveGlobalSettings()
+			}
 
 		case .keyDown:
 			NSLog("Forwarding \(event) to \(context ?? "no context")")
