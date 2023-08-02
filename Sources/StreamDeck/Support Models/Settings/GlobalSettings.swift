@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  GlobalSettings.swift
 //  
 //
 //  Created by Emory Dunn on 8/2/23.
@@ -10,26 +10,28 @@ import OSLog
 
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "Global Settings")
 
-/// Global settings declared for the plugin.
+/// Persistent global settings declared for the plugin.
 ///
 /// When updating the value of a setting via the subscript a
 /// `setGlobalSettings` event is sent to store the settings with
 /// the Stream Deck app and instances are notified of the change. 
 public struct GlobalSettings {
 
+	/// Shared global instance of global settings. 
 	static var shared = GlobalSettings()
 
 	// Object to send to SD App
 	private var settings: [String: Any] = [:]
 
+	/// Access the global settings for the plugin with a custom key.
 	public subscript<K: GlobalSettingKey>(key: K.Type) -> K.Value {
 		get {
 			log.debug("Getting value for \(key, privacy: .public)")
-			return settings[String(describing: key)] as? K.Value ?? key.defaultValue
+			return settings[key.name] as? K.Value ?? key.defaultValue
 		}
 		set {
 			log.log("Setting value for \(key, privacy: .public) to \(String(describing: newValue), privacy: .public)")
-			settings[String(describing: key)] = newValue
+			settings[key.name] = newValue
 
 			let updatedSettings = settings
 			Task {
@@ -46,6 +48,10 @@ public struct GlobalSettings {
 		}
 	}
 
+	/// Update the settings from a `getGlobalSettings` event.
+	///
+	/// This method decodes the payload and settings from a event.
+	/// - Parameter data: The full event data.
 	mutating func updateSettings(fromEvent data: Data) {
 
 		// Decode the event

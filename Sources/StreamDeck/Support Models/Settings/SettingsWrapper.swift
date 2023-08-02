@@ -1,5 +1,5 @@
 //
-//  Settings.swift
+//  SettingsWrapper.swift
 //  
 //
 //  Created by Emory Dunn on 11/30/22.
@@ -11,6 +11,9 @@ import Foundation
 public struct NoSettings: Codable, Hashable { }
 
 @propertyWrapper
+/// A property wrapper that reads from and writes to the plugin's global settings.
+///
+/// The the `GlobalSetting` property wrapper to read and write global settings. 
 public struct GlobalSetting<Value: Codable> {
 
 	var keyPath: WritableKeyPath<GlobalSettings, Value>

@@ -9,7 +9,7 @@ import Foundation
 
 /// Keys marked as exported are expected to be set by an action before it finishes.
 ///
-/// `ImportedContext` checks whether a key has been registered by a previous `ExportedContext`.
+/// - Note: Environmental values are not persistent. 
 @propertyWrapper
 public struct Environment<K: EnvironmentKey>: CustomReflectable {
 	
