@@ -24,11 +24,11 @@ public struct GlobalSettings {
 
 	public subscript<K: GlobalSettingKey>(key: K.Type) -> K.Value {
 		get {
-			log.debug("Getting value for \(key)")
+			log.debug("Getting value for \(key, privacy: .public)")
 			return settings[String(describing: key)] as? K.Value ?? key.defaultValue
 		}
 		set {
-			log.log("Setting value for \(key) to \(String(describing: newValue))")
+			log.log("Setting value for \(key, privacy: .public) to \(String(describing: newValue), privacy: .public)")
 			settings[String(describing: key)] = newValue
 
 			let updatedSettings = settings
@@ -47,12 +47,24 @@ public struct GlobalSettings {
 	}
 
 	mutating func updateSettings(fromEvent data: Data) {
-		guard let newSettings = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
+
+		// Decode the event
+		guard
+			let event = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any],
+			let payload = event["payload"] as? [String: Any],
+			let newSettings = payload["settings"] as? [String: Any]
+		else {
 			return
 		}
 
-		log.log("Updated global settings from event")
 		self.settings = newSettings
+
+		log.log("Notifying action instances")
+		Task {
+			for (_ , instance) in StreamDeckPlugin.shared.instances {
+				instance.didReceiveGlobalSettings()
+			}
+		}
 	}
 
 }
