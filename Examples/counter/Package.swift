@@ -5,13 +5,14 @@ import PackageDescription
 
 let package = Package(
     name: "CounterPlugin",
-    platforms: [.macOS(.v10_15)],
+	platforms: [.macOS(.v11)],
     products: [
         .executable(name: "counter-plugin", targets: ["counter"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-       .package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main")),
+//       .package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main")),
+		.package(path: "/Users/emorydunn/Repositories/StreamDeck/StreamDeckPlugin"),
 		// .package(path: "path/to/this/repo/StreamDeck/StreamDeckPlugin"), // For local development
     ],
     targets: [
@@ -20,7 +21,7 @@ let package = Package(
         .executableTarget(
             name: "counter",
             dependencies: [
-				.product(name: "StreamDeck", package: "StreamDeck"),
+				.product(name: "StreamDeck", package: "StreamDeckPlugin"),
             ]),
     ]
 )
