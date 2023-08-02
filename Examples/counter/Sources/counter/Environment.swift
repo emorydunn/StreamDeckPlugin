@@ -8,6 +8,15 @@
 import Foundation
 import StreamDeck
 
-struct PluginCount: EnvironmentKey {
-    static let defaultValue: Int = 0
+struct PluginCount: EnvironmentKey, GlobalSettingKey {
+	static let defaultValue: Int = 0
+}
+
+
+extension GlobalSettings {
+	@MainActor
+	var count: Int {
+		get { self[PluginCount.self] }
+		set { self[PluginCount.self] = newValue }
+	}
 }
