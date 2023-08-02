@@ -8,7 +8,7 @@
 import Foundation
 import StreamDeck
 
-struct PluginCount: EnvironmentKey, GlobalSettingKey {
+struct PluginCount: GlobalSettingKey {
 	static let defaultValue: Int = 0
 }
 

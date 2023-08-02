@@ -30,7 +30,7 @@ class RotaryAction: EncoderAction {
 
 	static var userTitleEnabled: Bool? = false
 
-	@Environment(PluginCount.self) var count: Int
+	@GlobalSetting(\.count) var count: Int
 
 	var valueLayout = true
 
@@ -51,10 +51,6 @@ class RotaryAction: EncoderAction {
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) {
 		count += payload.ticks
 
-		StreamDeckPlugin.shared.instances.values.forEach {
-			$0.setTitle(to: "\(count)", target: nil, state: nil)
-		}
-
 		setFeedback(["value" : "\(count)"])
 	}
 
@@ -62,10 +58,6 @@ class RotaryAction: EncoderAction {
 		guard payload.pressed else { return }
 
 		count = 0
-
-		StreamDeckPlugin.shared.instances.values.forEach {
-			$0.setTitle(to: "\(count)", target: nil, state: nil)
-		}
 
 		logMessage("Resetting counter")
 		setFeedback(["value" : "\(count)"])
@@ -82,6 +74,10 @@ class RotaryAction: EncoderAction {
 
 		valueLayout.toggle()
 
+	}
+
+	func didReceiveGlobalSettings() {
+		setTitle(to: "\(count)", target: nil, state: nil)
 	}
 
 }
