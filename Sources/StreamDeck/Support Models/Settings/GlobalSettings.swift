@@ -1,8 +1,8 @@
 //
-//  Settings.swift
+//  File.swift
 //  
 //
-//  Created by Emory Dunn on 11/30/22.
+//  Created by Emory Dunn on 8/2/23.
 //
 
 import Foundation
@@ -10,19 +10,11 @@ import OSLog
 
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "Global Settings")
 
-/// A struct that indicates an action has no settings. 
-public struct NoSettings: Codable, Hashable { }
-
-/// A key for accessing global settings.
-public protocol GlobalSettingKey {
-
-	associatedtype Value: Codable
-
-	/// The default value for the setting. 
-	static var defaultValue: Value { get }
-
-}
-
+/// Global settings declared for the plugin.
+///
+/// When updating the value of a setting via the subscript a
+/// `setGlobalSettings` event is sent to store the settings with
+/// the Stream Deck app and instances are notified of the change. 
 public struct GlobalSettings {
 
 	static var shared = GlobalSettings()
@@ -42,8 +34,8 @@ public struct GlobalSettings {
 			let updatedSettings = settings
 			Task {
 				try await StreamDeckPlugin.shared.sendEvent(.setGlobalSettings,
-												  context: StreamDeckPlugin.shared.uuid,
-												  payload: updatedSettings)
+															context: StreamDeckPlugin.shared.uuid,
+															payload: updatedSettings)
 
 				log.log("Notifying action instances")
 				for (_ , instance) in StreamDeckPlugin.shared.instances {
@@ -61,28 +53,6 @@ public struct GlobalSettings {
 
 		log.log("Updated global settings from event")
 		self.settings = newSettings
-	}
-
-}
-
-
-@propertyWrapper
-public struct GlobalSetting<Value: Codable> {
-
-	var keyPath: WritableKeyPath<GlobalSettings, Value>
-
-	public init(_ keyPath: WritableKeyPath<GlobalSettings, Value>) {
-		self.keyPath = keyPath
-	}
-
-	@MainActor
-	public var wrappedValue: Value {
-		get {
-			GlobalSettings.shared[keyPath: keyPath]
-		}
-		nonmutating set {
-			GlobalSettings.shared[keyPath: keyPath] = newValue
-		}
 	}
 
 }
