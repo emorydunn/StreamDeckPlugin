@@ -25,6 +25,11 @@ public final class StreamDeckPlugin {
 	let encoder = JSONEncoder()
 	let decoder = JSONDecoder()
 
+	/// A flag indicating global settings need to be loaded.
+	///
+	/// The first event after registration will request the global settings and toggle this value.
+	private var shouldLoadSettings = true
+
 	// MARK: Streamdeck Properties
 
 	/// The port that should be used to create the WebSocket
@@ -122,6 +127,7 @@ public final class StreamDeckPlugin {
 			// Queue for the next message
 			self?.monitorSocket()
 		}
+
 	}
 
 	/// Sends a WebSocket message, receiving the result in a completion handler.
@@ -301,6 +307,15 @@ public final class StreamDeckPlugin {
 	///   - event: The event key.
 	///   - data: The JSON data.
 	func parseEvent(event: ReceivableEvent.EventKey, context: String?, data: Data) throws {
+
+		if shouldLoadSettings {
+			NSLog("Received first event, requesting global settings")
+			// Get the initial global settings
+			StreamDeckPlugin.shared.sendEvent(.getGlobalSettings,
+											  context: StreamDeckPlugin.shared.uuid,
+											  payload: nil)
+			shouldLoadSettings = false
+		}
 
 		switch event {
 
