@@ -274,6 +274,28 @@ public final class StreamDeckPlugin {
 
 	}
 
+	/// Send raw events over the the socket.
+	///
+	/// - Parameters:
+	///   - eventType: The event type.
+	///   - context: The context token.
+	///   - payload: The payload for the action.
+	/// - Throws: Errors while encoding the data to JSON.
+	public func sendEvent<P: Encodable>(_ eventType: SendableEventKey, action: String? = nil, context: String?, payload: P?) async throws {
+
+		// Construct the event to serialize and send
+		let event = SendableEvent(event: eventType,
+								  action: action,
+								  context: context,
+								  payload: payload)
+
+		// Encode the event
+		let data = try encoder.encode(event)
+
+		try await task.send(URLSessionWebSocketTask.Message.data(data))
+
+	}
+
 	/// Parse an event received from the Stream Deck application.
 	/// - Parameters:
 	///   - event: The event key.
