@@ -144,7 +144,7 @@ extension Action {
 		touchTap(device: action.device, payload: action.payload)
 	}
 
-	/// Decode and deliver a will dissapear  event.
+	/// Decode and deliver a will disappear event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
