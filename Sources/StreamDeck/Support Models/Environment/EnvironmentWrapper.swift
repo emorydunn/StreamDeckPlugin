@@ -11,22 +11,21 @@ import Foundation
 ///
 /// - Note: Environmental values are not persistent. 
 @propertyWrapper
-public struct Environment<K: EnvironmentKey>: CustomReflectable {
-	
-	public init(_ key: K.Type) {}
-	
-	/// Gets and sets the value in the shared `ContextValues` instance.
-	public var wrappedValue: K.Value {
-		get {
-			EnvironmentValues.shared[K.self]
-		}
-		set {
-			EnvironmentValues.shared[K.self] = newValue
-		}
-		
+public struct Environment<Value> {
+
+	var keyPath: WritableKeyPath<EnvironmentValues, Value>
+
+	public init(_ keyPath: WritableKeyPath<EnvironmentValues, Value>) {
+		self.keyPath = keyPath
 	}
 	
-	public var customMirror: Mirror {
-		Mirror(String.self, children: ["ExportedKey": K.dictKey])
+	@MainActor
+	public var wrappedValue: Value {
+		get {
+			EnvironmentValues.shared[keyPath: keyPath]
+		}
+		nonmutating set {
+			EnvironmentValues.shared[keyPath: keyPath] = newValue
+		}
 	}
 }

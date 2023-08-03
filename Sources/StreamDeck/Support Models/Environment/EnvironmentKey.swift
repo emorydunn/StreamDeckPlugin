@@ -16,6 +16,6 @@ public protocol EnvironmentKey {
 extension EnvironmentKey {
 	/// Unique name for the key type
 	static var dictKey: String {
-		return String(reflecting: Self.self)
+		return String(describing: self)
 	}
 }
