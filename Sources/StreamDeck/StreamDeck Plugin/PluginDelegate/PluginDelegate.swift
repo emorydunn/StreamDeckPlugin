@@ -96,74 +96,8 @@ public protocol PluginDelegate {
 	
 	// MARK: Events Received
 	
-	/// Event received after calling the `getSettings` API to retrieve the persistent data stored for the action.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent<NoSettings>.Payload)
-	
-	@available(*, deprecated, message: "Please declare a Settings type")
-	/// Event received after calling the `getGlobalSettings` API to retrieve the global persistent data.
-	func didReceiveGlobalSettings(_ settings: [String: String])
-	
-	/// Event received after calling the `getGlobalSettings` API to retrieve the global persistent data.
-	@available(*, deprecated, message: "Use the @GlobalSetting")
-	func didReceiveGlobalSettings(_ settings: NoSettings)
-
 	func didReceiveGlobalSettings()
 
-	/// When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a `willAppear` event.
-	///
-	/// You will see such an event when:
-	/// - the Stream Deck application is started
-	/// - the user switches between profiles
-	/// - the user sets a key to use your action
-	/// - Parameters:
-	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func willAppear(action: String, context: String, device: String, payload: AppearEvent<NoSettings>)
-	
-	/// When an instance of an action ceases to be displayed on Stream Deck, for example when switching profiles or folders, the plugin will receive a `willDisappear` event.
-	///
-	/// You will see such an event when:
-	/// - the user switches between profiles
-	/// - the user deletes an action
-	/// - Parameters:
-	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func willDisappear(action: String, context: String, device: String, payload: AppearEvent<NoSettings>)
-	
-	/// When the user presses a key, the plugin will receive the `keyDown` event.
-	/// - Parameters:
-	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func keyDown(action: String, context: String, device: String, payload: KeyEvent<NoSettings>)
-	
-	/// When the user releases a key, the plugin will receive the `keyUp` event.
-	/// - Parameters:
-	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func keyUp(action: String, context: String, device: String, payload: KeyEvent<NoSettings>)
-	
-	/// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
-	/// - Parameters:
-	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo<NoSettings>)
-	
 	/// When a device is plugged to the computer, the plugin will receive a `deviceDidConnect` event.
 	/// - Parameters:
 	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
@@ -207,15 +141,7 @@ public protocol PluginDelegate {
 	///   - context: An opaque value identifying the instance's action.
 	///   - device: An opaque value identifying the device.
 	func propertyInspectorDidDisappear(action: String, context: String, device: String)
-	
-	/// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
-	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - action: The action unique identifier. If your plugin supports multiple actions, you should use this value to find out which action was triggered.
-	///   - payload: A json object that will be received by the plugin.
-	@available(*, deprecated, message: "Action events are no longer sent to the plugin")
-	func sentToPlugin(context: String, action: String, payload: [String: String])
-	
+
 	/// Called immediately after `main()`. 
 	static func pluginWasCreated()
 }

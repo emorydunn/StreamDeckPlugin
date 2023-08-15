@@ -124,19 +124,7 @@ class TestPlugin: PluginDelegate {
         fatalError("init(port:uuid:event:info:) has not been implemented")
     }
     
-	func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent<Settings>.Payload) {}
-    
 	func didReceiveGlobalSettings() {}
-
-    func willAppear(action: String, context: String, device: String, payload: AppearEvent<Settings>) {}
-    
-    func willDisappear(action: String, context: String, device: String, payload: AppearEvent<Settings>) {}
-    
-    func keyDown(action: String, context: String, device: String, payload: KeyEvent<Settings>) {}
-    
-    func keyUp(action: String, context: String, device: String, payload: KeyEvent<Settings>) {}
-    
-    func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo<Settings>) {}
     
     func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) {}
     
@@ -151,8 +139,5 @@ class TestPlugin: PluginDelegate {
     func propertyInspectorDidAppear(action: String, context: String, device: String) {}
     
     func propertyInspectorDidDisappear(action: String, context: String, device: String) {}
-    
-    func sentToPlugin(context: String, action: String, payload: [String: String]) {}
-    
  
 }

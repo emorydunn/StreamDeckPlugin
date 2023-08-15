@@ -11,24 +11,8 @@ public extension PluginDelegate {
 	
 	// MARK: - Events Received
 	
-	func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent<NoSettings>.Payload) { }
-	
-	func didReceiveGlobalSettings(_ settings: [String: String]) { }
-	
-	func didReceiveGlobalSettings(_ settings: NoSettings) { }
-
 	func didReceiveGlobalSettings() { }
 
-	func willAppear(action: String, context: String, device: String, payload: AppearEvent<NoSettings>) { }
-	
-	func willDisappear(action: String, context: String, device: String, payload: AppearEvent<NoSettings>) { }
-	
-	func keyDown(action: String, context: String, device: String, payload: KeyEvent<NoSettings>) { }
-	
-	func keyUp(action: String, context: String, device: String, payload: KeyEvent<NoSettings>) { }
-	
-	func titleParametersDidChange(action: String, context: String, device: String, info: TitleInfo<NoSettings>) { }
-	
 	func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) { }
 	
 	func deviceDidDisconnect(_ device: String) { }
@@ -42,7 +26,5 @@ public extension PluginDelegate {
 	func propertyInspectorDidAppear(action: String, context: String, device: String) { }
 	
 	func propertyInspectorDidDisappear(action: String, context: String, device: String) { }
-	
-	func sentToPlugin(context: String, action: String, payload: [String: String]) { }
 	
 }
