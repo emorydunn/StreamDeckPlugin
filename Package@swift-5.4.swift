@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:5.4
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -23,36 +23,15 @@ var package = Package(
 	targets: [
 		// Targets are the basic building blocks of a package. A target can define a module or a test suite.
 		// Targets can depend on other targets in this package, and on products in packages this package depends on.
-
-		// MARK: Plugin
 		.target(
 			name: "StreamDeck",
 			dependencies: [
-				.product(name: "ArgumentParser", package: "swift-argument-parser"),
-				"StreamDeckMacros"
+				.product(name: "ArgumentParser", package: "swift-argument-parser")
 			]),
 		.testTarget(
 			name: "StreamDeckPluginTests",
 			dependencies: ["StreamDeck"],
 			resources: [.copy("Support/Test Events")]),
-
-		// MARK: Macros
-		.macro(
-			name: "StreamDeckMacros",
-			dependencies: [
-				.product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
-				.product(name: "SwiftCompilerPlugin", package: "swift-syntax")
-			]
-		),
-
-		// A test target used to develop the macro implementation.
-		.testTarget(
-			name: "StreamDeckMacrosTests",
-			dependencies: [
-				"StreamDeckMacros",
-				.product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
-			]
-		),
 
 	]
 )
