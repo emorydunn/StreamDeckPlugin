@@ -49,9 +49,11 @@ public extension PluginDelegate {
 }
 
 extension PluginDelegate {
+
+	@available(*, deprecated, message: "Use the @GlobalSetting")
 	func decodeGlobalSettings(_ data: Data, using decoder: JSONDecoder) throws {
-		let settings = try decoder.decode(GlobalSettingsEvent<Settings>.self, from: data)
-		
-		didReceiveGlobalSettings(settings.payload.settings)
+//		let settings = try decoder.decode(GlobalSettingsEvent<Settings>.self, from: data)
+//		
+//		didReceiveGlobalSettings(settings.payload.settings)
 	}
 }

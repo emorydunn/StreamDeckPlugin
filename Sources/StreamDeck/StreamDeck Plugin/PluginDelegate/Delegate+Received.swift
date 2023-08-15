@@ -15,8 +15,10 @@ public extension PluginDelegate {
 	
 	func didReceiveGlobalSettings(_ settings: [String: String]) { }
 	
-	func didReceiveGlobalSettings(_ settings: Settings) { }
-	
+	func didReceiveGlobalSettings(_ settings: NoSettings) { }
+
+	func didReceiveGlobalSettings() { }
+
 	func willAppear(action: String, context: String, device: String, payload: AppearEvent<NoSettings>) { }
 	
 	func willDisappear(action: String, context: String, device: String, payload: AppearEvent<NoSettings>) { }

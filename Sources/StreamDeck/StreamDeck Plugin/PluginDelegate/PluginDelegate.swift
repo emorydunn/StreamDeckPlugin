@@ -17,7 +17,7 @@ public protocol PluginDelegate {
 	/// Settings returned by the Stream Deck application.
 	///
 	/// If your plugin does not use global settings, simply use `NoSettings`.
-	associatedtype Settings: Codable & Hashable
+//	associatedtype Settings: Codable & Hashable
 	
 	// MARK: Manifest
 	
@@ -105,8 +105,11 @@ public protocol PluginDelegate {
 	func didReceiveGlobalSettings(_ settings: [String: String])
 	
 	/// Event received after calling the `getGlobalSettings` API to retrieve the global persistent data.
-	func didReceiveGlobalSettings(_ settings: Settings)
-	
+	@available(*, deprecated, message: "Use the @GlobalSetting")
+	func didReceiveGlobalSettings(_ settings: NoSettings)
+
+	func didReceiveGlobalSettings()
+
 	/// When an instance of an action is displayed on the Stream Deck, for example when the hardware is first plugged in, or when a folder containing that action is entered, the plugin will receive a `willAppear` event.
 	///
 	/// You will see such an event when:
