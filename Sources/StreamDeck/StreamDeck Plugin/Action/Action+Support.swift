@@ -88,8 +88,6 @@ extension Action {
 	func decodeKeyDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
 
-        let str = String(decoding: data, as: UTF8.self)
-        
 		NSLog("Action \(#function)")
 		keyDown(device: action.device, payload: action.payload)
 	}
