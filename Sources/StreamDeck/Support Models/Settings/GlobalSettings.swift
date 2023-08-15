@@ -35,7 +35,7 @@ public struct GlobalSettings {
 
 			let updatedSettings = settings
 			Task {
-				try await StreamDeckPlugin.shared.sendEvent(.setGlobalSettings,
+				StreamDeckPlugin.shared.sendEvent(.setGlobalSettings,
 															context: StreamDeckPlugin.shared.uuid,
 															payload: updatedSettings)
 

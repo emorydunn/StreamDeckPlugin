@@ -14,8 +14,6 @@ fileprivate let log = Logger(subsystem: "Counter Plugin", category: "Main Plugin
 @main
 class CounterPlugin: PluginDelegate {
 
-	typealias Settings = NoSettings
-
 	// MARK: Manifest
 	static var name: String = "Counter"
 
@@ -45,16 +43,8 @@ class CounterPlugin: PluginDelegate {
 		RotaryAction.self
 	]
 
-	//    @Environment(PluginCount.self) var count: Int
-
 	required init() {
 		log.log("CounterPlugin init!")
 	}
-
-	//    func keyDown(action: String, context: String, device: String, payload: KeyEvent<Settings>) {
-	//        StreamDeckPlugin.shared.instances.values.forEach {
-	//            $0.setTitle(to: "\(count)", target: nil, state: nil)
-	//        }
-	//    }
 
 }

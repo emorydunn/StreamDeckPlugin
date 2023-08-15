@@ -8,15 +8,8 @@
 import Foundation
 import StreamDeck
 
-struct PluginCount: GlobalSettingKey {
-	static let defaultValue: Int = 0
-}
-
-
 extension GlobalSettings {
-	@MainActor
-	var count: Int {
-		get { self[PluginCount.self] }
-		set { self[PluginCount.self] = newValue }
-	}
+
+	/// A macro to define the `GlobalSettingsKey` and property used for the key path. 
+	#globalSetting("count", defaultValue: 0, ofType: Int.self)
 }

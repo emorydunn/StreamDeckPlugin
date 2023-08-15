@@ -13,11 +13,32 @@ struct PluginCount: EnvironmentKey {
     static let defaultValue: Int = 0
 }
 
+extension EnvironmentValues {
+	var count: Int {
+		get { self[PluginCount.self] }
+		set { self[PluginCount.self] = newValue }
+	}
+}
+
+struct GlobalCount: GlobalSettingKey {
+	static let defaultValue: Int = 0
+}
+
+extension GlobalSettings {
+	var count: Int {
+		get { self[GlobalCount.self] }
+		set { self[GlobalCount.self] = newValue }
+	}
+}
+
+
 class TestAction: Action {
 
 	struct Settings: Codable, Hashable {
 		let someKey: String
 	}
+
+	@GlobalSetting(\.count) var count
 
     static var name: String = "TestAction"
     
@@ -58,10 +79,6 @@ class TestAction: Action {
 
 class TestPlugin: PluginDelegate {
 
-	struct Settings: Codable, Hashable {
-		let someKey: String
-	}
-    
     // MARK: Manifest
     static var name: String = "Test Plugin"
     
@@ -94,9 +111,7 @@ class TestPlugin: PluginDelegate {
     static var codePathWin: String? = nil
     
     let eventExp: XCTestExpectation
-    
-    @Environment(PluginCount.self) var count: Int
-    
+
     static var actions: [any Action.Type] = [
         
     ]
@@ -111,8 +126,8 @@ class TestPlugin: PluginDelegate {
     
 	func didReceiveSettings(action: String, context: String, device: String, payload: SettingsEvent<Settings>.Payload) {}
     
-    func didReceiveGlobalSettings(_ settings: Settings) {}
-    
+	func didReceiveGlobalSettings() {}
+
     func willAppear(action: String, context: String, device: String, payload: AppearEvent<Settings>) {}
     
     func willDisappear(action: String, context: String, device: String, payload: AppearEvent<Settings>) {}
