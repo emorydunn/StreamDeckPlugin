@@ -11,8 +11,7 @@ let package = Package(
 	],
 	dependencies: [
 		// Dependencies declare other packages that this package depends on.
-		.package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", branch: "GlobalSettings"),
-		// .package(path: "path/to/this/repo/StreamDeck/StreamDeckPlugin"), // For local development
+		.package(path: "../../"), // For local development
 	],
 	targets: [
 		// Targets are the basic building blocks of a package. A target can define a module or a test suite.
