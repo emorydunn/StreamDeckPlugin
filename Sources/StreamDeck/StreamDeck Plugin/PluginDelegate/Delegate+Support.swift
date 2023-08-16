@@ -33,13 +33,21 @@ public extension PluginDelegate {
 	static var executableName: String {
 		Bundle.main.executableURL!.lastPathComponent
 	}
-	
+
+	static var category: String? { nil }
+
+	static var categoryIcon: String? { nil }
+
 	static var applicationsToMonitor: StreamDeck.ApplicationsToMonitor? { nil }
-	
+
+	static var url: URL? { nil }
+
 	static var sdkVersion: Int { 2 }
 	
 	static var software: StreamDeck.PluginSoftware { .minimumVersion("5.0") }
-	
+
+	static var os: [PluginOS] { [.mac(minimumVersion: .v11)] }
+
 	static var codePath: String { executableName }
 	
 	static var codePathMac: String? { nil }

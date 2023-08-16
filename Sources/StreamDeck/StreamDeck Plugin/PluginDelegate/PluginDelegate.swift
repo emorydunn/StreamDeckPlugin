@@ -13,12 +13,7 @@ import AppKit
 /// Your plugin's `@main` type should conform to `PluginDelegate` in order for the framework to handle plugin
 /// lifecycle and command line events.
 public protocol PluginDelegate {
-	
-	/// Settings returned by the Stream Deck application.
-	///
-	/// If your plugin does not use global settings, simply use `NoSettings`.
-//	associatedtype Settings: Codable & Hashable
-	
+
 	// MARK: Manifest
 	
 	/// The name of the plugin.
@@ -145,3 +140,4 @@ public protocol PluginDelegate {
 	/// Called immediately after `main()`. 
 	static func pluginWasCreated()
 }
+

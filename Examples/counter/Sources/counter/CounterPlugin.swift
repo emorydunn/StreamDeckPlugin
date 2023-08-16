@@ -19,23 +19,13 @@ class CounterPlugin: PluginDelegate {
 
 	static var description: String = "Count things. On your Stream Deck!"
 
-	static var category: String?
-
-	static var categoryIcon: String?
-
 	static var author: String = "Emory Dunn"
 
 	static var icon: String = "Icons/pluginIcon"
 
 	static var url: URL? = URL(string: "https://github.com/emorydunn/StreamDeckPlugin")
 
-	static var version: String = "0.3"
-	
-	static var os: [PluginOS] = [.mac(minimumVersion: "10.15")]
-
-	static var applicationsToMonitor: ApplicationsToMonitor?
-
-	static var software: PluginSoftware = .minimumVersion("6.0")
+	static var version: String = "0.4"
 
 	static var actions: [any Action.Type] = [
 		IncrementAction.self,
