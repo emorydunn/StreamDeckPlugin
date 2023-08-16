@@ -407,21 +407,21 @@ public struct PluginOS: Codable {
 	public let platform: PluginPlatform
 
 	/// The minimum version of the operating system that the plugin requires.
-	public let minimumVersion: String
+	public let minimumVersion: PlatformMinimumVersion
 
 	/// Initialize a new OS.
-	public init(_ platform: PluginPlatform, minimumVersion: String) {
+	public init(_ platform: PluginPlatform, minimumVersion: PlatformMinimumVersion) {
 		self.platform = platform
 		self.minimumVersion = minimumVersion
 	}
 
 	/// Initialize a `mac` OS with the specified minimum version
-	public static func mac(minimumVersion: String) -> PluginOS {
+	public static func mac(minimumVersion: PlatformMinimumVersion) -> PluginOS {
 		PluginOS(.mac, minimumVersion: minimumVersion)
 	}
 
 	/// Initialize a `windows` OS with the specified minimum version
-	public static func win(minimumVersion: String) -> PluginOS {
+	public static func win(minimumVersion: PlatformMinimumVersion) -> PluginOS {
 		PluginOS(.windows, minimumVersion: minimumVersion)
 	}
 }
@@ -430,6 +430,22 @@ public struct PluginOS: Codable {
 public enum PluginPlatform: String, Codable {
 	case mac
 	case windows
+}
+
+public struct PlatformMinimumVersion: ExpressibleByStringLiteral, Codable {
+	let version: String
+
+	public init(stringLiteral value: StringLiteralType) {
+		self.version = value
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(self.version)
+	}
+
+	public static let v10_15: PlatformMinimumVersion = "10.15"
+	public static let v11: PlatformMinimumVersion = "10.11"
 }
 
 /// The minimum version of the Stream Deck application supported.
