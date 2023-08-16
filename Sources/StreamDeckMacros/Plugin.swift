@@ -12,6 +12,7 @@ import SwiftSyntaxMacros
 @main
 struct MacroSettingsTestPlugin: CompilerPlugin {
 	let providingMacros: [Macro.Type] = [
-		GlobalSettingsMacro.self
+		GlobalSettingsMacro.self,
+		EnvironmentMacro.self
 	]
 }

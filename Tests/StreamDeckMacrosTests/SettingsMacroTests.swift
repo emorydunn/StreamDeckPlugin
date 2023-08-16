@@ -12,7 +12,7 @@ let testMacros: [String: Macro.Type] = [
 #endif
 
 final class SettingsMacroTests: XCTestCase {
-	func testMacro() throws {
+	func testSettingsMacro() throws {
 		#if canImport(MacroSettingsTestMacros)
 		assertMacroExpansion(
 			"""
@@ -29,6 +29,32 @@ final class SettingsMacroTests: XCTestCase {
 			    set {
 			        self [Count.self] = newValue
 			    }
+			}
+			""",
+			macros: testMacros
+		)
+		#else
+		throw XCTSkip("macros are only supported when running tests for the host platform")
+		#endif
+	}
+
+	func testEnvMacro() throws {
+		#if canImport(MacroSettingsTestMacros)
+		assertMacroExpansion(
+			"""
+			#globalSetting("color", defaultValue: "#FFF", ofType: String.self)
+			""",
+			expandedSource: """
+			struct Color: EnvironmentKey {
+			   static let defaultValue: String = "#FFF"
+			}
+			var color: String {
+			   get {
+			       self [Color.self]
+			   }
+			   set {
+			       self [Color.self] = newValue
+			   }
 			}
 			""",
 			macros: testMacros
