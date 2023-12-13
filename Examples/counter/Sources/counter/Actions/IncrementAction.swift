@@ -43,9 +43,7 @@ class IncrementAction: KeyAction {
 
 	func keyDown(device: String, payload: KeyEvent<Settings>) {
 		count += 1
-
 		log.log("Incrementing count to \(self.count)")
-
 	}
 
 	func didReceiveGlobalSettings() {

@@ -43,33 +43,12 @@ class DecrementAction: KeyAction {
 
 	func keyDown(device: String, payload: KeyEvent<Settings>) {
 		count -= 1
-
 		log.log("Decrementing count to \(self.count)")
-
 	}
 
 	func didReceiveGlobalSettings() {
 		log.log("Global settings changed, updating title with \(self.count)")
 		setTitle(to: "\(count)", target: nil, state: nil)
 	}
-
-//	var body: Any {
-//		State {
-//			Title("\(count)")
-//				.alignment(.middle)
-//
-//			Image("Icons/actionDefaultImage")
-//		}
-//		.keyDown {
-//			count -= 1
-//		}
-//
-//		State {
-//			Title("\(count)")
-//				.alignment(.middle)
-//
-//			Image("Icons/actionDefaultImage")
-//		}
-//	}
 
 }
