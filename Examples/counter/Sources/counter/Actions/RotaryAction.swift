@@ -39,7 +39,7 @@ class RotaryAction: EncoderAction {
 		self.coordinates = coordinates
 	}
 
-	func willAppear(device: String, payload: AppearEvent<NoSettings>) {
+	func willAppear(device: String, payload: AppearEvent<Settings>) {
 
 		setFeedback([
 			"title" : "Current Count",
@@ -54,7 +54,7 @@ class RotaryAction: EncoderAction {
 		displayCounter()
 	}
 
-	func dialPress(device: String, payload: EncoderPressEvent<NoSettings>) {
+	func dialPress(device: String, payload: EncoderPressEvent<Settings>) {
 		guard payload.pressed else { return }
 
 		count = 0
@@ -63,7 +63,7 @@ class RotaryAction: EncoderAction {
 		displayCounter()
 	}
 
-	func touchTap(device: String, payload: TouchTapEvent<NoSettings>) {
+	func touchTap(device: String, payload: TouchTapEvent<Settings>) {
 		NSLog("Touch Tap: \(payload.hold)")
 
 		if valueLayout {

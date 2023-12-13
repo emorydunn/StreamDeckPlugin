@@ -36,7 +36,7 @@ class DecrementAction: KeyAction {
 		self.coordinates = coordinates
 	}
 
-	func willAppear(device: String, payload: AppearEvent<NoSettings>) {
+	func willAppear(device: String, payload: AppearEvent<Settings>) {
 		log.log("Action appeared, setting title to \(self.count)")
 		setTitle(to: "\(count)", target: nil, state: nil)
 	}
