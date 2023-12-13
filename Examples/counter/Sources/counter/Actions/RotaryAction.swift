@@ -51,7 +51,7 @@ class RotaryAction: EncoderAction {
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) {
 		count += payload.ticks
 
-		setFeedback(["value" : "\(count)"])
+		displayCounter()
 	}
 
 	func dialPress(device: String, payload: EncoderPressEvent<NoSettings>) {
@@ -60,7 +60,7 @@ class RotaryAction: EncoderAction {
 		count = 0
 
 		logMessage("Resetting counter")
-		setFeedback(["value" : "\(count)"])
+		displayCounter()
 	}
 
 	func touchTap(device: String, payload: TouchTapEvent<NoSettings>) {
@@ -70,6 +70,7 @@ class RotaryAction: EncoderAction {
 			setFeedbackLayout(.icon)
 		} else {
 			setFeedbackLayout(.value)
+			displayCounter()
 		}
 
 		valueLayout.toggle()
@@ -77,7 +78,11 @@ class RotaryAction: EncoderAction {
 	}
 
 	func didReceiveGlobalSettings() {
-		setTitle(to: "\(count)", target: nil, state: nil)
+		displayCounter()
+	}
+
+	func displayCounter() {
+		setFeedback(["value" : "\(count)"])
 	}
 
 }
