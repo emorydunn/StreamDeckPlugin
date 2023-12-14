@@ -49,9 +49,9 @@ final class PluginEventTests: XCTestCase {
     
     func testDidReceiveGlobalSettings() {
         class EventTestPlugin: TestPlugin {
-			override func didReceiveGlobalSettings(_ settings: TestPlugin.Settings) {
-                eventExp.fulfill()
-            }
+			override func didReceiveGlobalSettings() {
+				eventExp.fulfill()
+			}
         }
         
         let event = ReceivableEvent.EventKey.didReceiveGlobalSettings

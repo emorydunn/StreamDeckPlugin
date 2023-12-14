@@ -8,6 +8,8 @@
 import Foundation
 
 public extension Action {
+
+	func didReceiveGlobalSettings() { } 
 	
 	/// Event received after calling the `getSettings` API to retrieve the persistent data stored for the action.
 	func didReceiveSettings(device: String, payload: SettingsEvent<Settings>.Payload) { }

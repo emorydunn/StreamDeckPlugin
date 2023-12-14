@@ -1,7 +1,16 @@
-.DS_Store
-/Packages
-/*.xcodeproj
-xcuserdata/
-DerivedData/
+# Ignore Swift Package Manager build artifacts directory.
+.build/
+# Ignore generated Xcode projects
+*.xcodeproj
 .swiftpm
-.build
+# Ignore SwiftPM state, such as the generated xcodeproj when opening the project directly
+.swiftpm
+# Ignore user state in Xcode Projects
+*.xcuserdatad
+UserInterfaceState.xcuserstate
+xcuserdata/
+
+# Ignore any fixed dependency versions.
+Package.resolved
+
+.DS_Store

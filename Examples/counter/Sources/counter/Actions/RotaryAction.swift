@@ -30,7 +30,7 @@ class RotaryAction: EncoderAction {
 
 	static var userTitleEnabled: Bool? = false
 
-	@Environment(PluginCount.self) var count: Int
+	@GlobalSetting(\.count) var count: Int
 
 	var valueLayout = true
 
@@ -39,7 +39,7 @@ class RotaryAction: EncoderAction {
 		self.coordinates = coordinates
 	}
 
-	func willAppear(device: String, payload: AppearEvent<NoSettings>) {
+	func willAppear(device: String, payload: AppearEvent<Settings>) {
 
 		setFeedback([
 			"title" : "Current Count",
@@ -51,37 +51,38 @@ class RotaryAction: EncoderAction {
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) {
 		count += payload.ticks
 
-		StreamDeckPlugin.shared.instances.values.forEach {
-			$0.setTitle(to: "\(count)", target: nil, state: nil)
-		}
-
-		setFeedback(["value" : "\(count)"])
+		displayCounter()
 	}
 
-	func dialPress(device: String, payload: EncoderPressEvent<NoSettings>) {
+	func dialPress(device: String, payload: EncoderPressEvent<Settings>) {
 		guard payload.pressed else { return }
 
 		count = 0
 
-		StreamDeckPlugin.shared.instances.values.forEach {
-			$0.setTitle(to: "\(count)", target: nil, state: nil)
-		}
-
 		logMessage("Resetting counter")
-		setFeedback(["value" : "\(count)"])
+		displayCounter()
 	}
 
-	func touchTap(device: String, payload: TouchTapEvent<NoSettings>) {
+	func touchTap(device: String, payload: TouchTapEvent<Settings>) {
 		NSLog("Touch Tap: \(payload.hold)")
 
 		if valueLayout {
 			setFeedbackLayout(.icon)
 		} else {
 			setFeedbackLayout(.value)
+			displayCounter()
 		}
 
 		valueLayout.toggle()
 
+	}
+
+	func didReceiveGlobalSettings() {
+		displayCounter()
+	}
+
+	func displayCounter() {
+		setFeedback(["value" : "\(count)"])
 	}
 
 }

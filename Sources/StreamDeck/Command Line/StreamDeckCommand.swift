@@ -7,6 +7,9 @@
 
 import Foundation
 import ArgumentParser
+import OSLog
+
+fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "StreamDeckCommand")
 
 /// The command called by the Stream Deck application to run the plugin.
 struct StreamDeckCommand: ParsableCommand {
@@ -32,22 +35,22 @@ struct StreamDeckCommand: ParsableCommand {
 		let pluginType = PluginCommand.plugin!
 		let pluginInfo = try PluginRegistrationInfo(string: info)
 		
-		NSLog("Initializing plugin '\(pluginType.name)'")
-		NSLog("""
+		log.log("Initializing plugin '\(pluginType.name)'")
+		log.log("""
 		CLI Port: \(port)
 		CLI UUID: \(uuid)
 		CLI Event: \(event)
 		""")
-		NSLog(pluginInfo.description)
-		
+		log.log("\(pluginInfo.description)")
+
 		StreamDeckPlugin.shared = StreamDeckPlugin(plugin: pluginType.init(), port: port, uuid: uuid, event: event, info: pluginInfo)
 		
 		StreamDeckPlugin.shared.monitorSocket()
 		
 		try StreamDeckPlugin.shared.registerPlugin()
 		
-		NSLog("Plugin started. Dispatching on main thread.")
-		
+		log.log("Plugin started. Dispatching on main thread.")
+
 		dispatchMain()
 	}
 	

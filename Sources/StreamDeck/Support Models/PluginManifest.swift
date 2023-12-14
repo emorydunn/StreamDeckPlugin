@@ -341,38 +341,38 @@ struct PluginAction: Codable {
 public struct PluginActionState: Codable {
 
 	/// The default image for the state.
-	public let image: String
+	public var image: String
 
 	/// The name of the state displayed in the dropdown menu in the Multi action.
 	///
 	/// For example Start or Stop for the states of the Game Capture Record action. If the name is not provided, the state will not appear in the Multi Action.
-	public let name: String?
+	public var name: String?
 
 	/// Default title.
-	public let title: String?
+	public var title: String?
 
 	/// Boolean to hide/show the title. True by default.
-	public let showTitle: Bool?
+	public var showTitle: Bool?
 
 	/// Default title color.
-	public let titleColor: String?
+	public var titleColor: String?
 
 	/// Default title vertical alignment.
-	public let titleAlignment: Alignment?
+	public var titleAlignment: Alignment?
 
 	/// Default font family for the title.
-	public let fontFamily: FontFamily?
+	public var fontFamily: FontFamily?
 
 	/// Default font style for the title.
 	///
 	/// - Note: Some fonts might not support all values.
-	public let fontStyle: FontStyle?
+	public var fontStyle: FontStyle?
 
 	/// Default font size for the title.
-	public let fontSize: Int?
+	public var fontSize: Int?
 
 	/// Boolean to have an underline under the title. False by default
-	public let fontUnderline: Bool?
+	public var fontUnderline: Bool?
 
 	public init(image: String,
 				name: String? = nil,
@@ -407,21 +407,21 @@ public struct PluginOS: Codable {
 	public let platform: PluginPlatform
 
 	/// The minimum version of the operating system that the plugin requires.
-	public let minimumVersion: String
+	public let minimumVersion: PlatformMinimumVersion
 
 	/// Initialize a new OS.
-	public init(_ platform: PluginPlatform, minimumVersion: String) {
+	public init(_ platform: PluginPlatform, minimumVersion: PlatformMinimumVersion) {
 		self.platform = platform
 		self.minimumVersion = minimumVersion
 	}
 
 	/// Initialize a `mac` OS with the specified minimum version
-	public static func mac(minimumVersion: String) -> PluginOS {
+	public static func mac(minimumVersion: PlatformMinimumVersion) -> PluginOS {
 		PluginOS(.mac, minimumVersion: minimumVersion)
 	}
 
 	/// Initialize a `windows` OS with the specified minimum version
-	public static func win(minimumVersion: String) -> PluginOS {
+	public static func win(minimumVersion: PlatformMinimumVersion) -> PluginOS {
 		PluginOS(.windows, minimumVersion: minimumVersion)
 	}
 }
@@ -430,6 +430,22 @@ public struct PluginOS: Codable {
 public enum PluginPlatform: String, Codable {
 	case mac
 	case windows
+}
+
+public struct PlatformMinimumVersion: ExpressibleByStringLiteral, Codable {
+	let version: String
+
+	public init(stringLiteral value: StringLiteralType) {
+		self.version = value
+	}
+
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(self.version)
+	}
+
+	public static let v10_15: PlatformMinimumVersion = "10.15"
+	public static let v11: PlatformMinimumVersion = "10.11"
 }
 
 /// The minimum version of the Stream Deck application supported.

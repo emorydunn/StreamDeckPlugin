@@ -2,146 +2,151 @@
 
 ![Swift](https://github.com/emorydunn/StreamDeckPlugin/workflows/Swift/badge.svg) ![Documentation badge](https://emorydunn.github.io/StreamDeckPlugin/badge.svg)
 
-A library for creating Stream Deck plugins in Swift. 
+A library for creating Stream Deck plugins in Swift.
 
 ## Usage
 
 Your plugin should conform to `PluginDelegate`, which handles event routing to you actions and lets you interact with the Stream Deck application.
 
 ```swift
-import StreamDeck
-
 @main
 class CounterPlugin: PluginDelegate {
 
-    // Skipping manifest for brevity
+    static var name: String = "Counter"
 
-    var counter: Int = 0
+    static var description: String = "Count things. On your Stream Deck!"
 
-    func keyDown(action: String, context: String, device: String, payload: KeyEvent) {
-        counter += 1
-        setTitle(in: context, to: "\(counter)")
-    }
+    static var author: String = "Emory Dunn"
+
+    static var icon: String = "Icons/pluginIcon"
+
+    static var version: String = "0.4"
+
+    static var actions: [any Action.Type] = [
+        IncrementAction.self,
+        DecrementAction.self
+    ]
+
+    required init() { }
 
 }
 ```
 
 By using the `@main` attribute your plugin will be automatically initialized.
 
-## Responding to Events
+## Declaring a Plugin
 
-When the plugin receives a message from the application the event is parsed and routed. Events are first sent to the relevant `Action` and then to the `PluginDelegate`. Global events, like `applicationDidLaunch` and `didReceiveGlobalSettings`, are sent only to the delegate.
+A plugin both defines the code used to interact with the Stream Deck and the manifest for the plugin. When declaring your plugin there are a number of static properties which are defined to tell the Stream Deck application about what your plugin is and what it can do. Not all properties are required, for instance your plugin doesn't need to add a custom category. Optional properties have default overloads to help reduce boilerplate.
 
-### With Methods
-
-When events are received by your plugin they are parsed and the corresponding method is called. See the [Events Received][er] page for more details. Each event has a default implementation that does nothing, so your plugin only needs to include any events you care about.
-
-Each method is called with the top-level properties along with an event specific payload. For instance, to the `keyDown` event provides a payload that includes the actions settings, coordinates, etc.
-
-### With Actions
-
-A more powerful way to respond to events is with `Actions`. By creating an object that conforms to `Action` you can move the logic out of the plugin. For a plugin with many actions this is the preferred way to handle events. The `StreamDeckPlugin` creates a new instance of your action when `willAppear` is called and releases it when `willDisappear` is called.
-
-## The Environment
-
-In order to pass variables between instances you can use `@Environment` property wrapper. Firstly you need to declare your `EnvironmentKey`:
+Many of the properties are shown to users, such as the name and description. Others are used internally by the Stream Deck application. The most important property is `actions` which is where you define the actions your plugin provides.
 
 ```swift
-struct PluginCount: EnvironmentKey {
+static var actions: [any Action.Type] = [
+    IncrementAction.self,
+    DecrementAction.self
+]
+```
+
+Actions are provided as a type because the plugin will initialize a new instance per visible key.
+
+### The Environment and Global Settings
+
+There are two ways to share a global state amongst actions:
+
+1. The Environment
+2. Global Settings
+
+In use they're very similar, only differing by a couple of protocols. The important difference is that environmental values aren't persisted whereas global settings are stored and will be consistent across launches of the Stream Deck app.
+
+There are two ways to declare environmental values and global settings.
+
+Start with a struct that conforms to `EnvironmentKey` or `GlobalSettingKey`. This defines the default value and how the value will be accessed:
+
+```swift
+struct Count: EnvironmentKey {
     static let defaultValue: Int = 0
 }
 ```
 
-Then when you need to access that value in an action you decorate the variable:
+Next add an extension to either `EnvironmentValues` or `GlobalSettings`:
 
 ```swift
-class IncrementAction: Action {
-    @Environment(PluginCount.self) var count: Int
+extension EnvironmentValues {
+    var count: Int {
+        get { self[Count.self] }
+        set { self[Count.self] = newValue }
+    }
 }
 ```
 
-[er]: https://developer.elgato.com/documentation/stream-deck/sdk/events-received/
-
-## Sending Events
-
-In addition to receiving events from the application your plugin can [send events][se]. Most of the commands require a context object to specify the instance on the Stream Deck.
-
-[se]: https://developer.elgato.com/documentation/stream-deck/sdk/events-sent/
-
-## Exporting Your Plugin
-
-Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor. Each `Action` also has its own manifest properties as well.
+To use the value in your actions use the corresponding property wrapper:
 
 ```swift
-@main
-class CounterPlugin: PluginDelegate {
+@Environment(\.count) var count // For an environment key
+@GlobalSetting(\.count) var count // For a global settings key
+```
 
-    // MARK: Manifest
-    static var name: String = "Counter"
+The value can be read and updated from inside an action callback.
 
-    static var description: String = "Count things. On your Stream Deck!"
+#### Macros
 
-    static var category: String? = "Counting Actions"
+Starting in Swift 5.9 two new macros will be available to make declaring environmental values and global settings easier. The macro handles generating both the struct and variable for the key path.
 
-    static var categoryIcon: String? = nil
-
-    static var author: String = "Emory Dunn"
-
-    static var icon: String = "counter"
-
-    static var url: URL? = nil
-
-    static var version: String = "0.2"
-
-    static var os: [PluginOS] = [.mac(minimumVersion: "10.15")]
-
-    static var applicationsToMonitor: ApplicationsToMonitor? = nil
-
-    static var software: PluginSoftware = .minimumVersion("4.1")
-
-    static var sdkVersion: Int = 2
-
-    static var codePath: String = CounterPlugin.executableName
-
-    static var codePathMac: String? = nil
-
-    static var codePathWin: String? = nil
-
-    static var actions: [Action.Type] = [
-        IncrementAction.self,
-        DecrementAction.self
-    ]
-
+```swift
+extension EnvironmentValues {
+    #environmentKey("count", defaultValue: 0, ofType: Int.self)
 }
 
-class IncrementAction: Action {
+extension GlobalSettings {
+    #globalSetting("count", defaultValue: 0, ofType: Int.self)
+}
+```
+
+## Creating Actions
+
+Each action in your plugin is defined as a separate struct conforming to `Action`. There are several helper protocols available for specific action types.
+
+| Protocol             | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `KeyAction`          | A key action which has multiple states       |
+| `StatelessKeyAction` | A key action which has a single state        |
+| `EncoderAction`      | A rotary encoder action on the Stream Deck + |
+
+Using one of the above protocols simply provides default values on top of `Action`, and you can provide your own values as needed. For instance `KeyAction` sets the `controllers` property to `[.keypad]` by default, and `EncoderAction` sets it to `[.encoder]`. To create an action that provides both key and encoder actions set `controllers` to `[.keypad, .encoder]` no matter which convenience protocol you're using.
+
+For all action there are several common static properties which need to be defined.
+
+```swift
+class IncrementAction: KeyAction {
+
+    typealias Settings = NoSettings
 
     static var name: String = "Increment"
 
     static var uuid: String = "counter.increment"
 
-    static var icon: String = "Icons/plus"
+    static var icon: String = "Icons/actionIcon"
 
-    static var states: [PluginActionState] = []
+    static var states: [PluginActionState]? = [
+        PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
+    ]
 
-    static var propertyInspectorPath: String?
+    var context: String
 
-    static var supportedInMultiActions: Bool?
+    var coordinates: StreamDeck.Coordinates?
 
-    static var tooltip: String?
+    @GlobalSetting(\.count) var count
 
-    static var visibleInActionsList: Bool?
+    required init(context: String, coordinates: StreamDeck.Coordinates?) {
+        self.context = context
+        self.coordinates = coordinates
+    }
 }
-
 ```
 
-Using the `export` command you can generate the manifest file and copy the actual executable to the Plugins directory:
+### Events
 
-```
-counter-plugin export --copy-executable --generate-manifest
-```
-
-You can also specify the output directory, manifest name, executable name, or preview the manifest. Check `export -h` for all of the options.
+### Action Settings
 
 ## Adding `StreamDeck` as a Dependency
 
@@ -157,7 +162,7 @@ Finally, include `"StreamDeck"` as a dependency for your executable target:
 ```swift
 let package = Package(
     // name, products, etc.
-    platforms: [.macOS(.v10_15)],
+    platforms: [.macOS(.v11)],
     dependencies: [
         .package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main")),
         // other dependencies

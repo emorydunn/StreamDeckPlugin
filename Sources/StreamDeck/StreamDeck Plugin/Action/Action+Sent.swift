@@ -8,6 +8,10 @@
 import Foundation
 import AppKit
 
+import OSLog
+
+fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "Action")
+
 public extension Action {
 	
 	// MARK: Sent
@@ -44,7 +48,7 @@ public extension Action {
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
-		NSLog("EVENT: Sending log message: \(message)")
+		log.log("EVENT: Sending log message: \(message)")
 		StreamDeckPlugin.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
 	}
 	

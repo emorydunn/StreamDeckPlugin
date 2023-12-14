@@ -51,7 +51,7 @@ public struct ReceivableEvent: Decodable {
 
 /// Keys for received events.
 extension ReceivableEvent {
-	public enum EventKey: String, Codable {
+	public enum EventKey: String, Codable, CustomStringConvertible {
 		case didReceiveSettings
 		case didReceiveGlobalSettings
 		case keyDown
@@ -70,7 +70,12 @@ extension ReceivableEvent {
 		case propertyInspectorDidAppear
 		case propertyInspectorDidDisappear
 		case sendToPlugin
+
+		public var description: String {
+			rawValue.capitalized
+		}
 	}
+
 }
 
 

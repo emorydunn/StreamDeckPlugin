@@ -7,6 +7,9 @@
 
 import Foundation
 import StreamDeck
+import OSLog
+
+fileprivate let log = Logger(subsystem: "Counter Plugin", category: "Increment")
 
 class IncrementAction: KeyAction {
 
@@ -26,7 +29,7 @@ class IncrementAction: KeyAction {
 	
 	var coordinates: StreamDeck.Coordinates?
 
-	@Environment(PluginCount.self) var count: Int
+	@GlobalSetting(\.count) var count
 
 	required init(context: String, coordinates: StreamDeck.Coordinates?) {
 		self.context = context
@@ -34,15 +37,18 @@ class IncrementAction: KeyAction {
 	}
 
 	func willAppear(device: String, payload: AppearEvent<NoSettings>) {
+		log.log("Action appeared, setting title to \(self.count)")
 		setTitle(to: "\(count)", target: nil, state: nil)
 	}
 
 	func keyDown(device: String, payload: KeyEvent<Settings>) {
 		count += 1
+		log.log("Incrementing count to \(self.count)")
+	}
 
-		StreamDeckPlugin.shared.instances.values.forEach {
-			$0.setTitle(to: "\(count)", target: nil, state: nil)
-		}
+	func didReceiveGlobalSettings() {
+		log.log("Global settings changed, updating title with \(self.count)")
+		setTitle(to: "\(count)", target: nil, state: nil)
 	}
 
 }
