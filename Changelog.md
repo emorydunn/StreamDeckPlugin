@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.4.0 / Unreleased
+
+## Added
+
+- The new `globalSetting` and `environmentKey` macros
+- Support for `dialDown` and `dialUp` events
+- ` DisableAutomaticStates` in the Action protocol
+- `setTriggerDescription` event for SD+
+
+## Changed
+
+- Use `OSLog` for nicer logs
+- Example plugin uses a relative path to the plugin
+- Use `PlatformMinimumVersion` for manifest
+
 ## 0.3.0 / 2023-03-03
 
 ## Added
