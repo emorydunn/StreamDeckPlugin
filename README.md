@@ -104,6 +104,74 @@ extension GlobalSettings {
 
 ## Creating Actions
 
+Each action in your plugin is defined as a separate struct conforming to `Action`. There are several helper protocols available for specific action types.
+
+| Protocol             | Description                                  |
+| -------------------- | -------------------------------------------- |
+| `KeyAction`          | A key action which has multiple states       |
+| `StatelessKeyAction` | A key action which has a single state        |
+| `EncoderAction`      | A rotary encoder action on the Stream Deck + |
+
+Using one of the above protocols simply provides default values on top of `Action`, and you can provide your own values as needed. For instance `KeyAction` sets the `controllers` property to `[.keypad]` by default, and `EncoderAction` sets it to `[.encoder]`. To create an action that provides both key and encoder actions set `controllers` to `[.keypad, .encoder]` no matter which convenience protocol you're using.
+
+For all action there are several common static properties which need to be defined.
+
+```swift
+class IncrementAction: KeyAction {
+
+    typealias Settings = NoSettings
+
+    static var name: String = "Increment"
+
+    static var uuid: String = "counter.increment"
+
+    static var icon: String = "Icons/actionIcon"
+
+    static var states: [PluginActionState]? = [
+        PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
+    ]
+
+    var context: String
+
+    var coordinates: StreamDeck.Coordinates?
+
+    @GlobalSetting(\.count) var count
+
+    required init(context: String, coordinates: StreamDeck.Coordinates?) {
+        self.context = context
+        self.coordinates = coordinates
+    }
+}
+```
+
 ### Events
 
 ### Action Settings
+
+## Adding `StreamDeck` as a Dependency
+
+To use the `StreamDeck` library in a SwiftPM project,
+add the following line to the dependencies in your `Package.swift` file:
+
+```swift
+.package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main"))
+```
+
+Finally, include `"StreamDeck"` as a dependency for your executable target:
+
+```swift
+let package = Package(
+    // name, products, etc.
+    platforms: [.macOS(.v11)],
+    dependencies: [
+        .package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main")),
+        // other dependencies
+    ],
+    targets: [
+        .executableTarget(name: "<command-line-tool>", dependencies: [
+            "StreamDeck"
+        ]),
+        // other targets
+    ]
+)
+```
