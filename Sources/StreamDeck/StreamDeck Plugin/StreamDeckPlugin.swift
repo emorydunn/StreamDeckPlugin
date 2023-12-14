@@ -342,6 +342,8 @@ public final class StreamDeckPlugin {
 			log.info("Forwarding \(event) to PluginDelegate")
 			GlobalSettings.shared.updateSettings(fromEvent: data)
 
+			plugin.didReceiveGlobalSettings()
+
 			for (_ , instance) in instances {
 				instance.didReceiveGlobalSettings()
 			}
