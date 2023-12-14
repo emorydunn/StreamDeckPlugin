@@ -19,7 +19,8 @@ final class PluginEventTests: XCTestCase {
     
     func wait(for event: ReceivableEvent.EventKey, data: Data, delegate: TestPlugin) {
         let plugin = StreamDeckPlugin(plugin: delegate, port: 42, uuid: "", event: "", info: info)
-        
+		StreamDeckPlugin.shared = plugin
+
         do {
             try plugin.parseEvent(event: event, context: nil, data: data)
         } catch {
