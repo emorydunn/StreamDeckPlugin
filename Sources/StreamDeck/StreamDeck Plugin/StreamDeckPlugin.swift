@@ -30,6 +30,12 @@ public final class StreamDeckPlugin {
 	/// The first event after registration will request the global settings and toggle this value.
 	private var shouldLoadSettings = true
 
+
+	/// The number of WebSocket errors encountered.
+	///
+	/// This is incremented on every error and reset on success.
+	/// WebSocket errors most likely mean the plugin is still running after the 
+	/// StreamDeck app has quit or crashed.
 	private var webSocketErrorCount = 0
 
 	// MARK: Streamdeck Properties
