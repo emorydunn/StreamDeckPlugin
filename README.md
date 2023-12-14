@@ -117,7 +117,7 @@ Using one of the above protocols simply provides default values on top of `Actio
 For all action there are several common static properties which need to be defined.
 
 ```swift
-class IncrementAction: KeyAction {
+struct IncrementAction: KeyAction {
 
     typealias Settings = NoSettings
 
@@ -144,9 +144,45 @@ class IncrementAction: KeyAction {
 }
 ```
 
+### Action Settings
+
+If your action uses a [property inspector][pi] for configuration you can use a `Codable` struct as the `Settings`. The current settings will be sent in the payload in events.
+
+```swift
+struct ChooseAction: KeyAction {
+    enum Settings: String, Codable {
+        case optionOne
+        case optionTwo
+        case optionThree
+    }
+}
+```
+
 ### Events
 
-### Action Settings
+Your action can both [receive events][er] from the app and [send events][es] to the app. Most of the events will be from user interaction, key presses and dial rotation, but also from system events such as the action appearing on a Stream Deck or the property inspector appearing.
+
+To receive events simply implement the corresponding method in your action, for instance to be notified when a key is released use `keyUp`. If your action displays settings to the user, use `willAppear` to update the title to reflect the current value.
+
+```swift
+struct IncrementAction: KeyAction {
+
+    func willAppear(device: String, payload: AppearEvent<NoSettings>) {
+        setTitle(to: "\(count)", target: nil, state: nil)
+    }
+
+    func didReceiveGlobalSettings() {
+        log.log("Global settings changed, updating title with \(self.count)")
+        setTitle(to: "\(count)", target: nil, state: nil)
+    }
+
+    func keyUp(device: String, payload: KeyEvent<Settings>) {
+        count += 1
+    }
+}
+```
+
+In the above example, `setTitle` is an event that an action can send. In this case it sets the title of the action. It's called in two places: when the action appears to set the initial title and when the global settings are changed so it can keep the visible counter in sync.
 
 ## Adding `StreamDeck` as a Dependency
 
@@ -175,3 +211,7 @@ let package = Package(
     ]
 )
 ```
+
+[pi]: https://docs.elgato.com/sdk/plugins/property-inspector
+[er]: https://docs.elgato.com/sdk/plugins/events-received
+[es]: https://docs.elgato.com/sdk/plugins/events-sent
