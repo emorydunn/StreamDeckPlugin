@@ -18,7 +18,7 @@ var package = Package(
 		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.4.3"),
 
 		// Depend on the latest Swift 5.9 prerelease of SwiftSyntax
-		.package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0-swift-5.9-DEVELOPMENT-SNAPSHOT-2023-04-25-b"),
+		.package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
 	],
 	targets: [
 		// Targets are the basic building blocks of a package. A target can define a module or a test suite.
