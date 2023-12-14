@@ -30,6 +30,8 @@ public final class StreamDeckPlugin {
 	/// The first event after registration will request the global settings and toggle this value.
 	private var shouldLoadSettings = true
 
+	private var webSocketErrorCount = 0
+
 	// MARK: Streamdeck Properties
 
 	/// The port that should be used to create the WebSocket
@@ -119,9 +121,16 @@ public final class StreamDeckPlugin {
 			switch result {
 			case let .success(message):
 				self?.parseMessage(message)
+				self?.webSocketErrorCount = 0
 			case let .failure(error):
 				NSLog("WebSocket Error: \(error)")
+				self?.webSocketErrorCount += 1
 				break
+			}
+
+			if self?.webSocketErrorCount == 50 {
+				NSLog("There have been 50 WebSocket errors in a row, the StreamDeck app is probably no longer running. Terminating.")
+				exit(0)
 			}
 
 			// Queue for the next message
