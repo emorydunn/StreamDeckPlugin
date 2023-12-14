@@ -362,7 +362,7 @@ public final class StreamDeckPlugin {
 		case .dialPress:
 			log.info("Forwarding \(event) to \(context ?? "no context")")
 
-			try self[context]?.decodeDialPress(data, using: decoder)
+			try self[context]?.decodeDialUp(data, using: decoder)
 
 		case .dialDown:
 			log.info("Forwarding \(event) to \(context ?? "no context")")
