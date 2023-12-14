@@ -15,6 +15,7 @@
 - Example plugin uses a relative path to the plugin
 - Use `PlatformMinimumVersion` for manifest
 - Plugin monitors WebSocket errors and exits after too many
+- Deprecated `dialPress`, event is send to `dialUp`
 
 ## 0.3.0 / 2023-03-03
 
