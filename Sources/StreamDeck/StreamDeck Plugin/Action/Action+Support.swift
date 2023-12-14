@@ -123,7 +123,8 @@ extension Action {
 		dialRotate(device: action.device, payload: action.payload)
 	}
 	
-	/// Decode and deliver a dial rotation event.
+	@available(*, deprecated, message: "Please note, from Stream Deck 6.5 onwards, dialPress will not be emitted by the API. Plugins should use dialDown and dialUp to receive events relating to dial presses.")
+	/// Decode and deliver a dial press event.
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -132,7 +133,27 @@ extension Action {
 		
 		dialPress(device: action.device, payload: action.payload)
 	}
-	
+
+	/// Decode and deliver a dial down event.
+	/// - Parameters:
+	///   - data: Event data
+	///   - decoder: The decoder to use
+	func decodeDialDown(_ data: Data, using decoder: JSONDecoder) throws {
+		let action = try decoder.decode(ActionEvent<EncoderPressEvent<Settings>>.self, from: data)
+
+		dialDown(device: action.device, payload: action.payload)
+	}
+
+	/// Decode and deliver a dial up event.
+	/// - Parameters:
+	///   - data: Event data
+	///   - decoder: The decoder to use
+	func decodeDialUp(_ data: Data, using decoder: JSONDecoder) throws {
+		let action = try decoder.decode(ActionEvent<EncoderPressEvent<Settings>>.self, from: data)
+
+		dialUp(device: action.device, payload: action.payload)
+	}
+
 	/// Decode and deliver a dial rotation event.
 	/// - Parameters:
 	///   - data: Event data

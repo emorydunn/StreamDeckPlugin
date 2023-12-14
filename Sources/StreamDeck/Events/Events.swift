@@ -59,6 +59,8 @@ extension ReceivableEvent {
 		case keyUp
 		case dialRotate
 		case dialPress
+		case dialDown
+		case dialUp
 		case touchTap
 		case willAppear
 		case willDisappear
