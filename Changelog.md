@@ -14,6 +14,7 @@
 - Use `OSLog` for nicer logs
 - Example plugin uses a relative path to the plugin
 - Use `PlatformMinimumVersion` for manifest
+- Plugin monitors WebSocket errors and exits after too many
 
 ## 0.3.0 / 2023-03-03
 
