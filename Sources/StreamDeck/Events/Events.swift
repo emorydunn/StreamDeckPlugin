@@ -26,6 +26,7 @@ public enum SendableEventKey: String, Codable {
 	case sendToPropertyInspector
 	case setFeedback
 	case setFeedbackLayout
+	case setTriggerDescription
 }
 
 /// A event that is sent to the Stream Deck software. 

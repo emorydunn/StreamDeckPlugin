@@ -208,4 +208,17 @@ public extension Action {
 										  context: context,
 										  payload: payload)
 	}
+	
+	/// Sets the trigger descriptions associated with an encoder (touch display + dial) action instance.
+	///
+	/// All descriptions are optional; when one or more descriptions are defined all descriptions are updated,
+	/// with `undefined` values having their description hidden in Stream Deck.
+	///
+	/// To reset the descriptions to the default values defined within the manifest, an empty payload can be sent as part of the event.
+	/// - Parameter triggerDescription: The new `TriggerDescription` or `nil` to reset.
+	func setTriggerDescription(_ triggerDescription: TriggerDescription?) {
+		StreamDeckPlugin.shared.sendEvent(.setTriggerDescription,
+										  context: context,
+										  payload: triggerDescription)
+	}
 }
