@@ -50,7 +50,11 @@ public extension Action {
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) { }
 	
 	func dialPress(device: String, payload: EncoderPressEvent<Settings>) { }
-	
+
+	func dialDown(device: String, payload: EncoderPressEvent<Settings>) { }
+
+	func dialUp(device: String, payload: EncoderPressEvent<Settings>) { }
+
 	func touchTap(device: String, payload: TouchTapEvent<Settings>) { }
 	
 	/// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.

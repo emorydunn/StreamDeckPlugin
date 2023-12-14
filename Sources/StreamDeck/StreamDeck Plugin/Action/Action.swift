@@ -74,8 +74,7 @@ public protocol Action {
 	///
 	/// True by default.
 	static var supportedInMultiActions: Bool? { get }
-	
-	
+
 	/// The string displayed as tooltip when the user leaves the mouse over your action in the actions list.
 	static var tooltip: String? { get }
 	
@@ -87,6 +86,11 @@ public protocol Action {
 	/// Boolean to disable the title field for users in the property inspector. True by default.
 	static var userTitleEnabled: Bool? { get }
 	
+	/// Determines whether the state of the action should automatically toggle when the user presses the action; only applies to actions that have two states defined.
+	///
+	/// Default is `false`.
+	static var disableAutomaticStates: Bool? { get }
+
 	// MARK: - Instance Properties
 	
 	/// The context value for the instance.
@@ -137,10 +141,36 @@ public protocol Action {
 	///   - payload: The event payload sent by the server.
 	func keyUp(device: String, payload: KeyEvent<Settings>)
 	
+	/// When the user rotates the encoder, the plugin will receive the dialRotate event.
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
 	func dialRotate(device: String, payload: EncoderEvent<Settings>)
 	
+	@available(*, deprecated, message: "Please note, from Stream Deck 6.5 onwards, dialPress will not be emitted by the API. Plugins should use dialDown and dialUp to receive events relating to dial presses.")
+	/// When the user presses or releases the encoder, the plugin will receive the dialPress event.
+	///
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
 	func dialPress(device: String, payload: EncoderPressEvent<Settings>)
 	
+	/// When the user presses the encoder down, the plugin will receive the dialDown event (SD+).
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
+	func dialDown(device: String, payload: EncoderPressEvent<Settings>)
+	
+	/// When the user releases a pressed encoder, the plugin will receive the dialUp event (SD+).
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
+	func dialUp(device: String, payload: EncoderPressEvent<Settings>)
+	
+	/// When the user touches the display, the plugin will receive the touchTap event.
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
 	func touchTap(device: String, payload: TouchTapEvent<Settings>)
 	
 	/// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
