@@ -279,6 +279,8 @@ struct PluginAction: Codable {
 
 	let userTitleEnabled: Bool?
 
+	let disableAutomaticStates: Bool?
+
 	/// Initialize a new action.
 	init(name: String,
 		 uuid: String,
@@ -290,7 +292,8 @@ struct PluginAction: Codable {
 		 supportedInMultiActions: Bool? = nil,
 		 tooltip: String? = nil,
 		 visibleInActionsList: Bool? = nil,
-		 userTitleEnabled: Bool? = nil) {
+		 userTitleEnabled: Bool? = nil,
+		 disableAutomaticStates: Bool? = nil) {
 		self.name = name
 		self.uuid = uuid
 		self.icon = icon
@@ -299,6 +302,7 @@ struct PluginAction: Codable {
 		self.tooltip = tooltip
 		self.visibleInActionsList = visibleInActionsList
 		self.userTitleEnabled = userTitleEnabled
+		self.disableAutomaticStates = disableAutomaticStates
 
 		if let states = states {
 			self.states = states
@@ -321,6 +325,7 @@ struct PluginAction: Codable {
 		self.tooltip = action.tooltip
 		self.visibleInActionsList = action.visibleInActionsList
 		self.userTitleEnabled = action.userTitleEnabled
+		self.disableAutomaticStates = action.disableAutomaticStates
 
 		if let states = action.states {
 			self.states = states

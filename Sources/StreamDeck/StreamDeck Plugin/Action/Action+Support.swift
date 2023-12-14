@@ -64,7 +64,9 @@ extension Action {
 	public static var tooltip: String? { nil }
 	
 	public static var visibleInActionsList: Bool? { nil }
-	
+
+	public static var disableAutomaticStates: Bool? { nil }
+
 	/// The Action's UUID.
 	public var uuid: String {
 		type(of: self).uuid
