@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import OSLog
+
+fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "StreamDeckPlugin")
 
 /// An object that manages a plugins’s main event loop.
 public final class StreamDeckPlugin {
@@ -29,7 +32,6 @@ public final class StreamDeckPlugin {
 	///
 	/// The first event after registration will request the global settings and toggle this value.
 	private var shouldLoadSettings = true
-
 
 	/// The number of WebSocket errors encountered.
 	///
@@ -79,27 +81,27 @@ public final class StreamDeckPlugin {
 
 		// Check if the instance already exists
 		guard instances[context] == nil else {
-			NSLog("This instance has already been registered.")
+			log.log("This instance has already been registered.")
 			return
 		}
 
 		// Look up the action
 		guard let actionType = action(forID: actionID) else {
-			NSLog("No action available with UUID '\(actionID)'.")
+			log.log("No action available with UUID '\(actionID, privacy: .public)'.")
 			return
 		}
 
 		// Initialize a new instance
 		instances[context] = actionType.init(context: context, coordinates: coordinates)
 
-		NSLog("Initialized a new instance of '\(actionType.uuid)'")
+		log.log("Initialized a new instance of '\(actionType.uuid, privacy: .public)'")
 	}
 
 	/// Remove an instance of an action from a `willDisappear` event.
 	/// - Parameter event: The event with information about the instance.
 	public func removeInstance(_ context: String?) {
 		guard let context else { return }
-		NSLog("Removing instance of '\(context)'")
+		log.log("Removing instance of '\(context, privacy: .public)'")
 		instances[context] = nil
 	}
 
@@ -117,7 +119,7 @@ public final class StreamDeckPlugin {
 	func monitorSocket() {
 
 		if task.state == .suspended {
-			NSLog("Connecting to Stream Deck application")
+			log.log("Connecting to Stream Deck application")
 			task.resume()
 		}
 
@@ -129,13 +131,13 @@ public final class StreamDeckPlugin {
 				self?.parseMessage(message)
 				self?.webSocketErrorCount = 0
 			case let .failure(error):
-				NSLog("WebSocket Error: \(error)")
+				log.error("WebSocket Error: \(error)")
 				self?.webSocketErrorCount += 1
 				break
 			}
 
 			if self?.webSocketErrorCount == 50 {
-				NSLog("There have been 50 WebSocket errors in a row, the StreamDeck app is probably no longer running. Terminating.")
+				log.warning("There have been 50 WebSocket errors in a row, the StreamDeck app is probably no longer running. Terminating.")
 				exit(0)
 			}
 
@@ -157,7 +159,7 @@ public final class StreamDeckPlugin {
 
 	func parseMessage(_ message: URLSessionWebSocketTask.Message) {
 		guard let data = readMessage(message) else {
-			NSLog("Warning: WebSocket sent empty message")
+			log.warning("WebSocket sent empty message")
 			return
 		}
 
@@ -168,7 +170,7 @@ public final class StreamDeckPlugin {
 		} catch let error as DecodingError {
 			let json = String(data: data, encoding: .utf8) ?? "could not read string from JSON"
 
-			NSLog("""
+			log.error("""
 			Decoding Error:
 			\(error)
 			\(json)
@@ -176,7 +178,7 @@ public final class StreamDeckPlugin {
 
 		} catch {
 			let json = String(data: data, encoding: .utf8) ?? "could not read string from JSON"
-			NSLog("Decoding Error: \(error.localizedDescription)\n\(json)")
+			log.error("Decoding Error: \(error.localizedDescription)\n\(json)")
 		}
 
 	}
@@ -189,7 +191,7 @@ public final class StreamDeckPlugin {
 		case let .string(string):
 			return string.data(using: .utf8)
 		@unknown default:
-			NSLog("Warning: WebSocket sent unknown message")
+			log.warning("Warning: WebSocket sent unknown message")
 			return nil
 		}
 	}
@@ -212,11 +214,10 @@ public final class StreamDeckPlugin {
 
 		let data = try JSONSerialization.data(withJSONObject: registrationEvent, options: [])
 
-		NSLog("Sending registration event")
+		log.log("Sending registration event")
 		send(URLSessionWebSocketTask.Message.data(data)) { error in
 			if let error = error {
-				NSLog("ERROR: Failed to send \(self.event) event.")
-				NSLog(error.localizedDescription)
+				log.error("Failed to send \(self.event) event.\n\(error.localizedDescription)")
 			}
 		}
 
@@ -240,7 +241,7 @@ public final class StreamDeckPlugin {
 		event["payload"] = payload
 
 		guard JSONSerialization.isValidJSONObject(event) else {
-			NSLog("Data for \(eventType.rawValue) is not valid JSON.")
+			log.log("Data for \(eventType.rawValue) is not valid JSON.")
 			return
 		}
 
@@ -249,14 +250,13 @@ public final class StreamDeckPlugin {
 
 			task.send(URLSessionWebSocketTask.Message.data(data)) { error in
 				if let error = error {
-					NSLog("ERROR: Failed to send \(eventType.rawValue) event.")
-					NSLog(error.localizedDescription)
+					log.error("Failed to send \(eventType.rawValue) event.\n\(error.localizedDescription)")
 				} else {
-					NSLog("Completed \(eventType.rawValue)")
+					log.log("Completed \(eventType.rawValue)")
 				}
 			}
 		} catch {
-			NSLog("ERROR: \(error.localizedDescription).")
+			log.error("\(error.localizedDescription).")
 		}
 
 	}
@@ -283,14 +283,13 @@ public final class StreamDeckPlugin {
 			// Send the event
 			task.send(URLSessionWebSocketTask.Message.data(data)) { error in
 				if let error = error {
-					NSLog("ERROR: Failed to send \(eventType.rawValue) event.")
-					NSLog(error.localizedDescription)
+					log.error("Failed to send \(eventType.rawValue) event.\n\(error.localizedDescription)")
 				} else {
-					NSLog("Completed \(eventType.rawValue)")
+					log.log("Completed \(eventType.rawValue)")
 				}
 			}
 		} catch {
-			NSLog("ERROR: \(error.localizedDescription).")
+			log.error("\(error.localizedDescription).")
 		}
 
 	}
@@ -324,7 +323,7 @@ public final class StreamDeckPlugin {
 	func parseEvent(event: ReceivableEvent.EventKey, context: String?, data: Data) throws {
 
 		if shouldLoadSettings {
-			NSLog("Received first event, requesting global settings")
+			log.log("Received first event, requesting global settings")
 			// Get the initial global settings
 			StreamDeckPlugin.shared.sendEvent(.getGlobalSettings,
 											  context: StreamDeckPlugin.shared.uuid,
@@ -336,11 +335,11 @@ public final class StreamDeckPlugin {
 
 		case .didReceiveSettings:
 
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeSettings(data, using: decoder)
 
 		case .didReceiveGlobalSettings:
-			NSLog("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event) to PluginDelegate")
 			GlobalSettings.shared.updateSettings(fromEvent: data)
 
 			for (_ , instance) in instances {
@@ -348,34 +347,34 @@ public final class StreamDeckPlugin {
 			}
 
 		case .keyDown:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeKeyDown(data, using: decoder)
 
 		case .keyUp:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeKeyUp(data, using: decoder)
 
 		case .dialRotate:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 
 			try self[context]?.decodeDialRotate(data, using: decoder)
 
 		case .dialPress:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 
 			try self[context]?.decodeDialPress(data, using: decoder)
 
 		case .touchTap:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 
 			try self[context]?.decodeTouchTap(data, using: decoder)
 
 			if let json = String(data: data, encoding: .utf8) {
-				NSLog(json)
+				log.debug("\(json)")
 			}
 
 		case .willAppear:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 			let action = try decoder.decode(ActionEvent<InstanceAppearEvent>.self, from: data)
 
 			self.registerInstance(actionID: action.action, context: action.context, coordinates: action.payload.coordinates)
@@ -386,7 +385,7 @@ public final class StreamDeckPlugin {
 			//            plugin.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
 
 		case .willDisappear:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeWillDisappear(data, using: decoder)
 			//            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
 			//
@@ -396,61 +395,56 @@ public final class StreamDeckPlugin {
 			self.removeInstance(context)
 
 		case .titleParametersDidChange:
-			NSLog("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event) to \(context ?? "no context")")
 			try self[context]?.decodeTitleParametersDidChange(data, using: decoder)
-			//            let action = try decoder.decode(ActionEvent<TitleInfo>.self, from: data)
-			//
-			//			NSLog("Forwarding \(event) to \(action.context)")
-			//            self[action.context]?.titleParametersDidChange(device: action.device, info: action.payload)
-			//            plugin.titleParametersDidChange(action: action.action, context: action.context, device: action.device, info: action.payload)
 
 		case .deviceDidConnect:
 			let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event) to PluginDelegate")
 			plugin.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
 
 		case .deviceDidDisconnect:
 			let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event) to PluginDelegate")
 			plugin.deviceDidDisconnect(action.device)
 
 		case .systemDidWakeUp:
 
-			NSLog("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event) to PluginDelegate")
 			plugin.systemDidWakeUp()
 
 		case .applicationDidLaunch:
 			let action = try decoder.decode(ApplicationEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event) to PluginDelegate")
 			plugin.applicationDidLaunch(action.payload.application)
 
 		case .applicationDidTerminate:
 			let action = try decoder.decode(ApplicationEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event) to PluginDelegate")
 			plugin.applicationDidTerminate(action.payload.application)
 
 		case .propertyInspectorDidAppear:
 			let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to \(action.context)")
+			log.info("Forwarding \(event) to \(action.context)")
 			self[action.context]?.propertyInspectorDidAppear(device: action.device)
 			plugin.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
 
 		case .propertyInspectorDidDisappear:
 			let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
 
-			NSLog("Forwarding \(event) to \(action.context)")
+			log.info("Forwarding \(event) to \(action.context)")
 
-            self[action.context]?.propertyInspectorDidDisappear(device: action.device)
-            plugin.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
-        
-        case .sendToPlugin:
-            NSLog("Forwarding \(event) to \(context ?? "no context")")
-            try self[context]?.decodeSentToPlugin(data, using: decoder)
-        }
-    }
+			self[action.context]?.propertyInspectorDidDisappear(device: action.device)
+			plugin.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
+			
+		case .sendToPlugin:
+			log.info("Forwarding \(event) to \(context ?? "no context")")
+			try self[context]?.decodeSentToPlugin(data, using: decoder)
+		}
+	}
 }
