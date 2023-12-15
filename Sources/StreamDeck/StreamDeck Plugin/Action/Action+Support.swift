@@ -56,7 +56,7 @@ extension Action {
 	
 	// MARK: Defaults
 
-	public static var sortTitle: String { name }
+	public static var sortName: String { name }
 
 	public static var userTitleEnabled: Bool? { nil }
 	
