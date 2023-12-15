@@ -8,6 +8,7 @@
 - Support for `dialDown` and `dialUp` events
 - ` DisableAutomaticStates` in the Action protocol
 - `setTriggerDescription` event for SD+
+- `sortName` to provide a custom sort key for actions
 
 ## Changed
 

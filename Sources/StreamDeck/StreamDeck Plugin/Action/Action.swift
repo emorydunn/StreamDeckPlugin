@@ -23,6 +23,12 @@ public protocol Action {
 	/// The name of the action. This string is visible to the user in the actions list.
 	static var name: String { get }
 	
+	/// A name used for sorting actions in the Stream Deck app.
+	///
+	/// By default this is `name`, but a custom value can be provided to sort
+	/// and group actions together. 
+	static var sortName: String { get }
+
 	/// The unique identifier of the action.
 	///
 	/// It must be a uniform type identifier (UTI) that contains only lowercase alphanumeric characters (a-z, 0-9), hyphen (-), and period (.).

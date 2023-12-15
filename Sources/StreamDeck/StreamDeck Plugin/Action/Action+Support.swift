@@ -55,6 +55,9 @@ extension EncoderAction {
 extension Action {
 	
 	// MARK: Defaults
+
+	public static var sortTitle: String { name }
+
 	public static var userTitleEnabled: Bool? { nil }
 	
 	public static var propertyInspectorPath: String? { nil }
