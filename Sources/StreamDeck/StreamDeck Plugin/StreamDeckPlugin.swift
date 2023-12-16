@@ -17,7 +17,7 @@ public final class StreamDeckPlugin {
 	public static var shared: StreamDeckPlugin!
 
 	/// The plugin's delegate object.
-	public let plugin: any PluginDelegate
+	public var plugin: (any PluginDelegate)!
 
 	/// The task used for communicating with the Stream Deck application.
 	let task: URLSessionWebSocketTask
@@ -54,8 +54,7 @@ public final class StreamDeckPlugin {
 	/// The Stream Deck application information and devices information.
 	public let info: PluginRegistrationInfo
 
-	init(plugin: any PluginDelegate, port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) {
-		self.plugin = plugin
+	init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) {
 		self.port = port
 		self.uuid = uuid
 		self.event = event

@@ -43,12 +43,18 @@ struct StreamDeckCommand: ParsableCommand {
 		""")
 		log.log("\(pluginInfo.description)")
 
-		StreamDeckPlugin.shared = StreamDeckPlugin(plugin: pluginType.init(), port: port, uuid: uuid, event: event, info: pluginInfo)
+		// Create the plugin to handle communication
+		StreamDeckPlugin.shared = StreamDeckPlugin(port: port, uuid: uuid, event: event, info: pluginInfo)
 		
+		// Begin monitoring the socket
 		StreamDeckPlugin.shared.monitorSocket()
 		
+		// Send the registration event
 		try StreamDeckPlugin.shared.registerPlugin()
-		
+
+		// Create the user's plugin
+		StreamDeckPlugin.shared.plugin = pluginType.init()
+
 		let flag = DispatchSemaphore(value: 0)
 		log.log("Plugin started. Waiting for flag.")
 
