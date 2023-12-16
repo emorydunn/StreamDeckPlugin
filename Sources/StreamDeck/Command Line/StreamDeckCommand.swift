@@ -49,9 +49,11 @@ struct StreamDeckCommand: ParsableCommand {
 		
 		try StreamDeckPlugin.shared.registerPlugin()
 		
-		log.log("Plugin started. Dispatching on main thread.")
+		let flag = DispatchSemaphore(value: 0)
+		log.log("Plugin started. Waiting for flag.")
 
-		dispatchMain()
+		flag.wait()
+
 	}
 	
 }
