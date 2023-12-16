@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension PluginDelegate {
+public extension Plugin {
 	
 	// MARK: - Events Received
 	

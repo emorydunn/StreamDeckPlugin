@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension PluginDelegate {
+public extension Plugin {
 	
 	/// The default implementation of `static PluginDelegate.pluginWasCreated()`
 	static func pluginWasCreated() { }
@@ -56,7 +56,7 @@ public extension PluginDelegate {
 	
 }
 
-extension PluginDelegate {
+extension Plugin {
 
 	@available(*, deprecated, message: "Use the @GlobalSetting")
 	func decodeGlobalSettings(_ data: Data, using decoder: JSONDecoder) throws {

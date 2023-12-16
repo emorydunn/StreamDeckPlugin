@@ -21,7 +21,7 @@ public struct PluginCommand: ParsableCommand {
 	)
 
 	/// The plugin to be used.
-	public static var plugin: (any PluginDelegate.Type)?
+	public static var plugin: (any Plugin.Type)?
 
 	/// The default init
 	public init() { }

@@ -22,7 +22,7 @@ public extension Action {
 	///   - settings: A json object which is persistently saved for the action's instance.
 	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(to settings: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.setSettings,
+		PluginCommunication.shared.sendEvent(.setSettings,
 										  context: context,
 										  payload: settings)
 	}
@@ -32,7 +32,7 @@ public extension Action {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings(to settings: Settings) {
-		StreamDeckPlugin.shared.sendEvent(.setSettings,
+		PluginCommunication.shared.sendEvent(.setSettings,
 										  context: context,
 										  payload: settings)
 	}
@@ -40,7 +40,7 @@ public extension Action {
 	/// Request the persistent data for the action's instance.
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	func getSettings() {
-		StreamDeckPlugin.shared.sendEvent(.getSettings,
+		PluginCommunication.shared.sendEvent(.getSettings,
 										  context: context,
 										  payload: nil)
 	}
@@ -49,7 +49,7 @@ public extension Action {
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
 		log.log("EVENT: Sending log message: \(message)")
-		StreamDeckPlugin.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+		PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
 	}
 	
 	/// Write a debug log to the logs file.
@@ -77,7 +77,7 @@ public extension Action {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		StreamDeckPlugin.shared.sendEvent(.setTitle,
+		PluginCommunication.shared.sendEvent(.setTitle,
 										  context: context,
 										  payload: payload)
 	}
@@ -98,7 +98,7 @@ public extension Action {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		StreamDeckPlugin.shared.sendEvent(.setImage,
+		PluginCommunication.shared.sendEvent(.setImage,
 										  context: context,
 										  payload: payload)
 	}
@@ -148,7 +148,7 @@ public extension Action {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		StreamDeckPlugin.shared.sendEvent(.setImage,
+		PluginCommunication.shared.sendEvent(.setImage,
 										  context: context,
 										  payload: payload)
 	}
@@ -156,13 +156,13 @@ public extension Action {
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert() {
-		StreamDeckPlugin.shared.sendEvent(.showAlert, context: context, payload: nil)
+		PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
 	}
 	
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk() {
-		StreamDeckPlugin.shared.sendEvent(.showOK, context: context, payload: nil)
+		PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
 	}
 	
 	/// Change the state of the action's instance supporting multiple states.
@@ -172,7 +172,7 @@ public extension Action {
 	func setState(to state: Int) {
 		let payload: [String: Any] = ["state": state]
 		
-		StreamDeckPlugin.shared.sendEvent(.setState,
+		PluginCommunication.shared.sendEvent(.setState,
 										  context: context,
 										  payload: payload)
 	}
@@ -183,7 +183,7 @@ public extension Action {
 	///   - action: The action unique identifier.
 	///   - payload: A json object that will be received by the Property Inspector.
 	func sendToPropertyInspector(payload: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
+		PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
 										  action: uuid,
 										  context: context,
 										  payload: payload)
@@ -192,7 +192,7 @@ public extension Action {
 	
 	/// The plugin can send a `setFeedback` event to the Stream Deck application to dynamically change properties of items on the Stream Deck + touch display layout.
 	func setFeedback(_ payload: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.setFeedback,
+		PluginCommunication.shared.sendEvent(.setFeedback,
 										  context: context,
 										  payload: payload)
 	}
@@ -204,7 +204,7 @@ public extension Action {
 	func setFeedbackLayout(_ layout: LayoutName) {
 		let payload: [String: Any] = ["layout": layout.id]
 		
-		StreamDeckPlugin.shared.sendEvent(.setFeedbackLayout,
+		PluginCommunication.shared.sendEvent(.setFeedbackLayout,
 										  context: context,
 										  payload: payload)
 	}
@@ -217,7 +217,7 @@ public extension Action {
 	/// To reset the descriptions to the default values defined within the manifest, an empty payload can be sent as part of the event.
 	/// - Parameter triggerDescription: The new `TriggerDescription` or `nil` to reset.
 	func setTriggerDescription(_ triggerDescription: TriggerDescription?) {
-		StreamDeckPlugin.shared.sendEvent(.setTriggerDescription,
+		PluginCommunication.shared.sendEvent(.setTriggerDescription,
 										  context: context,
 										  payload: triggerDescription)
 	}

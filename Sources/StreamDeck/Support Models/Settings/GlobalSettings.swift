@@ -35,12 +35,12 @@ public struct GlobalSettings {
 
 			let updatedSettings = settings
 			Task {
-				StreamDeckPlugin.shared.sendEvent(.setGlobalSettings,
-															context: StreamDeckPlugin.shared.uuid,
+				PluginCommunication.shared.sendEvent(.setGlobalSettings,
+															context: PluginCommunication.shared.uuid,
 															payload: updatedSettings)
 
 				log.log("Notifying action instances")
-				for (_ , instance) in StreamDeckPlugin.shared.instances {
+				for (_ , instance) in PluginCommunication.shared.instances {
 					instance.didReceiveGlobalSettings()
 				}
 			}
@@ -67,7 +67,7 @@ public struct GlobalSettings {
 
 		log.log("Notifying action instances")
 		Task {
-			for (_ , instance) in StreamDeckPlugin.shared.instances {
+			for (_ , instance) in PluginCommunication.shared.instances {
 				instance.didReceiveGlobalSettings()
 			}
 		}

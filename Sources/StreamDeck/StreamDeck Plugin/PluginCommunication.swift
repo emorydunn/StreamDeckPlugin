@@ -8,16 +8,16 @@
 import Foundation
 import OSLog
 
-fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "StreamDeckPlugin")
+fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "PluginCommunication")
 
 /// An object that manages a plugins’s main event loop.
-public final class StreamDeckPlugin {
+public final class PluginCommunication {
 
 	/// The shared plugin.
-	public static var shared: StreamDeckPlugin!
+	public static var shared: PluginCommunication!
 
 	/// The plugin's delegate object.
-	public var plugin: (any PluginDelegate)!
+	public var plugin: (any Plugin)!
 
 	/// The task used for communicating with the Stream Deck application.
 	let task: URLSessionWebSocketTask
@@ -324,8 +324,8 @@ public final class StreamDeckPlugin {
 		if shouldLoadSettings {
 			log.log("Received first event, requesting global settings")
 			// Get the initial global settings
-			StreamDeckPlugin.shared.sendEvent(.getGlobalSettings,
-											  context: StreamDeckPlugin.shared.uuid,
+			PluginCommunication.shared.sendEvent(.getGlobalSettings,
+											  context: PluginCommunication.shared.uuid,
 											  payload: nil)
 			shouldLoadSettings = false
 		}

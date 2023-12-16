@@ -77,7 +77,7 @@ class TestAction: Action {
 
 }
 
-class TestPlugin: PluginDelegate {
+class TestPlugin: Plugin {
 
     // MARK: Manifest
     static var name: String = "Test Plugin"

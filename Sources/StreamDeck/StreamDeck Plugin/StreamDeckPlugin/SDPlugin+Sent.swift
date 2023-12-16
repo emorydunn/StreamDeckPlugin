@@ -12,7 +12,7 @@ import OSLog
 
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "PluginDelegate")
 
-public extension PluginDelegate {
+public extension Plugin {
 	
 	// MARK: Sent
 	
@@ -22,7 +22,7 @@ public extension PluginDelegate {
 	///   - settings: A json object which is persistently saved for the action's instance.
 	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(in context: String, to settings: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.setSettings,
+		PluginCommunication.shared.sendEvent(.setSettings,
 										  context: context,
 										  payload: settings)
 	}
@@ -32,7 +32,7 @@ public extension PluginDelegate {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings<P: Encodable>(in context: String, to settings: P) {
-		StreamDeckPlugin.shared.sendEvent(.setSettings,
+		PluginCommunication.shared.sendEvent(.setSettings,
 										  context: context,
 										  payload: settings)
 	}
@@ -40,7 +40,7 @@ public extension PluginDelegate {
 	/// Request the persistent data for the action's instance.
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	func getSettings(in context: String) {
-		StreamDeckPlugin.shared.sendEvent(.getSettings,
+		PluginCommunication.shared.sendEvent(.getSettings,
 										  context: context,
 										  payload: nil)
 	}
@@ -50,23 +50,23 @@ public extension PluginDelegate {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved globally.
 	func setGlobalSettings(_ settings: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.setGlobalSettings,
-										  context: StreamDeckPlugin.shared.uuid,
+		PluginCommunication.shared.sendEvent(.setGlobalSettings,
+										  context: PluginCommunication.shared.uuid,
 										  payload: settings)
 	}
 	
 	/// Request the global persistent data.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func getGlobalSettings() {
-		StreamDeckPlugin.shared.sendEvent(.getGlobalSettings,
-										  context: StreamDeckPlugin.shared.uuid,
+		PluginCommunication.shared.sendEvent(.getGlobalSettings,
+										  context: PluginCommunication.shared.uuid,
 										  payload: nil)
 	}
 	
 	/// Open an URL in the default browser.
 	/// - Parameter url: The URL to open
 	func openURL(_ url: URL) {
-		StreamDeckPlugin.shared.sendEvent(.openURL,
+		PluginCommunication.shared.sendEvent(.openURL,
 										  context: nil,
 										  payload: ["url": url.path])
 	}
@@ -75,7 +75,7 @@ public extension PluginDelegate {
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
 		log.log("EVENT: Sending log message: \(message)")
-		StreamDeckPlugin.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+		PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
 	}
 	
 	/// Write a debug log to the logs file.
@@ -103,7 +103,7 @@ public extension PluginDelegate {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		StreamDeckPlugin.shared.sendEvent(.setTitle,
+		PluginCommunication.shared.sendEvent(.setTitle,
 										  context: context,
 										  payload: payload)
 	}
@@ -124,7 +124,7 @@ public extension PluginDelegate {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		StreamDeckPlugin.shared.sendEvent(.setImage,
+		PluginCommunication.shared.sendEvent(.setImage,
 										  context: context,
 										  payload: payload)
 	}
@@ -173,7 +173,7 @@ public extension PluginDelegate {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		StreamDeckPlugin.shared.sendEvent(.setImage,
+		PluginCommunication.shared.sendEvent(.setImage,
 										  context: context,
 										  payload: payload)
 	}
@@ -187,13 +187,13 @@ public extension PluginDelegate {
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert(in context: String) {
-		StreamDeckPlugin.shared.sendEvent(.showAlert, context: context, payload: nil)
+		PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
 	}
 	
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk(in context: String) {
-		StreamDeckPlugin.shared.sendEvent(.showOK, context: context, payload: nil)
+		PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
 	}
 	
 	/// Change the state of the action's instance supporting multiple states.
@@ -203,7 +203,7 @@ public extension PluginDelegate {
 	func setState(in context: String, to state: Int) {
 		let payload: [String: Any] = ["state": state]
 		
-		StreamDeckPlugin.shared.sendEvent(.setState,
+		PluginCommunication.shared.sendEvent(.setState,
 										  context: context,
 										  payload: payload)
 	}
@@ -214,8 +214,8 @@ public extension PluginDelegate {
 		let payload: [String: Any] = ["profile": name]
 		// FIXME: Add Device
 		
-		StreamDeckPlugin.shared.sendEvent(.switchToProfile,
-										  context: StreamDeckPlugin.shared.uuid,
+		PluginCommunication.shared.sendEvent(.switchToProfile,
+										  context: PluginCommunication.shared.uuid,
 										  payload: payload)
 	}
 	
@@ -225,7 +225,7 @@ public extension PluginDelegate {
 	///   - action: The action unique identifier.
 	///   - payload: A json object that will be received by the Property Inspector.
 	func sendToPropertyInspector(in context: String, action: String, payload: [String: Any]) {
-		StreamDeckPlugin.shared.sendEvent(.sendToPropertyInspector,
+		PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
 										  action: action,
 										  context: context,
 										  payload: payload)
