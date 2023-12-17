@@ -5,12 +5,13 @@
 ## Added
 
 - The new `globalSetting` and `environmentKey` macros
-- Support for `dialDown` and `dialUp` events
-- ` DisableAutomaticStates` in the Action protocol
+- Support for `dialDown` and `dialUp` events (`dialPress` is now deprecated)
+- ` DisableAutomaticStates` in the `Action` protocol
 - `setTriggerDescription` event for SD+
 - `sortName` to provide a custom sort key for actions
 - `PluginSoftware` conforms to `ExpressibleByStringLiteral`
 - `@State` for action-specific state
+- New `sortName` property on `Action` to allow sorting actions
 
 ## Changed
 
@@ -20,6 +21,9 @@
 - Plugin monitors WebSocket errors and exits after too many
 - Deprecated `dialPress`, event is send to `dialUp`
 - Renamed `PluginOS.mac(minimumVersion:)` & `PluginOS.win(minimumVersion:)` to `PluginOS.macOS(_:)` & `PluginOS.windows(_:)`
+- Renamed `PluginDelegate` to `Plugin`
+- Renamed `StreamDeckPlugin` to `PluginCommunication`
+- The plugin communication and registration now happens before initializing your `Plugin`, meaning it's safe to call events from the `init()`
 
 ## 0.3.0 / 2023-03-03
 
