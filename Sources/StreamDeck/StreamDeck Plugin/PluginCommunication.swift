@@ -130,7 +130,7 @@ public final class PluginCommunication {
 				self?.parseMessage(message)
 				self?.webSocketErrorCount = 0
 			case let .failure(error):
-				log.error("WebSocket Error: \(error)")
+				log.error("WebSocket Error: \(error, privacy: .public)")
 				self?.webSocketErrorCount += 1
 				break
 			}
@@ -167,17 +167,17 @@ public final class PluginCommunication {
 			let eventKey = try decoder.decode(ReceivableEvent.self, from: data)
 			try parseEvent(event: eventKey.event, context: eventKey.context, data: data)
 		} catch let error as DecodingError {
-			let json = String(data: data, encoding: .utf8) ?? "could not read string from JSON"
+			let json = String(decoding: data, as: UTF8.self)
 
 			log.error("""
-			Decoding Error:
-			\(error)
-			\(json)
+			Error decoding event:
+			\(error, privacy: .public)
+			\(json,privacy: .public)
 			""")
 
 		} catch {
-			let json = String(data: data, encoding: .utf8) ?? "could not read string from JSON"
-			log.error("Decoding Error: \(error.localizedDescription)\n\(json)")
+			let json = String(decoding: data, as: UTF8.self)
+			log.error("\(error.localizedDescription, privacy: .public)\n\(json, privacy: .public)")
 		}
 
 	}
@@ -190,7 +190,7 @@ public final class PluginCommunication {
 		case let .string(string):
 			return string.data(using: .utf8)
 		@unknown default:
-			log.warning("Warning: WebSocket sent unknown message")
+			log.warning("WebSocket sent unknown message")
 			return nil
 		}
 	}
@@ -240,7 +240,7 @@ public final class PluginCommunication {
 		event["payload"] = payload
 
 		guard JSONSerialization.isValidJSONObject(event) else {
-			log.log("Data for \(eventType.rawValue) is not valid JSON.")
+			log.log("Data for \(eventType.rawValue, privacy: .public) is not valid JSON.")
 			return
 		}
 
@@ -249,13 +249,13 @@ public final class PluginCommunication {
 
 			task.send(URLSessionWebSocketTask.Message.data(data)) { error in
 				if let error = error {
-					log.error("Failed to send \(eventType.rawValue) event.\n\(error.localizedDescription)")
+					log.error("Failed to send \(eventType.rawValue, privacy: .public) event.\n\(error.localizedDescription, privacy: .public)")
 				} else {
-					log.log("Completed \(eventType.rawValue)")
+					log.log("Completed \(eventType.rawValue, privacy: .public)")
 				}
 			}
 		} catch {
-			log.error("\(error.localizedDescription).")
+			log.error("\(error.localizedDescription, privacy: .public).")
 		}
 
 	}
@@ -282,9 +282,9 @@ public final class PluginCommunication {
 			// Send the event
 			task.send(URLSessionWebSocketTask.Message.data(data)) { error in
 				if let error = error {
-					log.error("Failed to send \(eventType.rawValue) event.\n\(error.localizedDescription)")
+					log.error("Failed to send \(eventType.rawValue, privacy: .public) event.\n\(error.localizedDescription, privacy: .public)")
 				} else {
-					log.log("Completed \(eventType.rawValue)")
+					log.log("Completed \(eventType.rawValue, privacy: .public)")
 				}
 			}
 		} catch {
@@ -334,11 +334,11 @@ public final class PluginCommunication {
 
 		case .didReceiveSettings:
 
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeSettings(data, using: decoder)
 
 		case .didReceiveGlobalSettings:
-			log.info("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			GlobalSettings.shared.updateSettings(fromEvent: data)
 
 			plugin.didReceiveGlobalSettings()
@@ -348,15 +348,15 @@ public final class PluginCommunication {
 			}
 
 		case .keyDown:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeKeyDown(data, using: decoder)
 
 		case .keyUp:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeKeyUp(data, using: decoder)
 
 		case .dialRotate:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 
 			try self[context]?.decodeDialRotate(data, using: decoder)
 
@@ -366,17 +366,17 @@ public final class PluginCommunication {
 			try self[context]?.decodeDialUp(data, using: decoder)
 
 		case .dialDown:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 
 			try self[context]?.decodeDialDown(data, using: decoder)
 
 		case .dialUp:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 
 			try self[context]?.decodeDialUp(data, using: decoder)
 
 		case .touchTap:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 
 			try self[context]?.decodeTouchTap(data, using: decoder)
 
@@ -385,7 +385,7 @@ public final class PluginCommunication {
 			}
 
 		case .willAppear:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			let action = try decoder.decode(ActionEvent<InstanceAppearEvent>.self, from: data)
 
 			self.registerInstance(actionID: action.action, context: action.context, coordinates: action.payload.coordinates)
@@ -396,7 +396,7 @@ public final class PluginCommunication {
 			//            plugin.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
 
 		case .willDisappear:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeWillDisappear(data, using: decoder)
 			//            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
 			//
@@ -406,55 +406,55 @@ public final class PluginCommunication {
 			self.removeInstance(context)
 
 		case .titleParametersDidChange:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeTitleParametersDidChange(data, using: decoder)
 
 		case .deviceDidConnect:
 			let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
 
-			log.info("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			plugin.deviceDidConnect(action.device, deviceInfo: action.deviceInfo!)
 
 		case .deviceDidDisconnect:
 			let action = try decoder.decode(DeviceConnectionEvent.self, from: data)
 
-			log.info("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			plugin.deviceDidDisconnect(action.device)
 
 		case .systemDidWakeUp:
 
-			log.info("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			plugin.systemDidWakeUp()
 
 		case .applicationDidLaunch:
 			let action = try decoder.decode(ApplicationEvent.self, from: data)
 
-			log.info("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			plugin.applicationDidLaunch(action.payload.application)
 
 		case .applicationDidTerminate:
 			let action = try decoder.decode(ApplicationEvent.self, from: data)
 
-			log.info("Forwarding \(event) to PluginDelegate")
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			plugin.applicationDidTerminate(action.payload.application)
 
 		case .propertyInspectorDidAppear:
 			let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
 
-			log.info("Forwarding \(event) to \(action.context)")
+			log.info("Forwarding \(event, privacy: .public) to \(action.context, privacy: .public)")
 			self[action.context]?.propertyInspectorDidAppear(device: action.device)
 			plugin.propertyInspectorDidAppear(action: action.action, context: action.context, device: action.device)
 
 		case .propertyInspectorDidDisappear:
 			let action = try decoder.decode(PropertyInspectorEvent.self, from: data)
 
-			log.info("Forwarding \(event) to \(action.context)")
+			log.info("Forwarding \(event, privacy: .public) to \(action.context, privacy: .public)")
 
 			self[action.context]?.propertyInspectorDidDisappear(device: action.device)
 			plugin.propertyInspectorDidDisappear(action: action.action, context: action.context, device: action.device)
 			
 		case .sendToPlugin:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
+			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeSentToPlugin(data, using: decoder)
 		}
 	}

@@ -55,7 +55,14 @@ public struct StreamDeckApp: Decodable, CustomStringConvertible {
 	
 	/// The Stream Deck application version.
 	public let version: String
-	
+
+	enum CodingKeys: CodingKey {
+		case language
+		case platform
+		case platformVersion
+		case version
+	}
+
 	public var description: String {
 		"""
 		Language: \(language)

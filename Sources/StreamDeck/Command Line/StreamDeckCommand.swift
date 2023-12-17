@@ -35,13 +35,13 @@ struct StreamDeckCommand: ParsableCommand {
 		let pluginType = PluginCommand.plugin!
 		let pluginInfo = try PluginRegistrationInfo(string: info)
 		
-		log.log("Initializing plugin '\(pluginType.name)'")
+		log.log("Initializing plugin '\(pluginType.name, privacy: .public)'")
 		log.log("""
-		CLI Port: \(port)
-		CLI UUID: \(uuid)
-		CLI Event: \(event)
+		CLI Port: \(port, privacy: .public)
+		CLI UUID: \(uuid, privacy: .public)
+		CLI Event: \(event, privacy: .public)
 		""")
-		log.log("\(pluginInfo.description)")
+		log.log("\(pluginInfo.description, privacy: .public)")
 
 		// Create the plugin to handle communication
 		PluginCommunication.shared = PluginCommunication(port: port, uuid: uuid, event: event, info: pluginInfo)

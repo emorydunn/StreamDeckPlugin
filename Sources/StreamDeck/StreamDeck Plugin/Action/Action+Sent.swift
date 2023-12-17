@@ -48,7 +48,6 @@ public extension Action {
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
-		log.log("EVENT: Sending log message: \(message)")
 		PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
 	}
 	
