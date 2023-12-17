@@ -8,33 +8,33 @@
 import Foundation
 
 struct TestEvent {
-
+	
 	static let shared = TestEvent()
-
+	
 	let eventsWrapper: FileWrapper
-
+	
 	init() {
-
+		
 		guard let eventsURL = Bundle.module.url(forResource: "Test Events", withExtension: nil) else {
 			fatalError("Failed to locate 'Test Events' folder in '\(Bundle.module.bundleURL.path)'.")
 		}
-
+		
 		do {
 			self.eventsWrapper = try FileWrapper(url: eventsURL)
 		} catch {
 			fatalError("Failed to load test events.")
 		}
-
+		
 	}
-
+	
 	func data(for fileName: String) -> Data {
 		guard let data = eventsWrapper.fileWrappers?[fileName]?.regularFileContents else {
 			fatalError("Failed to read contents of '\(fileName)'.")
 		}
-
+		
 		return data
 	}
-
+	
 	static var registrationInfo: String = {
 		let data = TestEvent.shared.data(for: "registrationInfo.json")
 		return String(data: data, encoding: .utf8)!
@@ -84,5 +84,5 @@ struct TestEvent {
 	static var sendToPlugin: Data = {
 		TestEvent.shared.data(for: "sendToPlugin.json")
 	}()
-
+	
 }
