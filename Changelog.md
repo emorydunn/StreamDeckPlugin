@@ -9,6 +9,8 @@
 - ` DisableAutomaticStates` in the Action protocol
 - `setTriggerDescription` event for SD+
 - `sortName` to provide a custom sort key for actions
+- `PluginSoftware` conforms to `ExpressibleByStringLiteral`
+- `@State` for action-specific state
 
 ## Changed
 

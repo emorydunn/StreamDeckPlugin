@@ -468,7 +468,7 @@ public struct PlatformMinimumVersion: ExpressibleByStringLiteral, Codable {
 }
 
 /// The minimum version of the Stream Deck application supported.
-public struct PluginSoftware: Codable {
+public struct PluginSoftware: Codable, ExpressibleByStringLiteral {
 
 	/// The minimum version of the Stream deck application that the plugin requires.
 	///
@@ -481,10 +481,15 @@ public struct PluginSoftware: Codable {
 		self.minimumVersion = minimumVersion
 	}
 
+	public init(stringLiteral value: StringLiteralType) {
+		self.minimumVersion = value
+	}
+
 	/// Convenience method for setting the software version in a manifest.
 	public static func minimumVersion(_ minimumVersion: String) -> PluginSoftware {
 		PluginSoftware(minimumVersion: minimumVersion)
 	}
+
 }
 
 /// A plugin can request to be notified when some applications are launched or terminated.
