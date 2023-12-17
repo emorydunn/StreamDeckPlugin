@@ -17,6 +17,7 @@
 - Use `PlatformMinimumVersion` for manifest
 - Plugin monitors WebSocket errors and exits after too many
 - Deprecated `dialPress`, event is send to `dialUp`
+- Renamed `PluginOS.mac(minimumVersion:)` & `PluginOS.win(minimumVersion:)` to `PluginOS.macOS(_:)` & `PluginOS.windows(_:)`
 
 ## 0.3.0 / 2023-03-03
 
