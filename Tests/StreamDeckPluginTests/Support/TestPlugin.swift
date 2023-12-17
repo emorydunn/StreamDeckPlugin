@@ -96,7 +96,7 @@ class TestPlugin: Plugin {
     
     static var version: String = "0.1"
     
-    static var os: [PluginOS] = [.mac(minimumVersion: "10.15")]
+	static var os: [PluginOS] = [.macOS(.v11)]
     
     static var applicationsToMonitor: ApplicationsToMonitor? = nil
     

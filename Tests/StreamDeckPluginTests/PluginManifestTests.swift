@@ -19,8 +19,8 @@ final class PluginManifestTests: XCTestCase {
             icon: "counter",
             version: "0.1",
             os: [
-                .mac(minimumVersion: "10.15"),
-                .win(minimumVersion: "10")
+				.macOS(.v11),
+                .win("10")
             ],
             applicationsToMonitor: ApplicationsToMonitor(mac: ["com.test.app"]),
             software: .minimumVersion("4.1"),

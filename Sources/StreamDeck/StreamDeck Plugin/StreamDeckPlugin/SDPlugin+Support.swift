@@ -46,7 +46,7 @@ public extension Plugin {
 	
 	static var software: StreamDeck.PluginSoftware { .minimumVersion("5.0") }
 
-	static var os: [PluginOS] { [.mac(minimumVersion: .v11)] }
+	static var os: [PluginOS] { [.macOS(.v11)] }
 
 	static var codePath: String { executableName }
 	

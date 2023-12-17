@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-@available(*, deprecated, renamed: "StreamDeckPlugin")
+@available(*, deprecated, renamed: "Plugin")
 public typealias PluginDelegate = Plugin
 /// The `PluginDelegate` represents the entry point to to your plugin and is used to generate the manifest.
 ///

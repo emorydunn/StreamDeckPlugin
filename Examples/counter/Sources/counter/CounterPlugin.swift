@@ -12,7 +12,7 @@ import OSLog
 fileprivate let log = Logger(subsystem: "Counter Plugin", category: "Main Plugin")
 
 @main
-class CounterPlugin: PluginDelegate {
+class CounterPlugin: Plugin {
 
 	// MARK: Manifest
 	static var name: String = "Counter"
@@ -25,7 +25,9 @@ class CounterPlugin: PluginDelegate {
 
 	static var url: URL? = URL(string: "https://github.com/emorydunn/StreamDeckPlugin")
 
-	static var version: String = "0.4"
+	static var version: String = "0.5"
+
+	static var os: [PluginOS] = [.macOS(.v11)]
 
 	static var actions: [any Action.Type] = [
 		IncrementAction.self,
