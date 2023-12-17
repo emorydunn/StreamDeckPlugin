@@ -184,6 +184,33 @@ struct IncrementAction: KeyAction {
 
 In the above example, `setTitle` is an event that an action can send. In this case it sets the title of the action. It's called in two places: when the action appears to set the initial title and when the global settings are changed so it can keep the visible counter in sync.
 
+## Exporting Your Plugin
+
+Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor. Use the provided `export` command on your plugin binary to export the manifest and copy the binary itself. You will still need to use Elgato's `DistributionTool` for final packaging.
+
+```bash
+OVERVIEW: Conveniently export the plugin.
+
+Automatically generate the manifest and copy the executable to the Plugins folder.
+
+USAGE: plugin-command export <uri> [--output <output>] [--generate-manifest] [--preview-manifest] [--manifest-name <manifest-name>] [--copy-executable] [--executable-name <executable-name>]
+
+ARGUMENTS:
+  <uri>                   The URI for your plugin
+
+OPTIONS:
+  -o, --output <output>   The folder in which to create the plugin's directory. (default: ~/Library/Application Support/com.elgato.StreamDeck/Plugins)
+  --generate-manifest/--preview-manifest
+                          Encode the manifest for the plugin and either save or preview it.
+  -m, --manifest-name <manifest-name>
+                          The name of the manifest file. (default: manifest.json)
+  -c, --copy-executable   Copy the executable file.
+  -e, --executable-name <executable-name>
+                          The name of the executable file.
+  --version               Show the version.
+  -h, --help              Show help information.
+```
+
 ## Adding `StreamDeck` as a Dependency
 
 To use the `StreamDeck` library in a SwiftPM project,
