@@ -20,7 +20,7 @@ final class PluginManifestTests: XCTestCase {
             version: "0.1",
             os: [
 				.macOS(.v11),
-                .win("10")
+                .windows("10")
             ],
             applicationsToMonitor: ApplicationsToMonitor(mac: ["com.test.app"]),
             software: .minimumVersion("4.1"),
