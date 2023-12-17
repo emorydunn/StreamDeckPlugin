@@ -361,9 +361,13 @@ public final class PluginCommunication {
 			try self[context]?.decodeDialRotate(data, using: decoder)
 
 		case .dialPress:
-			log.info("Forwarding \(event) to \(context ?? "no context")")
-
-			try self[context]?.decodeDialUp(data, using: decoder)
+			// Only forward this event on versions before `dialUp` & `dialDown` were introduced
+			if info.application.version.hasPrefix("6.0") {
+				log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
+				try self[context]?.decodeDialPress(data, using: decoder)
+			} else {
+				log.warning("The `dialPress` event is deprecated and will be removed in Stream Deck 6.5.")
+			}
 
 		case .dialDown:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")

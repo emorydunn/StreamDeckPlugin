@@ -238,7 +238,7 @@ public struct EncoderEvent<S: Decodable & Hashable>: Decodable, Hashable, Locata
 	
 	/// Boolean which is `true` on rotation when encoder pressed.
 	public let pressed: Bool
-	
+
 	/// The integer which holds the number of "ticks" on encoder rotation.
 	///
 	/// Positive values are for clockwise rotation, negative values are for counterclockwise rotation, zero value is never happen.
@@ -257,7 +257,9 @@ public struct EncoderPressEvent<S: Decodable & Hashable>: Decodable, Hashable, L
 	public let coordinates: Coordinates?
 	
 	/// Boolean which is `true` on encoder pressed, else `false` on released
-	public let pressed: Bool
+	///
+	/// - Important: As of Stream Deck 6.1 this value is no longer sent.
+	public let pressed: Bool?
 }
 
 /// Information received about a `keyUp` or `keyDown` event.
