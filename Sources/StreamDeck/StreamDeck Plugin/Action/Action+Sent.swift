@@ -89,7 +89,7 @@ public extension Action {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - image: An image to display.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
-	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the image is set to all states.
 	func setImage(to image: NSImage?, target: Target? = nil, state: Int? = nil) {
 		var payload: [String: Any] = [:]
 		
@@ -112,7 +112,7 @@ public extension Action {
 	///   - ext: The filename extension of the file to locate.
 	///   - subpath: The subdirectory in the plugin bundle in which to search for images.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
-	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the image is set to all states.
 	func setImage(toImage image: String?, withExtension ext: String, subdirectory subpath: String?, target: Target? = nil, state: Int? = nil) {
 		guard
 			let imageURL = Bundle.main.url(forResource: image, withExtension: ext, subdirectory: subpath)
@@ -136,7 +136,7 @@ public extension Action {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - image: The SVG to display.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
-	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the image is set to all states.
 	func setImage(toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
 		var payload: [String: Any] = [:]
 		
@@ -167,7 +167,7 @@ public extension Action {
 	/// Change the state of the action's instance supporting multiple states.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
+	///   - state: A 0-based integer value representing the state of an action with multiple states.
 	func setState(to state: Int) {
 		let payload: [String: Any] = ["state": state]
 		
