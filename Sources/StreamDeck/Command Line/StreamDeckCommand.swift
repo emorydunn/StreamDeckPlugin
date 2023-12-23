@@ -55,10 +55,8 @@ struct StreamDeckCommand: ParsableCommand {
 		// Create the user's plugin
 		PluginCommunication.shared.plugin = pluginType.init()
 
-		let flag = DispatchSemaphore(value: 0)
-		log.log("Plugin started. Waiting for flag.")
-
-		flag.wait()
+		log.log("Plugin started. Entering run loop.")
+		RunLoop.current.run()
 
 	}
 	
