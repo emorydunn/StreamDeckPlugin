@@ -80,6 +80,10 @@ struct PluginAction: Codable {
 		 visibleInActionsList: Bool? = nil,
 		 userTitleEnabled: Bool? = nil,
 		 disableAutomaticStates: Bool? = nil) {
+
+		precondition(CharacterSet(charactersIn: uuid).isSubset(of: .reverseDNS),
+					 "The UUID must be a uniform type identifier that contains only lowercase alphanumeric characters (a-z, 0-9), hyphen (-), and period (.)")
+
 		self.name = name
 		self.uuid = uuid
 		self.icon = icon
@@ -103,6 +107,9 @@ struct PluginAction: Codable {
 	}
 
 	init(action: any Action.Type) {
+		precondition(CharacterSet(charactersIn: action.uuid).isSubset(of: .reverseDNS), 
+					 "The UUID must be a uniform type identifier that contains only lowercase alphanumeric characters (a-z, 0-9), hyphen (-), and period (.)")
+
 		self.name = action.name
 		self.uuid = action.uuid
 		self.icon = action.icon
