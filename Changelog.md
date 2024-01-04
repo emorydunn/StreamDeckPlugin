@@ -24,6 +24,8 @@
 - Renamed `PluginDelegate` to `Plugin`
 - Renamed `StreamDeckPlugin` to `PluginCommunication`
 - The plugin communication and registration now happens before initializing your `Plugin`, meaning it's safe to call events from the `init()`
+- The plugin validates action UUIDs
+- Sort manifest keys for stable JSON
 
 ## 0.3.0 / 2023-03-03
 

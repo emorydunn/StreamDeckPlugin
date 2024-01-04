@@ -170,7 +170,8 @@ struct ExportCommand: ParsableCommand {
 	func encode(manifest: PluginManifest,
 				outputFormatting: JSONEncoder.OutputFormatting = [
 					.prettyPrinted,
-					.withoutEscapingSlashes]) throws -> Data {
+					.withoutEscapingSlashes,
+					.sortedKeys]) throws -> Data {
 						let encoder = JSONEncoder()
 						encoder.outputFormatting = outputFormatting
 
