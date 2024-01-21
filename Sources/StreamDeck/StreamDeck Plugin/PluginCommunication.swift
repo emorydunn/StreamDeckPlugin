@@ -240,7 +240,7 @@ public final class PluginCommunication {
 		event["payload"] = payload
 
 		guard JSONSerialization.isValidJSONObject(event) else {
-			log.log("Data for \(eventType.rawValue, privacy: .public) is not valid JSON.")
+			log.warning("Data for \(eventType.rawValue, privacy: .public) is not valid JSON.")
 			return
 		}
 
