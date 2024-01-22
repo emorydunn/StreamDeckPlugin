@@ -32,12 +32,18 @@ var package = Package(
 			name: "StreamDeck",
 			dependencies: [
 				.product(name: "ArgumentParser", package: "swift-argument-parser"),
-				"StreamDeckMacros"
+				"StreamDeckMacros",
+				"SDPlusLayout"
 			]),
 		.testTarget(
 			name: "StreamDeckPluginTests",
 			dependencies: ["StreamDeck"],
 			resources: [.copy("Support/Test Events")]),
+
+		// MARK: Components
+
+		.target(name: "SDPlusLayout"),
+		.testTarget(name: "SDPlusLayoutTests", dependencies: ["SDPlusLayout"]),
 
 		// MARK: Macros
 		.macro(
