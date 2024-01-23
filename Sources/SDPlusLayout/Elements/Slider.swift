@@ -25,9 +25,9 @@ public struct Slider: BarLayoutItem {
 	public var background: String?
 
 	public var borderWidth: Int?
-	public var barBackgroundColor: String?
-	public var barBorderColor: String?
-	public var barFillColor: String?
+	public var barBackgroundColor: ColorStyle?
+	public var barBorderColor: Color?
+	public var barFillColor: Color?
 
 	public init(key: String, value: Int, range: Range<Int> = 0..<100) {
 		self.key = key
