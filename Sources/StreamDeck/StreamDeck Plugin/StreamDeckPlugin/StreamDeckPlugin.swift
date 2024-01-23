@@ -86,9 +86,13 @@ public protocol Plugin {
 	/// Override CodePath for Windows.
 	static var codePathWin: String? { get }
 	
+//	/// The actions defined by your plugin.
+//	static var actions: [any Action.Type] { get }
+
 	/// The actions defined by your plugin.
+	@ActionBuilder
 	static var actions: [any Action.Type] { get }
-	
+
 	init()
 	
 	// MARK: Events Received

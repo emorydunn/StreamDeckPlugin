@@ -29,11 +29,11 @@ class CounterPlugin: Plugin {
 
 	static var os: [PluginOS] = [.macOS(.v11)]
 
-	static var actions: [any Action.Type] = [
-		IncrementAction.self,
-		DecrementAction.self,
+	static var actions: [any Action.Type] {
+		IncrementAction.self
+		DecrementAction.self
 		RotaryAction.self
-	]
+	}
 
 	required init() {
 		log.log("CounterPlugin init!")
