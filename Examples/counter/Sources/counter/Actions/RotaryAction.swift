@@ -54,9 +54,7 @@ class RotaryAction: EncoderAction {
 		displayCounter()
 	}
 
-	func dialPress(device: String, payload: EncoderPressEvent<Settings>) {
-		guard payload.pressed else { return }
-
+	func dialDown(device: String, payload: EncoderPressEvent<NoSettings>) {
 		count = 0
 
 		logMessage("Resetting counter")

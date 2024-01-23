@@ -10,7 +10,7 @@ Your plugin should conform to `PluginDelegate`, which handles event routing to y
 
 ```swift
 @main
-class CounterPlugin: PluginDelegate {
+class CounterPlugin: Plugin {
 
     static var name: String = "Counter"
 
