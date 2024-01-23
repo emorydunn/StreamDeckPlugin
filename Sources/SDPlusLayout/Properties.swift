@@ -47,6 +47,12 @@ public struct Rect: Encodable {
 		self.height = height
 	}
 
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+
+		try container.encode([x, y, width, height])
+	}
+
 	static var standard = Rect(x: 0, y: 0, width: 200, height: 100)
 }
 
@@ -55,3 +61,7 @@ public struct Font: Encodable {
 	public var weight: Int?
 }
 
+public struct BarRange: Encodable {
+	public var min: Int
+	public var max: Int
+}

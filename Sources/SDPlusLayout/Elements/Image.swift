@@ -13,13 +13,13 @@ public struct Image: LayoutItemProtocol {
 
 	public var value: String
 
-	public var enabled: Bool = true
+	public var enabled: Bool?
 
-	public var frame: Rect = .standard
+	public var rect: Rect = .standard
 	public var zOrder: Int?
 
-	public var opacity: Double = 1
-	public var background: String? = nil
+	public var opacity: Double?
+	public var background: String?
 
 	public init(key: String, path: String) {
 		self.key = key
