@@ -51,7 +51,7 @@ struct ExportCommand: ParsableCommand {
 	/// The name of the executable file.
 	var executableName: String?
 
-	var manifestEncoder: JSONEncoder = {
+	static var manifestEncoder: JSONEncoder = {
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = [
 			.prettyPrinted,
@@ -61,14 +61,18 @@ struct ExportCommand: ParsableCommand {
 		encoder.keyEncodingStrategy = .custom { keys -> CodingKey in
 			StreamDeckKey(key: keys.last!)
 		}
+
+		return encoder
 	}()
 
-	var standardEncoder: JSONEncoder = {
+	static var standardEncoder: JSONEncoder = {
 		let encoder = JSONEncoder()
 		encoder.outputFormatting = [
 			.prettyPrinted,
 			.withoutEscapingSlashes,
 			.sortedKeys]
+
+		return encoder
 	}()
 
 	/// Determine the location of the plugins directory.
@@ -156,7 +160,7 @@ struct ExportCommand: ParsableCommand {
 
 		// Encode the manifest
 		let pluginManifest = PluginManifest(plugin: plugin)
-		let data = try manifestEncoder.encode(pluginManifest)
+		let data = try ExportCommand.manifestEncoder.encode(pluginManifest)
 
 		switch manifest {
 		case .generateManifest:
@@ -176,7 +180,7 @@ struct ExportCommand: ParsableCommand {
 			try FileManager.default.createDirectory(at: layoutFolder, withIntermediateDirectories: true)
 
 			for layout in plugin.layouts {
-				let data =  try standardEncoder.encode(layout)
+				let data =  try ExportCommand.standardEncoder.encode(layout)
 				let url = layoutFolder.appendingPathComponent("\(layout.id).json")
 				try data.write(to: url)
 				print("Wrote layout '\(layout.id)'")

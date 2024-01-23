@@ -43,7 +43,7 @@ final class PluginManifestTests: XCTestCase {
 			])
 		
 		let generator = ExportCommand()
-		XCTAssertNoThrow(try generator.encode(manifest: manifest))
+		XCTAssertNoThrow(try ExportCommand.manifestEncoder.encode(manifest))
 		
 	}
 }
