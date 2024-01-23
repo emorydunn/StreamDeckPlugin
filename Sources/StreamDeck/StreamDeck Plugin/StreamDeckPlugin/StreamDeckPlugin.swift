@@ -7,7 +7,7 @@
 
 import Foundation
 import AppKit
-import SDPlusLayout
+@_exported import SDPlusLayout
 
 @available(*, deprecated, renamed: "Plugin")
 public typealias PluginDelegate = Plugin
