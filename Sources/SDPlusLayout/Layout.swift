@@ -14,11 +14,11 @@ public struct Layout: Identifiable, Encodable {
 		case items
 	}
 
-	public let id: String
+	public let id: LayoutName
 
 	var items: [any LayoutItem]
 
-	public init(id: String, @ItemBuilder items: () -> [any LayoutItem]) {
+	public init(id: LayoutName, @ItemBuilder items: () -> [any LayoutItem]) {
 		self.id = id
 		self.items = items()
 	}

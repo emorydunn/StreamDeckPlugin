@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SDPlusLayout
 
 /// The Encoder property is used to describe and configure the dial and display segment on StreamDeck+.
 public struct RotaryEncoder: Codable {
