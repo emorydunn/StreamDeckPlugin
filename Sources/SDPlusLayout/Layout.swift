@@ -58,3 +58,15 @@ public struct ItemBuilder {
 		}
 	}
 }
+
+@resultBuilder
+public struct LayoutBuilder {
+
+	public static func buildBlock() -> [Layout] {
+		return []
+	}
+
+	public static func buildBlock(_ components: Layout...) -> [Layout] {
+		components
+	}
+}

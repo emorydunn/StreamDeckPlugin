@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+import SDPlusLayout
 
 @available(*, deprecated, renamed: "Plugin")
 public typealias PluginDelegate = Plugin
@@ -88,7 +89,10 @@ public protocol Plugin {
 	
 	/// The actions defined by your plugin.
 	static var actions: [any Action.Type] { get }
-	
+
+	@LayoutBuilder
+	static var layouts: [Layout] { get }
+
 	init()
 	
 	// MARK: Events Received
