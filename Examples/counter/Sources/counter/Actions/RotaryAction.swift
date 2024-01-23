@@ -38,12 +38,7 @@ class RotaryAction: EncoderAction {
 	}
 
 	func willAppear(device: String, payload: AppearEvent<Settings>) {
-
-		setFeedback([
-			"title" : "Current Count",
-			"value" : "\(count)"
-		])
-
+		displayCounter()
 	}
 
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) {
@@ -59,16 +54,26 @@ class RotaryAction: EncoderAction {
 		displayCounter()
 	}
 
-	func touchTap(device: String, payload: TouchTapEvent<Settings>) {
-		NSLog("Touch Tap: \(payload.hold)")
-	}
-
 	func didReceiveGlobalSettings() {
 		displayCounter()
 	}
 
 	func displayCounter() {
-		setFeedback(["count" : count, "count-value": count.formatted()])
+		let bgColor: Color
+
+		// Change the color of the bar based on the count
+		if count >= 1 {
+			bgColor = .red
+		} else if count <= -1 {
+			bgColor = .blue
+		} else {
+			bgColor = .white
+		}
+
+		setFeedback([
+					 "count-text": count.formatted(),
+					 "count-bar" : ["value": count, "bar_fill_c": bgColor.toHex()],
+					])
 	}
 
 }

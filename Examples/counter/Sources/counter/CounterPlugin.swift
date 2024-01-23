@@ -42,16 +42,16 @@ class CounterPlugin: Plugin {
 				.frame(width: 180, height: 24)
 				.position(x: (200 - 180) / 2, y: 10)
 
-			Text(key: "count-value", value: "0")
+			Text(key: "count-text", value: "0")
 				.textAlignment(.center)
 				.font(size: 16, weight: 600)
 				.frame(width: 180, height: 24)
 				.position(x: (200 - 180) / 2, y: 30)
 
-			Bar(key: "count", value: 0, range: -50..<50)
+			Bar(key: "count-bar", value: 0, range: -50..<50)
 				.frame(width: 180, height: 20)
 				.position(x: (200 - 180) / 2, y: 60)
-				.barBackground(.blue, .grey, .red)
+				.barBackground(.black)
 				.barStyle(.doubleTrapezoid)
 				.barBorder("#943E93")
 		}
