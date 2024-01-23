@@ -18,7 +18,7 @@ class RotaryAction: EncoderAction {
 
 	static var icon: String = "Icons/actionIcon"
 
-	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .value,
+	static var encoder: RotaryEncoder? = RotaryEncoder(layout: "Layouts/counter.json",
 													   stackColor: "#f1184c",
 													   icon: "Icons/stopwatch",
 													   rotate: "Count",
@@ -31,8 +31,6 @@ class RotaryAction: EncoderAction {
 	static var userTitleEnabled: Bool? = false
 
 	@GlobalSetting(\.count) var count: Int
-
-	var valueLayout = true
 
 	required init(context: String, coordinates: StreamDeck.Coordinates?) {
 		self.context = context
@@ -54,9 +52,7 @@ class RotaryAction: EncoderAction {
 		displayCounter()
 	}
 
-	func dialPress(device: String, payload: EncoderPressEvent<Settings>) {
-		guard payload.pressed else { return }
-
+	func dialDown(device: String, payload: EncoderPressEvent<NoSettings>) {
 		count = 0
 
 		logMessage("Resetting counter")
@@ -65,16 +61,6 @@ class RotaryAction: EncoderAction {
 
 	func touchTap(device: String, payload: TouchTapEvent<Settings>) {
 		NSLog("Touch Tap: \(payload.hold)")
-
-		if valueLayout {
-			setFeedbackLayout(.icon)
-		} else {
-			setFeedbackLayout(.value)
-			displayCounter()
-		}
-
-		valueLayout.toggle()
-
 	}
 
 	func didReceiveGlobalSettings() {
@@ -82,7 +68,7 @@ class RotaryAction: EncoderAction {
 	}
 
 	func displayCounter() {
-		setFeedback(["value" : "\(count)"])
+		setFeedback(["count" : count, "count-value": count.formatted()])
 	}
 
 }
