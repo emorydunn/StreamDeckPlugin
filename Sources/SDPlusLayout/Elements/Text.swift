@@ -36,3 +36,47 @@ public struct Text: LayoutItemProtocol {
 	}
 
 }
+
+extension Text {
+	public func textAlignment(_ alignment: TextAlignment) -> Text {
+		var copy = self
+		copy.alignment = alignment
+		return copy
+	}
+
+	public func font(_ font: Font) -> Text {
+		var copy = self
+		copy.font = font
+		return copy
+	}
+
+	public func font(size: Int, weight: Int) -> Text {
+		var copy = self
+		copy.font = Font(size: size, weight: weight)
+		return copy
+	}
+
+	public func font(size: Int) -> Text {
+		var copy = self
+
+		if copy.font == nil {
+			copy.font = Font(size: size)
+		} else {
+			copy.font?.size = size
+		}
+
+		return copy
+	}
+
+	public func font(weight: Int) -> Text {
+		var copy = self
+
+		if copy.font == nil {
+			copy.font = Font(weight: weight)
+		} else {
+			copy.font?.weight = weight
+		}
+
+		return copy
+	}
+}
