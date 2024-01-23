@@ -72,7 +72,7 @@ class RotaryAction: EncoderAction {
 
 		setFeedback([
 					 "count-text": count.formatted(),
-					 "count-bar" : ["value": count, "bar_fill_c": bgColor.toHex()],
+					 "count-bar" : ["value": count, "bar_fill_c": bgColor.formatted(.hex)],
 					])
 	}
 

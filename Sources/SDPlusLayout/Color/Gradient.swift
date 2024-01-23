@@ -48,7 +48,7 @@ public struct Gradient: Encodable {
 		var container = encoder.singleValueContainer()
 
 		let value = stops.sorted().map { stop in
-			"\(stop.position.formatted(.number.precision(.fractionLength(0..<2)))): \(stop.color.toHex())"
+			"\(stop.position.formatted(.number.precision(.fractionLength(0..<2)))): \(stop.color.formatted(.hex))"
 		}
 		.joined(separator: ", ")
 

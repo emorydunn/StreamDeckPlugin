@@ -9,8 +9,8 @@ import Foundation
 //import Silica
 
 /// A set of components that define a color. The color space is defined by the drawing context.
-public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral {
-
+public struct Color: Equatable, Hashable, Codable {
+    
     /// Red value
     public let red: Double
     
@@ -19,7 +19,10 @@ public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral 
     
     /// Blue value
     public let blue: Double
-
+    
+    /// Alpha value
+    public let alpha: Double
+    
     /// The grey value of the color, determined by averaging the channels.
     public var grey: Double {
         return (red + green + blue) / 3
@@ -34,10 +37,11 @@ public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral 
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(red: Double, green: Double, blue: Double) {
+    public init(red: Double, green: Double, blue: Double, alpha: Double = 1) {
         self.red = red.clamped(to: 0...1)
         self.green = green.clamped(to: 0...1)
         self.blue = blue.clamped(to: 0...1)
+        self.alpha = alpha.clamped(to: 0...1)
     }
 
     /// Instantiate a new Color
@@ -49,11 +53,12 @@ public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral 
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(_ red: Int, _ green: Int, _ blue: Int) {
+    public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Double = 1) {
         self.init(
             red: Double(red) / 255,
             green: Double(green) / 255,
-            blue: Double(blue) / 255
+            blue: Double(blue) / 255,
+            alpha: alpha
         )
     }
 
@@ -61,25 +66,80 @@ public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral 
     /// - Parameters:
     ///   - grey: Decimal grey value
     ///   - a: Alpha value, from 0 to 1
-    public init(grey: Double) {
-        self.init(red: grey, green: grey, blue: grey)
+    public init(grey: Double, _ alpha: Double = 1) {
+        self.init(red: grey, green: grey, blue: grey, alpha: alpha)
     }
 
     /// Create  a color from a hex string
     /// From: https://stackoverflow.com/a/26341062
-    public init(hexString: String) {
+    public init(hexString: String, alpha: Double) {
         var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         colorString = colorString.replacingOccurrences(of: "#", with: "")
 
+        self.alpha = alpha
         self.red = Color.colorComponentFrom(colorString: colorString, start: 0, length: 2)
         self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
         self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
     }
 
-	public init(stringLiteral value: StringLiteralType) {
-		self.init(hexString: value)
+	/// Create  a color from a hex string
+	/// From: https://stackoverflow.com/a/26341062
+	public init(hexString: String) {
+		var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
+		colorString = colorString.replacingOccurrences(of: "#", with: "")
+
+		self.red = Color.colorComponentFrom(colorString: colorString, start: 0, length: 2)
+		self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
+		self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
+
+		if colorString.count == 8 {
+			self.alpha = Color.colorComponentFrom(colorString: colorString, start: 6, length: 2)
+		} else {
+			self.alpha = 1
+		}
 	}
 
+	/// Create a Color from the specified color components.
+	///
+	/// Depending on the number of components given either a greyscale or RGB color will be initialized.
+	///
+	/// | Count | Colorspace | Alpha          |
+	/// | ----- | ---------- | -------------- |
+	/// | 1     | Greyscale  | 1              |
+	/// | 2     | Greyscale  | last component |
+	/// | 3     | RGB        | 1              |
+	/// | 4     | RGB        | last component |
+	///
+	/// - Parameter components: The color components.
+	public init(fromComponents components: [Double]) {
+		switch components.count {
+			case 0:
+				// No components given, default to black
+				self = Color.black
+			case 1: // Greyscale Colorspace
+				self.init(grey: components[0], 1)
+			case 2: // Greyscale Colorspace
+				self.init(grey: components[0], components[1])
+			case 3:
+				self.init(red: components[0],
+								 green: components[1],
+								 blue: components[2],
+								 alpha: 1)
+			case 4:
+				self.init(red: components[0],
+									 green: components[1],
+									 blue: components[2],
+									 alpha: components[3])
+			default:
+				// Extra components given, just grab the first four
+				self.init(red: components[0],
+								 green: components[1],
+								 blue: components[2],
+								 alpha: components[3])
+
+		}
+	}
+    
     /// Determine the float value of a color component from it's hex representation in a string
     /// - Parameters:
     ///   - colorString: The full hex color value
@@ -103,6 +163,7 @@ public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral 
         return floatValue
     }
 
+	@available(macOS, deprecated: 12.0, message: "Use .formatted(.hex)")
     /// Convert to a hex string
     /// From: https://stackoverflow.com/a/26341062
     public func toHex() -> String {
@@ -114,17 +175,28 @@ public struct Color: Equatable, Hashable, Encodable, ExpressibleByStringLiteral 
         return hexString
     }
 
-	enum CodingKeys: CodingKey {
-		case red
-		case green
-		case blue
+	@available(macOS, deprecated: 12.0, message: "Use .formatted(.rgba)")
+    /// Returns an RGBA string
+    public func toRGBA() -> String {
+        let r = lround(red * 255) // swiftlint:disable:this identifier_name
+        let g = lround(green * 255) // swiftlint:disable:this identifier_name
+        let b = lround(blue * 255) // swiftlint:disable:this identifier_name
+
+        return "rgba(\(r),\(g),\(b),\(alpha))"
+    }
+
+	/// Return the color without transparency. 
+	public var withoutAlpha: Color {
+		Color(red: red, green: green, blue: blue)
 	}
 
-	public func encode(to encoder: Encoder) throws {
-		var container = encoder.singleValueContainer()
-		try container.encode(self.toHex())
+	public func withAlpha(_ alpha: Double) -> Color {
+		Color(red: red, green: green, blue: blue, alpha: alpha)
 	}
 
+	/// Clear
+	public static let clear = Color(grey: 0, 0)
+    
 	/// CSS `aliceblue`
 	public static let aliceblue = Color(hexString: "#F0F8FF")
 	/// CSS `antiquewhite`
