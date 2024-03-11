@@ -346,7 +346,9 @@ public final class PluginCommunication {
 		case .didReceiveDeepLink:
 			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 
-			print(String(decoding: data, as: UTF8.self))
+			let event = try decoder.decode(DeepLinkEvent.self, from: data)
+
+			plugin.didReceiveDeepLink(event.payload.url)
 
 		case .keyDown:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
