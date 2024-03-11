@@ -99,6 +99,8 @@ public protocol Plugin {
 	
 	func didReceiveGlobalSettings()
 
+	func didReceiveDeepLink(_ url: URL)
+
 	/// When a device is plugged to the computer, the plugin will receive a `deviceDidConnect` event.
 	/// - Parameters:
 	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.

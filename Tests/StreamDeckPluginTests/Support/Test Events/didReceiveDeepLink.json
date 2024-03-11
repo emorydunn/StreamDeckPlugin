@@ -1,0 +1,6 @@
+{
+    event: "didReceiveDeepLink",
+    payload: {
+        url: "streamdeck://plugins/message/com.test.plugin/Test%20message"
+    }
+}

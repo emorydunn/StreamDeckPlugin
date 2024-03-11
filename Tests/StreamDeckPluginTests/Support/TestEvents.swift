@@ -45,6 +45,9 @@ struct TestEvent {
 	static var didReceiveGlobalSettings: Data = {
 		TestEvent.shared.data(for: "didReceiveGlobalSettings.json")
 	}()
+	static var didReceiveDeepLink: Data = {
+		TestEvent.shared.data(for: "didReceiveDeepLink.json")
+	}()
 	static var keyUp: Data = {
 		TestEvent.shared.data(for: "keyUp.json")
 	}()

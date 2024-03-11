@@ -343,6 +343,11 @@ public final class PluginCommunication {
 
 			plugin.didReceiveGlobalSettings()
 
+		case .didReceiveDeepLink:
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
+
+			print(String(decoding: data, as: UTF8.self))
+
 		case .keyDown:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeKeyDown(data, using: decoder)

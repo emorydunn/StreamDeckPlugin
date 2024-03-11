@@ -65,6 +65,20 @@ final class PluginEventTests: XCTestCase {
 
 	}
 
+	func testDidReceiveDeepLink() {
+		class EventTestPlugin: TestPlugin {
+			override func didReceiveDeepLink(_ url: URL) {
+				eventExp.fulfill()
+			}
+		}
+
+		let event = ReceivableEvent.EventKey.didReceiveDeepLink
+		let data = TestEvent.didReceiveDeepLink
+
+		let delegate = EventTestPlugin(expectation(description: #function))
+		wait(for: event, data: data, delegate: delegate)
+	}
+
 	//    func testKeyDown() {
 	//        class EventTestPlugin: TestPlugin {
 	//			override func keyDown(action: String, context: String, device: String, payload: KeyEvent<NoSettings>) {

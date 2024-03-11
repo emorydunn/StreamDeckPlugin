@@ -55,6 +55,7 @@ extension ReceivableEvent {
 	public enum EventKey: String, Codable, CustomStringConvertible {
 		case didReceiveSettings
 		case didReceiveGlobalSettings
+		case didReceiveDeepLink
 		case keyDown
 		case keyUp
 		case dialRotate

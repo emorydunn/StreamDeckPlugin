@@ -125,7 +125,9 @@ class TestPlugin: Plugin {
 	}
 	
 	func didReceiveGlobalSettings() {}
-	
+
+	func didReceiveDeepLink(_ url: URL) { }
+
 	func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) {}
 	
 	func deviceDidDisconnect(_ device: String) {}
