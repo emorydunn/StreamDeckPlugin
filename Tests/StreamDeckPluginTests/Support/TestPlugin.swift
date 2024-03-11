@@ -8,6 +8,7 @@
 import Foundation
 import XCTest
 @testable import StreamDeck
+import SDPlusLayout
 
 struct PluginCount: EnvironmentKey {
 	static let defaultValue: Int = 0
@@ -115,7 +116,13 @@ class TestPlugin: Plugin {
 	static var actions: [any Action.Type] = [
 		
 	]
-	
+
+	static var layouts: [Layout] {
+		Layout(id: "test") {
+			
+		}
+	}
+
 	init(_ exp: XCTestExpectation) {
 		self.eventExp = exp
 	}

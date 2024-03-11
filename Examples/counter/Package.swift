@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
 	name: "CounterPlugin",
-	platforms: [.macOS(.v11)],
+	platforms: [.macOS(.v12)],
 	products: [
 		.executable(name: "counter-plugin", targets: ["counter"])
 	],

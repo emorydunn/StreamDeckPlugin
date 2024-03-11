@@ -51,6 +51,30 @@ struct ExportCommand: ParsableCommand {
 	/// The name of the executable file.
 	var executableName: String?
 
+	static var manifestEncoder: JSONEncoder = {
+		let encoder = JSONEncoder()
+		encoder.outputFormatting = [
+			.prettyPrinted,
+			.withoutEscapingSlashes,
+			.sortedKeys]
+
+		encoder.keyEncodingStrategy = .custom { keys -> CodingKey in
+			StreamDeckKey(key: keys.last!)
+		}
+
+		return encoder
+	}()
+
+	static var standardEncoder: JSONEncoder = {
+		let encoder = JSONEncoder()
+		encoder.outputFormatting = [
+			.prettyPrinted,
+			.withoutEscapingSlashes,
+			.sortedKeys]
+
+		return encoder
+	}()
+
 	/// Determine the location of the plugins directory.
 	///
 	/// If `--url` was specified this method returns that URL. Otherwise it constructs `~/Library/Application Support/com.elgato.StreamDeck/Plugins`
@@ -134,9 +158,9 @@ struct ExportCommand: ParsableCommand {
 			}
 		}
 
+		// Encode the manifest
 		let pluginManifest = PluginManifest(plugin: plugin)
-
-		let data = try encode(manifest: pluginManifest)
+		let data = try ExportCommand.manifestEncoder.encode(pluginManifest)
 
 		switch manifest {
 		case .generateManifest:
@@ -150,36 +174,24 @@ struct ExportCommand: ParsableCommand {
 			try data.write(to: outputURL)
 
 			print("Wrote manifest to \(outputURL.path)")
-		case .previewManifest:
-			if let string = String(data: data, encoding: .utf8) {
-				print(string)
-			} else {
-				print("Could not encode manifest to JSON string.")
+
+			// Encode the layouts
+			let layoutFolder = folder.appendingPathComponent("Layouts")
+			try FileManager.default.createDirectory(at: layoutFolder, withIntermediateDirectories: true)
+
+			for layout in plugin.layouts {
+				let data =  try ExportCommand.standardEncoder.encode(layout)
+				let url = layoutFolder.appendingPathComponent("\(layout.id).json")
+				try data.write(to: url)
+				print("Wrote layout '\(layout.id)'")
 			}
+
+		case .previewManifest:
+			print(String(decoding: data, as: UTF8.self))
 		case nil:
 			break
 		}
 
 	}
-
-	/// Encode the manifest as JSON.
-	/// - Parameters:
-	///   - manifest: The plugin manifest to encide.
-	///   - outputFormatting: JSON formatting to use.
-	/// - Returns: The encoded manifest.
-	func encode(manifest: PluginManifest,
-				outputFormatting: JSONEncoder.OutputFormatting = [
-					.prettyPrinted,
-					.withoutEscapingSlashes,
-					.sortedKeys]) throws -> Data {
-						let encoder = JSONEncoder()
-						encoder.outputFormatting = outputFormatting
-
-						encoder.keyEncodingStrategy = .custom { keys -> CodingKey in
-							StreamDeckKey(key: keys.last!)
-						}
-
-						return try encoder.encode(manifest)
-					}
 
 }

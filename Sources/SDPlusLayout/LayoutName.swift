@@ -12,10 +12,14 @@ import Foundation
 /// There are built-in pre-defined layouts or create a custom layout JSON file. The layout name or path to the custom layout json file is defined in the manifest.
 ///
 /// The layout can also be dynamically changed using the `setFeedbackLayout` event.
-public struct LayoutName: Codable, ExpressibleByStringLiteral, Identifiable, Hashable {
-	
+public struct LayoutName: Codable, ExpressibleByStringLiteral, Identifiable, Hashable, CustomStringConvertible {
+
 	public var id: String
-	
+
+	public var description: String {
+		id
+	}
+
 	public init(_ layoutName: String) {
 		self.id = layoutName
 	}

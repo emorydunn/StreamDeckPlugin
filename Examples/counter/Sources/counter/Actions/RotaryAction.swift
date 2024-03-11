@@ -18,7 +18,7 @@ class RotaryAction: EncoderAction {
 
 	static var icon: String = "Icons/actionIcon"
 
-	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .value,
+	static var encoder: RotaryEncoder? = RotaryEncoder(layout: "Layouts/counter.json",
 													   stackColor: "#f1184c",
 													   icon: "Icons/stopwatch",
 													   rotate: "Count",
@@ -32,20 +32,13 @@ class RotaryAction: EncoderAction {
 
 	@GlobalSetting(\.count) var count: Int
 
-	var valueLayout = true
-
 	required init(context: String, coordinates: StreamDeck.Coordinates?) {
 		self.context = context
 		self.coordinates = coordinates
 	}
 
 	func willAppear(device: String, payload: AppearEvent<Settings>) {
-
-		setFeedback([
-			"title" : "Current Count",
-			"value" : "\(count)"
-		])
-
+		displayCounter()
 	}
 
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) {
@@ -61,26 +54,26 @@ class RotaryAction: EncoderAction {
 		displayCounter()
 	}
 
-	func touchTap(device: String, payload: TouchTapEvent<Settings>) {
-		NSLog("Touch Tap: \(payload.hold)")
-
-		if valueLayout {
-			setFeedbackLayout(.icon)
-		} else {
-			setFeedbackLayout(.value)
-			displayCounter()
-		}
-
-		valueLayout.toggle()
-
-	}
-
 	func didReceiveGlobalSettings() {
 		displayCounter()
 	}
 
 	func displayCounter() {
-		setFeedback(["value" : "\(count)"])
+		let bgColor: Color
+
+		// Change the color of the bar based on the count
+		if count >= 1 {
+			bgColor = .red
+		} else if count <= -1 {
+			bgColor = .blue
+		} else {
+			bgColor = .white
+		}
+
+		setFeedback([
+					 "count-text": count.formatted(),
+					 "count-bar" : ["value": count, "bar_fill_c": bgColor.formatted(.hex)],
+					])
 	}
 
 }

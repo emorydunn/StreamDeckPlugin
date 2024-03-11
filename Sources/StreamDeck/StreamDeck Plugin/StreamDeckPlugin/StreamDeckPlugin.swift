@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+@_exported import SDPlusLayout
 
 @available(*, deprecated, renamed: "Plugin")
 public typealias PluginDelegate = Plugin
@@ -86,20 +87,17 @@ public protocol Plugin {
 	/// Override CodePath for Windows.
 	static var codePathWin: String? { get }
 	
-//	/// The actions defined by your plugin.
-//	static var actions: [any Action.Type] { get }
-
 	/// The actions defined by your plugin.
-	@ActionBuilder
 	static var actions: [any Action.Type] { get }
+
+	@LayoutBuilder
+	static var layouts: [Layout] { get }
 
 	init()
 	
 	// MARK: Events Received
 	
 	func didReceiveGlobalSettings()
-
-	func didReceiveDeepLink(_ url: URL)
 
 	/// When a device is plugged to the computer, the plugin will receive a `deviceDidConnect` event.
 	/// - Parameters:
