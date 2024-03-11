@@ -59,7 +59,11 @@ extension SharedKeyMacro {
 		}
 
 		// Create the struct with default value
-		let settingStruct = StructDeclSyntax(name: "\(raw: settingName.capitalized)") {
+		let settingStruct = try StructDeclSyntax(name: "\(raw: settingName.capitalized)") {
+
+			// Create an override for the key name
+			try VariableDeclSyntax("static let name = \"\(raw: settingName)\"")
+
 			VariableDeclSyntax(bindingSpecifier: "static let") {
 				PatternBindingSyntax(
 					pattern: PatternSyntax(stringLiteral: "defaultValue"),
