@@ -44,7 +44,15 @@ public extension Action {
 										  context: context,
 										  payload: nil)
 	}
-	
+
+	/// Open an URL in the default browser.
+	/// - Parameter url: The URL to open
+	func openURL(_ url: URL) {
+		PluginCommunication.shared.sendEvent(.openURL,
+											 context: nil,
+											 payload: ["url": url.path])
+	}
+
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
