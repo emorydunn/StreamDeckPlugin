@@ -76,13 +76,11 @@ extension ReceivableEvent {
 		case sendToPlugin
 
 		public var description: String {
-			rawValue.capitalized
+			"'\(rawValue)'"
 		}
 	}
 
 }
-
-
 
 /// Events sent by the server in response to actions.
 public struct ActionEvent<Payload: Decodable>: Decodable {
@@ -164,6 +162,17 @@ public struct GlobalSettingsEvent<S: Decodable>: Decodable {
 	public struct Payload: Decodable {
 		/// This json object contains data that you can set and are stored persistently.
 		public let settings: S
+	}
+}
+
+public struct DeepLinkEvent: Decodable {
+	/// The payload of the event.
+	public let payload: Payload
+
+	/// Container for the settings data.
+	public struct Payload: Decodable {
+		/// This json object contains data that you can set and are stored persistently.
+		public let url: URL
 	}
 }
 
