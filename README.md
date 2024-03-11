@@ -90,7 +90,7 @@ The value can be read and updated from inside an action callback.
 
 #### Macros
 
-Starting in Swift 5.9 two new macros will be available to make declaring environmental values and global settings easier. The macro handles generating both the struct and variable for the key path.
+Starting in Swift 5.9 two new macros will be available to make declaring environmental values and global settings easier. The macro handles generating both the struct and variable for the key path. The key specified in the macro is used as the key of the setting.
 
 ```swift
 extension EnvironmentValues {
@@ -184,6 +184,48 @@ struct IncrementAction: KeyAction {
 
 In the above example, `setTitle` is an event that an action can send. In this case it sets the title of the action. It's called in two places: when the action appears to set the initial title and when the global settings are changed so it can keep the visible counter in sync.
 
+## Stream Deck Plus Layouts
+
+Designing [custom layouts][plus_layout] for the Stream Deck Plus is accomplished with using a result builder. Each `Layout` is built from components, such as `Text`, `Image`, etc. The layout is defined in the plugin manifest. For instance, to build a custom bar layout from the example `counter` plugin:
+
+```swift
+Layout(id: "counter") {
+  // The title of the layout
+  Text(title: "Current Count")
+    .textAlignment(.center)
+    .frame(width: 180, height: 24)
+    .position(x: (200 - 180) / 2, y: 10)
+
+  // A large counter label
+  Text(key: "count-text", value: "0")
+    .textAlignment(.center)
+    .font(size: 16, weight: 600)
+    .frame(width: 180, height: 24)
+    .position(x: (200 - 180) / 2, y: 30)
+
+  // A bar that shows the current count
+  Bar(key: "count-bar", value: 0, range: -50..<50)
+    .frame(width: 180, height: 20)
+    .position(x: (200 - 180) / 2, y: 60)
+    .barBackground(.black)
+    .barStyle(.doubleTrapezoid)
+    .barBorder("#943E93")
+}
+```
+
+The layout is saved into the Layouts folder in the same directory as the manifest. In order to use the layout on a rotary action set the layout property of the encoder to the folder and id of the layout, e.g. `Layouts/counter.json`.
+
+At the moment updating the values in the layout still requires manually specifying keys from the components. In our example above the counter and bar can be updated like so:
+
+```swift
+setFeedback([
+ "count-text": count.formatted(),
+ "count-bar" : ["value": count],
+])
+```
+
+Any editable property can be updated this way. Please refer to the [documentation](https://docs.elgato.com/sdk/plugins/layouts-sd+#items) for more details.
+
 ## Exporting Your Plugin
 
 Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor. Use the provided `export` command on your plugin binary to export the manifest and copy the binary itself. You will still need to use Elgato's `DistributionTool` for final packaging.
@@ -242,3 +284,4 @@ let package = Package(
 [pi]: https://docs.elgato.com/sdk/plugins/property-inspector
 [er]: https://docs.elgato.com/sdk/plugins/events-received
 [es]: https://docs.elgato.com/sdk/plugins/events-sent
+[plus_layout]: https://docs.elgato.com/sdk/plugins/layouts-sd+
