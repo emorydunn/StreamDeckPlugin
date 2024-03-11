@@ -162,22 +162,14 @@ public final class PluginCommunication {
 			return
 		}
 
-		// Decode the event from the data
 		do {
+			// Decode the event from the data
 			let eventKey = try decoder.decode(ReceivableEvent.self, from: data)
 			try parseEvent(event: eventKey.event, context: eventKey.context, data: data)
-		} catch let error as DecodingError {
-			let json = String(decoding: data, as: UTF8.self)
-
-			log.error("""
-			Error decoding event:
-			\(error, privacy: .public)
-			\(json,privacy: .public)
-			""")
-
 		} catch {
-			let json = String(decoding: data, as: UTF8.self)
-			log.error("\(error.localizedDescription, privacy: .public)\n\(json, privacy: .public)")
+			// Pass the error onto the plugin
+			log.error("Failed to decode and parse the event received")
+			plugin.eventError(error, data: data)
 		}
 
 	}

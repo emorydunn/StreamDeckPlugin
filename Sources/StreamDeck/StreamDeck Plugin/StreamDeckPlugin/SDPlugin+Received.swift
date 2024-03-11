@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import OSLog
+
+fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "PluginDefaults")
 
 public extension Plugin {
 	
@@ -28,5 +31,21 @@ public extension Plugin {
 	func propertyInspectorDidAppear(action: String, context: String, device: String) { }
 	
 	func propertyInspectorDidDisappear(action: String, context: String, device: String) { }
-	
+
+	// MARK: Errors
+	func eventError<E: Error>(_ error: E, data: Data) {
+		if error is DecodingError {
+			let json = String(decoding: data, as: UTF8.self)
+
+			log.error("""
+			Error decoding event:
+			\(error, privacy: .public)
+			\(json, privacy: .public)
+			""")
+		} else {
+			let json = String(decoding: data, as: UTF8.self)
+			log.error("\(error.localizedDescription, privacy: .public)\n\(json, privacy: .public)")
+		}
+	}
+
 }

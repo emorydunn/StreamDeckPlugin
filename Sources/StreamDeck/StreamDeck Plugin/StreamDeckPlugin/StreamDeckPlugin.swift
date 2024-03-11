@@ -147,5 +147,12 @@ public protocol Plugin {
 
 	/// Called immediately after `main()`. 
 	static func pluginWasCreated()
+
+	// MARK: Errors
+	/// Called when the plugin encounters an error handling an event.
+	/// - Parameters:
+	///   - error: The error.
+	///   - data: The event data.
+	func eventError<E: Error>(_ error: E, data: Data)
 }
 
