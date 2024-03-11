@@ -185,7 +185,14 @@ public struct Color: Equatable, Hashable, Codable {
         return "rgba(\(r),\(g),\(b),\(alpha))"
     }
 
-	/// Return the color without transparency. 
+	public func encode(to encoder: Encoder) throws {
+		var container = encoder.singleValueContainer()
+		try container.encode(self.formatted(.hex))
+	}
+
+
+	// MARK: Opacity Modification
+	/// Return the color without transparency.
 	public var withoutAlpha: Color {
 		Color(red: red, green: green, blue: blue)
 	}
@@ -193,6 +200,8 @@ public struct Color: Equatable, Hashable, Codable {
 	public func withAlpha(_ alpha: Double) -> Color {
 		Color(red: red, green: green, blue: blue, alpha: alpha)
 	}
+
+	// MARK: - Default Colors
 
 	/// Clear
 	public static let clear = Color(grey: 0, 0)
