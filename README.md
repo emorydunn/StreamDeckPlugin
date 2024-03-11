@@ -22,10 +22,12 @@ class CounterPlugin: Plugin {
 
     static var version: String = "0.4"
 
-    static var actions: [any Action.Type] = [
-        IncrementAction.self,
-        DecrementAction.self
-    ]
+    @ActionBuilder
+    static var actions: [any Action.Type] {
+      IncrementAction.self
+      DecrementAction.self
+      RotaryAction.self
+    }
 
     required init() { }
 
@@ -41,6 +43,16 @@ A plugin both defines the code used to interact with the Stream Deck and the man
 Many of the properties are shown to users, such as the name and description. Others are used internally by the Stream Deck application. The most important property is `actions` which is where you define the actions your plugin provides.
 
 ```swift
+
+// Define actions with a builder
+@ActionBuilder
+static var actions: [any Action.Type] {
+  IncrementAction.self
+  DecrementAction.self
+  RotaryAction.self
+}
+
+// Or define actions in an array
 static var actions: [any Action.Type] = [
     IncrementAction.self,
     DecrementAction.self
