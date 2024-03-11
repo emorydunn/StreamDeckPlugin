@@ -343,10 +343,6 @@ public final class PluginCommunication {
 
 			plugin.didReceiveGlobalSettings()
 
-			for (_ , instance) in instances {
-				instance.didReceiveGlobalSettings()
-			}
-
 		case .keyDown:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeKeyDown(data, using: decoder)
