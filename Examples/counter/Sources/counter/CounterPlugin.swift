@@ -61,8 +61,19 @@ class CounterPlugin: Plugin {
 		}
 	}
 
+	@GlobalSetting(\.count) var count
+
 	required init() {
 		log.log("CounterPlugin init!")
+	}
+
+	func didReceiveDeepLink(_ url: URL) {
+		if let newCount = Int(url.lastPathComponent) {
+			log.log("Setting counter to \(newCount) from deep link")
+			count = newCount
+		} else {
+			log.error("Could not convert deep link '\(url.lastPathComponent)' to integer")
+		}
 	}
 
 }
