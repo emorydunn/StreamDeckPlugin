@@ -25,6 +25,8 @@ class DecrementAction: KeyAction {
 		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
 	]
 
+	static var userTitleEnabled: Bool? = false
+
 	var context: String
 
 	var coordinates: StreamDeck.Coordinates?

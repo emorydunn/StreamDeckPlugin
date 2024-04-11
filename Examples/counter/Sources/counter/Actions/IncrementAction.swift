@@ -25,6 +25,8 @@ class IncrementAction: KeyAction {
 		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
 	]
 
+	static var userTitleEnabled: Bool? = false
+
 	var context: String
 	
 	var coordinates: StreamDeck.Coordinates?
@@ -36,7 +38,7 @@ class IncrementAction: KeyAction {
 		self.coordinates = coordinates
 	}
 
-	func willAppear(device: String, payload: AppearEvent<NoSettings>) {
+	func willAppear(device: String, payload: AppearEvent<Settings>) {
 		log.log("Action appeared, setting title to \(self.count)")
 		setTitle(to: "\(count)", target: nil, state: nil)
 	}
