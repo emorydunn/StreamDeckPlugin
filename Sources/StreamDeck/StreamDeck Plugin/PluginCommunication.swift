@@ -115,37 +115,33 @@ public final class PluginCommunication {
 
 	// MARK: - WebSocket Methods
 	/// Continually receive messages from the socket.
-	func monitorSocket() {
+	func monitorSocket() async {
 
 		if task.state == .suspended {
 			log.log("Connecting to Stream Deck application")
 			task.resume()
 		}
 
-		self.task.receive { [weak self] result in
+		do {
+			let message = try await self.task.receive()
 
-			// Handle a new message
-			switch result {
-			case let .success(message):
-				self?.parseMessage(message)
-				self?.webSocketErrorCount = 0
-			case let .failure(error):
-				log.error("WebSocket Error: \(error, privacy: .public)")
-				self?.webSocketErrorCount += 1
-				break
-			}
-
-			if self?.webSocketErrorCount == 50 {
-				log.warning("There have been 50 WebSocket errors in a row, the StreamDeck app is probably no longer running. Terminating.")
-				exit(0)
-			}
-
-			// Queue for the next message
-			self?.monitorSocket()
+			parseMessage(message)
+			webSocketErrorCount = 0
+		} catch {
+			log.error("WebSocket Error: \(error, privacy: .public)")
+			webSocketErrorCount += 1
 		}
+
+		if webSocketErrorCount == 50 {
+			log.warning("There have been 50 WebSocket errors in a row, the StreamDeck app is probably no longer running. Terminating.")
+			exit(0)
+		}
+
+		await monitorSocket()
 
 	}
 
+	@available(*, deprecated, message: "Use async")
 	/// Sends a WebSocket message, receiving the result in a completion handler.
 	///
 	/// If an error occurs while sending the message, any outstanding work also fails.
@@ -154,6 +150,24 @@ public final class PluginCommunication {
 	///   - completionHandler: A closure that receives an NSError that indicates an error encountered while sending, or nil if no error occurred.
 	func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
 		task.send(message, completionHandler: completionHandler)
+	}
+
+	/// Sends a WebSocket message, receiving the result in a completion handler.
+	/// 
+	/// If an error occurs while sending the message, any outstanding work also fails.
+	/// - Parameters:
+	///   - message: The WebSocket message to send to the other endpoint.
+	///   - eventType: The event type of the data, used for logging. 
+	func send(_ message: Data, eventType: String) {
+		Task {
+			do {
+				try await task.send(URLSessionWebSocketTask.Message.data(message))
+
+				log.log("Completed \(eventType, privacy: .public)")
+			} catch {
+				log.error("Failed to send \(eventType, privacy: .public) event.\n\(error.localizedDescription, privacy: .public)")
+			}
+		}
 	}
 
 	func parseMessage(_ message: URLSessionWebSocketTask.Message) {
@@ -206,11 +220,12 @@ public final class PluginCommunication {
 		let data = try JSONSerialization.data(withJSONObject: registrationEvent, options: [])
 
 		log.log("Sending registration event")
-		send(URLSessionWebSocketTask.Message.data(data)) { error in
-			if let error = error {
-				log.error("Failed to send \(self.event) event.\n\(error.localizedDescription)")
-			}
-		}
+		send(data, eventType: event)
+//		send(URLSessionWebSocketTask.Message.data(data)) { error in
+//			if let error = error {
+//				log.error("Failed to send \(self.event) event.\n\(error.localizedDescription)")
+//			}
+//		}
 
 	}
 
@@ -239,13 +254,7 @@ public final class PluginCommunication {
 		do {
 			let data = try JSONSerialization.data(withJSONObject: event, options: [])
 
-			task.send(URLSessionWebSocketTask.Message.data(data)) { error in
-				if let error = error {
-					log.error("Failed to send \(eventType.rawValue, privacy: .public) event.\n\(error.localizedDescription, privacy: .public)")
-				} else {
-					log.log("Completed \(eventType.rawValue, privacy: .public)")
-				}
-			}
+			send(data, eventType: eventType.rawValue)
 		} catch {
 			log.error("\(error.localizedDescription, privacy: .public).")
 		}
@@ -272,13 +281,7 @@ public final class PluginCommunication {
 			let data = try encoder.encode(event)
 
 			// Send the event
-			task.send(URLSessionWebSocketTask.Message.data(data)) { error in
-				if let error = error {
-					log.error("Failed to send \(eventType.rawValue, privacy: .public) event.\n\(error.localizedDescription, privacy: .public)")
-				} else {
-					log.log("Completed \(eventType.rawValue, privacy: .public)")
-				}
-			}
+			send(data, eventType: eventType.rawValue)
 		} catch {
 			log.error("\(error.localizedDescription).")
 		}
@@ -292,20 +295,20 @@ public final class PluginCommunication {
 	///   - context: The context token.
 	///   - payload: The payload for the action.
 	/// - Throws: Errors while encoding the data to JSON.
-	public func sendEvent<P: Encodable>(_ eventType: SendableEventKey, action: String? = nil, context: String?, payload: P?) async throws {
-
-		// Construct the event to serialize and send
-		let event = SendableEvent(event: eventType,
-								  action: action,
-								  context: context,
-								  payload: payload)
-
-		// Encode the event
-		let data = try encoder.encode(event)
-
-		try await task.send(URLSessionWebSocketTask.Message.data(data))
-
-	}
+//	public func sendEvent<P: Encodable>(_ eventType: SendableEventKey, action: String? = nil, context: String?, payload: P?) throws {
+//
+//		// Construct the event to serialize and send
+//		let event = SendableEvent(event: eventType,
+//								  action: action,
+//								  context: context,
+//								  payload: payload)
+//
+//		// Encode the event
+//		let data = try encoder.encode(event)
+//
+//		send(data, eventType: eventType.rawValue)
+//
+//	}
 
 	/// Parse an event received from the Stream Deck application.
 	/// - Parameters:

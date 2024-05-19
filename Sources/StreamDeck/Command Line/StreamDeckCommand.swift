@@ -47,8 +47,10 @@ struct StreamDeckCommand: ParsableCommand {
 		PluginCommunication.shared = PluginCommunication(port: port, uuid: uuid, event: event, info: pluginInfo)
 		
 		// Begin monitoring the socket
-		PluginCommunication.shared.monitorSocket()
-		
+		Task.detached {
+			await PluginCommunication.shared.monitorSocket()
+		}
+
 		// Send the registration event
 		try PluginCommunication.shared.registerPlugin()
 
@@ -59,5 +61,5 @@ struct StreamDeckCommand: ParsableCommand {
 		RunLoop.current.run()
 
 	}
-	
+
 }
