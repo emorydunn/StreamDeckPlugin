@@ -8,7 +8,11 @@
 import Foundation
 
 /// A struct that indicates an action has no settings. 
-public struct NoSettings: Codable, Hashable { }
+public struct NoSettings: Codable, Hashable { 
+
+	public init() { } 
+
+}
 
 @propertyWrapper
 /// A property wrapper that reads from and writes to the plugin's global settings.
