@@ -36,8 +36,8 @@ public struct GlobalSettings {
 			let updatedSettings = settings
 			Task {
 				PluginCommunication.shared.sendEvent(.setGlobalSettings,
-															context: PluginCommunication.shared.uuid,
-															payload: updatedSettings)
+													 context: PluginCommunication.shared.uuid,
+													 payload: updatedSettings)
 
 				log.log("Notifying action instances")
 				for (_ , instance) in PluginCommunication.shared.instances {
