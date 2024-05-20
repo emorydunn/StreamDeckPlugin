@@ -125,7 +125,15 @@ public final class PluginCommunication {
 		do {
 			let message = try await self.task.receive()
 
-			parseMessage(message)
+			// Parse the message outside of the WebSocket loop.
+			// An action may take a long time to respond, especially
+			// if an AppleEvent takes longer than expected, so we
+			// want to kick that off and get back to receiving messages
+			// as soon as possible.
+			Task(priority: .userInitiated) {
+				parseMessage(message)
+			}
+			
 			webSocketErrorCount = 0
 		} catch {
 			log.error("WebSocket Error: \(error, privacy: .public)")
@@ -157,7 +165,7 @@ public final class PluginCommunication {
 	/// If an error occurs while sending the message, any outstanding work also fails.
 	/// - Parameters:
 	///   - message: The WebSocket message to send to the other endpoint.
-	///   - eventType: The event type of the data, used for logging. 
+	///   - eventType: The event type of the data, used for logging.
 	func send(_ message: Data, eventType: String) {
 		Task {
 			do {
