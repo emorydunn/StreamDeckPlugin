@@ -75,6 +75,8 @@ extension Action {
 		type(of: self).uuid
 	}
 	
+	public var longPressDuration: TimeInterval { 1 }
+	
 	// MARK: Events
 	/// Decode and deliver a settings event.
 	/// - Parameters:

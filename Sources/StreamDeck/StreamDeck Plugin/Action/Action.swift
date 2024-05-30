@@ -105,6 +105,9 @@ public protocol Action {
 	/// The coordinates of the instance.
 	var coordinates: Coordinates? { get }
 	
+	/// The duration a button needs to be held down in order to be considered a long press. 
+	var longPressDuration: TimeInterval { get }
+	
 	/// Create a new instance with the specified context and coordinates.
 	init(context: String, coordinates: Coordinates?)
 	
