@@ -50,7 +50,7 @@ class DecrementAction: KeyAction {
 		log.log("Decrementing count to \(self.count)")
 	}
 	
-	func longPress(device: String, payload: KeyEvent<NoSettings>) {
+	func longKeyPress(device: String, payload: KeyEvent<NoSettings>) {
 		count = 0
 		showOk()
 		log.log("Resetting count to \(self.count)")
