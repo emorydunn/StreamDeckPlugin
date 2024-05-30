@@ -108,10 +108,8 @@ extension Action {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
 		
 		// Cancel the long-press timer
-		TimerKeeper.shared.invalidateTimer(for: self)
+		let longPress = TimerKeeper.shared.invalidateTimer(for: self)
 		
-		let longPress = TimerKeeper.shared.lastPress(self)
-
 		keyUp(device: action.device, payload: action.payload, longPress: longPress)
 	}
 
@@ -152,6 +150,9 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeDialDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<EncoderPressEvent<Settings>>.self, from: data)
+		
+		// Begin a long-press timer
+		TimerKeeper.shared.beginTimer(for: self, event: action)
 
 		dialDown(device: action.device, payload: action.payload)
 	}
@@ -162,8 +163,11 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeDialUp(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<EncoderPressEvent<Settings>>.self, from: data)
+		
+		// Cancel the long-press timer
+		let longPress = TimerKeeper.shared.invalidateTimer(for: self)
 
-		dialUp(device: action.device, payload: action.payload)
+		dialUp(device: action.device, payload: action.payload, longPress: longPress)
 	}
 
 	/// Decode and deliver a dial rotation event.

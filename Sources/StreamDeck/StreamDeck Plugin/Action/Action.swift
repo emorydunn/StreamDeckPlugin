@@ -141,6 +141,7 @@ public protocol Action {
 	///   - payload: The event payload sent by the server.
 	func keyDown(device: String, payload: KeyEvent<Settings>)
 	
+	@available(*, deprecated, renamed: "keyUp(device:payload:longPress:)")
 	/// When the user releases a key, the plugin will receive the `keyUp` event.
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
@@ -151,13 +152,17 @@ public protocol Action {
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
+	///   - longPress: Whether the key was held down before being released.
 	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool)
 	
-	/// When the user presses a key
+	/// When the user holds a key down.
+	///
+	/// This isn't a Stream Deck event, instead this method is called internally by the plugin
+	/// when the user holds a key down for a second.
 	/// - Parameters:
-	///   - device: <#device description#>
-	///   - payload: <#payload description#>
-	func longPress(device: String, payload: KeyEvent<Settings>)
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
+	func longKeyPress(device: String, payload: KeyEvent<Settings>)
 	
 	/// When the user rotates the encoder, the plugin will receive the dialRotate event.
 	/// - Parameters:
@@ -179,11 +184,27 @@ public protocol Action {
 	///   - payload: The event payload sent by the server.
 	func dialDown(device: String, payload: EncoderPressEvent<Settings>)
 	
+	@available(*, deprecated, renamed: "dialUp(device:payload:longPress:)")
 	/// When the user releases a pressed encoder, the plugin will receive the dialUp event (SD+).
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
 	func dialUp(device: String, payload: EncoderPressEvent<Settings>)
+	
+	/// When the user releases a pressed encoder, the plugin will receive the dialUp event (SD+).
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
+	func dialUp(device: String, payload: EncoderPressEvent<Settings>, longPress: Bool)
+	
+	/// When the user holds a dial down.
+	///
+	/// This isn't a Stream Deck event, instead this method is called internally by the plugin
+	/// when the user holds a key down for a second.
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
+	func longDialPress(device: String, payload: EncoderPressEvent<Settings>)
 	
 	/// When the user touches the display, the plugin will receive the touchTap event.
 	/// - Parameters:

@@ -49,7 +49,7 @@ public extension Action {
 	
 	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool) { }
 	
-	func longPress(device: String, payload: KeyEvent<Settings>) { }
+	func longKeyPress(device: String, payload: KeyEvent<Settings>) { }
 	
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) { }
 	
@@ -58,6 +58,10 @@ public extension Action {
 	func dialDown(device: String, payload: EncoderPressEvent<Settings>) { }
 
 	func dialUp(device: String, payload: EncoderPressEvent<Settings>) { }
+	
+	func dialUp(device: String, payload: EncoderPressEvent<Settings>, longPress: Bool) { }
+	
+	func longDialPress(device: String, payload: EncoderPressEvent<Settings>) { }
 
 	func touchTap(device: String, payload: TouchTapEvent<Settings>) { }
 	
