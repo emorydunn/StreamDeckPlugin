@@ -47,6 +47,10 @@ public extension Action {
 	///   - payload: The event payload sent by the server.
 	func keyUp(device: String, payload: KeyEvent<Settings>) { }
 	
+	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool) { }
+	
+	func longPress(device: String, payload: KeyEvent<Settings>) { }
+	
 	func dialRotate(device: String, payload: EncoderEvent<Settings>) { }
 	
 	func dialPress(device: String, payload: EncoderPressEvent<Settings>) { }

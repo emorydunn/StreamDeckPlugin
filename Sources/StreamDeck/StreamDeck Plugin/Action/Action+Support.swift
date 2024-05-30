@@ -92,8 +92,12 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeKeyDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
-
+		
+		// Begin a long-press timer
+		TimerKeeper.shared.beginTimer(for: self, event: action)
+		
 		keyDown(device: action.device, payload: action.payload)
+	
 	}
 
 	/// Decode and deliver a key up event.
@@ -102,8 +106,13 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeKeyUp(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
+		
+		// Cancel the long-press timer
+		TimerKeeper.shared.invalidateTimer(for: self)
+		
+		let longPress = TimerKeeper.shared.lastPress(self)
 
-		keyUp(device: action.device, payload: action.payload)
+		keyUp(device: action.device, payload: action.payload, longPress: longPress)
 	}
 
 	/// Decode and deliver a will appear event.

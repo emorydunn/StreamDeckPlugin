@@ -147,6 +147,18 @@ public protocol Action {
 	///   - payload: The event payload sent by the server.
 	func keyUp(device: String, payload: KeyEvent<Settings>)
 	
+	/// When the user releases a key, the plugin will receive the `keyUp` event.
+	/// - Parameters:
+	///   - device: An opaque value identifying the device.
+	///   - payload: The event payload sent by the server.
+	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool)
+	
+	/// When the user presses a key
+	/// - Parameters:
+	///   - device: <#device description#>
+	///   - payload: <#payload description#>
+	func longPress(device: String, payload: KeyEvent<Settings>)
+	
 	/// When the user rotates the encoder, the plugin will receive the dialRotate event.
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
