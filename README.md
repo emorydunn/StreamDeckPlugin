@@ -6,7 +6,7 @@ A library for creating Stream Deck plugins in Swift.
 
 ## Usage
 
-Your plugin should conform to `PluginDelegate`, which handles event routing to you actions and lets you interact with the Stream Deck application.
+Your plugin should conform to `Plugin`, which handles event routing to your actions and lets you interact with the Stream Deck application.
 
 ```swift
 @main
@@ -271,7 +271,7 @@ To use the `StreamDeck` library in a SwiftPM project,
 add the following line to the dependencies in your `Package.swift` file:
 
 ```swift
-.package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main"))
+.package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", branch: "main"),
 ```
 
 Finally, include `"StreamDeck"` as a dependency for your executable target:
@@ -281,12 +281,12 @@ let package = Package(
     // name, products, etc.
     platforms: [.macOS(.v11)],
     dependencies: [
-        .package(name: "StreamDeck", url: "https://github.com/emorydunn/StreamDeckPlugin.git", .branch("main")),
+        .package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", branch: "main"),
         // other dependencies
     ],
     targets: [
         .executableTarget(name: "<command-line-tool>", dependencies: [
-            "StreamDeck"
+            .product(name: "StreamDeck", package: "StreamDeckPlugin")
         ]),
         // other targets
     ]
