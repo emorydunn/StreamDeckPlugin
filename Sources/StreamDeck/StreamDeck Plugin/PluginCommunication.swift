@@ -74,24 +74,24 @@ public final class PluginCommunication {
 		type(of: plugin).actions.first { $0.uuid == uuid }
 	}
 
-	/// Register a new instance of an action from a `willAppear` event.
-	/// - Parameter event: The event with information about the instance.
-	public func registerInstance(actionID: String, context: String, coordinates: Coordinates?) {
-
+	public func registerInstance(_ event:  ActionEvent<InstanceAppearEvent>) {
 		// Check if the instance already exists
-		guard instances[context] == nil else {
+		guard instances[event.context] == nil else {
 			log.log("This instance has already been registered.")
 			return
 		}
 
 		// Look up the action
-		guard let actionType = action(forID: actionID) else {
-			log.log("No action available with UUID '\(actionID, privacy: .public)'.")
+		guard let actionType = action(forID: event.action) else {
+			log.log("No action available with UUID '\(event.action, privacy: .public)'.")
 			return
 		}
 
+		// Register the controller type
+		ActionControllerRegistry.shared.store(event.context, controller: event.payload.controller)
+
 		// Initialize a new instance
-		instances[context] = actionType.init(context: context, coordinates: coordinates)
+		instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
 
 		log.log("Initialized a new instance of '\(actionType.uuid, privacy: .public)'")
 	}
@@ -102,6 +102,7 @@ public final class PluginCommunication {
 		guard let context else { return }
 		log.log("Removing instance of '\(context, privacy: .public)'")
 		instances[context] = nil
+		ActionControllerRegistry.shared.remove(context)
 	}
 
 	/// Return an action by its context.
@@ -396,22 +397,15 @@ public final class PluginCommunication {
 
 		case .willAppear:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
-			let action = try decoder.decode(ActionEvent<InstanceAppearEvent>.self, from: data)
+			let event = try decoder.decode(ActionEvent<InstanceAppearEvent>.self, from: data)
 
-			self.registerInstance(actionID: action.action, context: action.context, coordinates: action.payload.coordinates)
+			self.registerInstance(event)
 
 			try self[context]?.decodeWillAppear(data, using: decoder)
-			//
-			//            self[action.context]?.willAppear(device: action.device, payload: action.payload)
-			//            plugin.willAppear(action: action.action, context: action.context, device: action.device, payload: action.payload)
 
 		case .willDisappear:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 			try self[context]?.decodeWillDisappear(data, using: decoder)
-			//            let action = try decoder.decode(ActionEvent<AppearEvent>.self, from: data)
-			//
-			//            self[action.context]?.willDisappear(device: action.device, payload: action.payload)
-			//            plugin.willDisappear(action: action.action, context: action.context, device: action.device, payload: action.payload)
 
 			self.removeInstance(context)
 

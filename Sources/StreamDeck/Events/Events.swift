@@ -183,7 +183,10 @@ public struct InstanceAppearEvent: Decodable, Hashable, Locatable {
 	
 	/// The coordinates of the action triggered.
 	public let coordinates: Coordinates?
-	
+
+	/// Holds the name of the controller of the current action.
+	public let controller: ControllerType
+
 }
 
 /// Information received about a `willAppear` or `willDisappear` event.
