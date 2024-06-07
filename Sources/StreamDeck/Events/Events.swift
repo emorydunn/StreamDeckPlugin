@@ -256,6 +256,11 @@ public struct EncoderEvent<S: Decodable & Hashable>: Decodable, Hashable, Locata
 	///
 	/// Positive values are for clockwise rotation, negative values are for counterclockwise rotation, zero value is never happen.
 	public let ticks: Int
+	
+	/// The direction the dial was rotated.
+	public var clockwise: Bool {
+		ticks > 0
+	}
 }
 
 /// Information received about a rotary encoder event.
