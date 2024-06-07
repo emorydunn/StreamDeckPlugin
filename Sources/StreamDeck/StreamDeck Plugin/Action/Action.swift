@@ -143,15 +143,26 @@ public protocol Action {
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
 	func keyDown(device: String, payload: KeyEvent<Settings>)
-	
-	@available(*, deprecated, renamed: "keyUp(device:payload:longPress:)")
+
 	/// When the user releases a key, the plugin will receive the `keyUp` event.
+	///
+	/// This method is only called if the key was released quickly, that is, wasn't a long press. Use this method if your action implements specific
+	/// for a long press versus a short press.
+	///
+	/// - Note: If your action needs to always be notified when a key was released  implement `keyUp(device:payload:longPress:)`.
+	///
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
 	func keyUp(device: String, payload: KeyEvent<Settings>)
 	
 	/// When the user releases a key, the plugin will receive the `keyUp` event.
+	///
+	/// This method is always called when the `keyUp` event is received. Use `longPress` to
+	/// change the behavior of the event as needed if the key was held down.
+	///
+	/// - Note: If you only need to be notified when a key is released that isn't a long press use `keyUp(device:payload:)`.
+	///
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
@@ -172,9 +183,10 @@ public protocol Action {
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
 	func dialRotate(device: String, payload: EncoderEvent<Settings>)
-	
-	@available(*, deprecated, message: "Please note, from Stream Deck 6.5 onwards, dialPress will not be emitted by the API. Plugins should use dialDown and dialUp to receive events relating to dial presses.")
+
 	/// When the user presses or releases the encoder, the plugin will receive the dialPress event.
+	///
+	/// - Important: Please note, from Stream Deck 6.5 onwards, `dialPress` will not be emitted by the API. Plugins should use `dialDown` and `dialUp` to receive events relating to dial presses.
 	///
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
@@ -186,15 +198,26 @@ public protocol Action {
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
 	func dialDown(device: String, payload: EncoderPressEvent<Settings>)
-	
-	@available(*, deprecated, renamed: "dialUp(device:payload:longPress:)")
+
 	/// When the user releases a pressed encoder, the plugin will receive the dialUp event (SD+).
+	///
+	/// This method is only called if the dial was released quickly, that is, wasn't a long press. Use this method if your action implements specific
+	/// for a long press versus a short press.
+	///
+	/// - Note: If your action needs to always be notified when a dial was released  implement `dialUp(device:payload:longPress:)`.
+	///
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
 	func dialUp(device: String, payload: EncoderPressEvent<Settings>)
 	
 	/// When the user releases a pressed encoder, the plugin will receive the dialUp event (SD+).
+	///
+	/// This method is always called when the `dialUp` event is received. Use `longPress` to
+	/// change the behavior of the event as needed if the key was held down.
+	///
+	/// - Note: If you only need to be notified when a dial is released that isn't a long press use `dialUp(device:payload:)`.
+	///
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.

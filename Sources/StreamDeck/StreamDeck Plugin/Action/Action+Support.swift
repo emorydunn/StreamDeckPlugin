@@ -112,6 +112,10 @@ extension Action {
 		// Cancel the long-press timer
 		let longPress = TimerKeeper.shared.invalidateTimer(for: self)
 		
+		if !longPress {
+			keyUp(device: action.device, payload: action.payload)
+		}
+
 		keyUp(device: action.device, payload: action.payload, longPress: longPress)
 	}
 
@@ -134,9 +138,11 @@ extension Action {
 		
 		dialRotate(device: action.device, payload: action.payload)
 	}
-	
-	@available(*, deprecated, message: "Please note, from Stream Deck 6.5 onwards, dialPress will not be emitted by the API. Plugins should use dialDown and dialUp to receive events relating to dial presses.")
+
 	/// Decode and deliver a dial press event.
+	///
+	/// - Important: Please note, from Stream Deck 6.5 onwards, `dialPress` will not be emitted by the API. Plugins should use `dialDown` and `dialUp` to receive events relating to dial presses.
+	/// 
 	/// - Parameters:
 	///   - data: Event data
 	///   - decoder: The decoder to use
@@ -168,6 +174,10 @@ extension Action {
 		
 		// Cancel the long-press timer
 		let longPress = TimerKeeper.shared.invalidateTimer(for: self)
+
+		if !longPress {
+			dialUp(device: action.device, payload: action.payload)
+		}
 
 		dialUp(device: action.device, payload: action.payload, longPress: longPress)
 	}
