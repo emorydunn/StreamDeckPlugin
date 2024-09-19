@@ -43,9 +43,17 @@ class DecrementAction: KeyAction {
 		setTitle(to: "\(count)", target: nil, state: nil)
 	}
 
-	func keyDown(device: String, payload: KeyEvent<Settings>) {
+	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool) {
+		if longPress { return }
+		
 		count -= 1
 		log.log("Decrementing count to \(self.count)")
+	}
+	
+	func longKeyPress(device: String, payload: KeyEvent<NoSettings>) {
+		count = 0
+		showOk()
+		log.log("Resetting count to \(self.count)")
 	}
 
 	func didReceiveGlobalSettings() {
