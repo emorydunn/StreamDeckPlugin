@@ -302,7 +302,7 @@ To use the `StreamDeck` library in a SwiftPM project,
 add the following line to the dependencies in your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", branch: "main"),
+.package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", from: "0.5.0"),
 ```
 
 Finally, include `"StreamDeck"` as a dependency for your executable target:
@@ -312,7 +312,7 @@ let package = Package(
     // name, products, etc.
     platforms: [.macOS(.v11)],
     dependencies: [
-        .package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", branch: "main"),
+        .package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", from: "0.5.0"),
         // other dependencies
     ],
     targets: [
