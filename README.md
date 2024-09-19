@@ -29,6 +29,31 @@ class CounterPlugin: Plugin {
       RotaryAction.self
     }
 
+    static var layouts: [Layout] {
+      Layout(id: "counter") {
+        // The title of the layout
+        Text(title: "Current Count")
+          .textAlignment(.center)
+          .frame(width: 180, height: 24)
+          .position(x: (200 - 180) / 2, y: 10)
+
+        // A large counter label
+        Text(key: "count-text", value: "0")
+          .textAlignment(.center)
+          .font(size: 16, weight: 600)
+          .frame(width: 180, height: 24)
+          .position(x: (200 - 180) / 2, y: 30)
+
+        // A bar that shows the current count
+        Bar(key: "count-bar", value: 0, range: -50..<50)
+          .frame(width: 180, height: 20)
+          .position(x: (200 - 180) / 2, y: 60)
+          .barBackground(.black)
+          .barStyle(.doubleTrapezoid)
+          .barBorder("#943E93")
+      }
+    }
+
     required init() { }
 
 }
@@ -190,6 +215,12 @@ struct IncrementAction: KeyAction {
 
     func keyUp(device: String, payload: KeyEvent<Settings>) {
         count += 1
+    }
+
+    func longKeyPress(device: String, payload: KeyEvent<NoSettings>) {
+      count = 0
+      showOk()
+      log.log("Resetting count to \(self.count)")
     }
 }
 ```
