@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.5.0 / 2024-09-19
+
+## Added
+
+- Create custom SD+ layouts using result builders
+- Initial deep link support
+- `Action.openURL(_:)` to allow actions to launch URLs
+- Support for disabling the user configurable title in the PI
+- Global Long Press support for actions
+- Dial events include a `clockwise` property
+
+## Changed
+
+- Action UUIDs are checked that they are a uniform type identifier
+- WebSocket code has been migrated to async
+
 ## 0.4.0 / 2024-01-08
 
 ## Added
