@@ -15,7 +15,7 @@ var package = Package(
 	],
 	dependencies: [
 		// Dependencies declare other packages that this package depends on.
-		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "0.4.3"),
+		.package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.5.0"),
 
 		// Depend on the latest Swift 5.9 prerelease of SwiftSyntax
 		.package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
