@@ -15,18 +15,19 @@ public extension Plugin {
 	/// The default `main` function.
 	///
 	/// This method configures the plugin, calls `pluginWasCreated()`, and then registers the plugin.
-	static func main() {
+	static func main() async {
 		pluginWasCreated()
 		
 		PluginCommand.plugin = self
 		PluginCommand.configuration.version = version
 		PluginCommand.configuration.abstract = description
 		PluginCommand.configuration.discussion = """
-  \(name) by \(author)
-  
-  Version \(version)
-  """
-		PluginCommand.main()
+			\(name) by \(author)
+
+			Version \(version)
+			"""
+
+		await PluginCommand.main()
 	}
 	
 	/// Determine the CodePath for the plugin based on the bundles executable's name.

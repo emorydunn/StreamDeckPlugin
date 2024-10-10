@@ -9,7 +9,7 @@ import Foundation
 import ArgumentParser
 
 /// Manages a plugins lifecycle and handling launch from the Stream Deck application.
-public struct PluginCommand: ParsableCommand {
+public struct PluginCommand: AsyncParsableCommand {
 
 	/// The command's configuration.
 	public static var configuration = CommandConfiguration(

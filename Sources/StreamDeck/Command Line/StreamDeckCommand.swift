@@ -12,7 +12,7 @@ import OSLog
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "StreamDeckCommand")
 
 /// The command called by the Stream Deck application to run the plugin.
-struct StreamDeckCommand: ParsableCommand {
+struct StreamDeckCommand: AsyncParsableCommand {
 
 	static var configuration = CommandConfiguration(commandName: "register")
 
@@ -33,7 +33,7 @@ struct StreamDeckCommand: ParsableCommand {
 	public var info: String
 
 	/// Initialize an instance of the plugin with the properties provided by the command line.
-	public func run() throws {
+	public func run() async throws {
 		let pluginType = PluginCommand.plugin!
 		let pluginInfo = try PluginRegistrationInfo(string: info)
 		
