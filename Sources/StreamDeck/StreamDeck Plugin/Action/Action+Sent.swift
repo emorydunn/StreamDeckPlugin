@@ -22,9 +22,11 @@ public extension Action {
 	///   - settings: A json object which is persistently saved for the action's instance.
 	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(to settings: [String: Any]) {
-		PluginCommunication.shared.sendEvent(.setSettings,
-										  context: context,
-										  payload: settings)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setSettings,
+													   context: context,
+													   payload: settings)
+		}
 	}
 	
 	/// Save data persistently for the action's instance.
@@ -32,31 +34,39 @@ public extension Action {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings(to settings: Settings) {
-		PluginCommunication.shared.sendEvent(.setSettings,
-										  context: context,
-										  payload: settings)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setSettings,
+													   context: context,
+													   payload: settings)
+		}
 	}
 	
 	/// Request the persistent data for the action's instance.
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	func getSettings() {
-		PluginCommunication.shared.sendEvent(.getSettings,
-										  context: context,
-										  payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.getSettings,
+													   context: context,
+													   payload: nil)
+		}
 	}
 
 	/// Open an URL in the default browser.
 	/// - Parameter url: The URL to open
 	func openURL(_ url: URL) {
-		PluginCommunication.shared.sendEvent(.openURL,
-											 context: nil,
-											 payload: ["url": url.path])
+		Task {
+			await PluginCommunication.shared.sendEvent(.openURL,
+													   context: nil,
+													   payload: ["url": url.path])
+		}
 	}
 
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
-		PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+		Task {
+			await PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+		}
 	}
 	
 	/// Write a debug log to the logs file.
@@ -84,9 +94,11 @@ public extension Action {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		PluginCommunication.shared.sendEvent(.setTitle,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setTitle,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Dynamically change the image displayed by an instance of an action.
@@ -105,9 +117,11 @@ public extension Action {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		PluginCommunication.shared.sendEvent(.setImage,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setImage,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Dynamically change the image displayed by an instance of an action.
@@ -155,21 +169,27 @@ public extension Action {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		PluginCommunication.shared.sendEvent(.setImage,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setImage,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert() {
-		PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
+		}
 	}
 	
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk() {
-		PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
+		}
 	}
 	
 	/// Change the state of the action's instance supporting multiple states.
@@ -179,9 +199,11 @@ public extension Action {
 	func setState(to state: Int) {
 		let payload: [String: Any] = ["state": state]
 		
-		PluginCommunication.shared.sendEvent(.setState,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setState,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Send a payload to the Property Inspector.
@@ -190,18 +212,22 @@ public extension Action {
 	///   - action: The action unique identifier.
 	///   - payload: A json object that will be received by the Property Inspector.
 	func sendToPropertyInspector(payload: [String: Any]) {
-		PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
-										  action: uuid,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
+													   action: uuid,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	
 	/// The plugin can send a `setFeedback` event to the Stream Deck application to dynamically change properties of items on the Stream Deck + touch display layout.
 	func setFeedback(_ payload: [String: Any]) {
-		PluginCommunication.shared.sendEvent(.setFeedback,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setFeedback,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// The plugin can send a `setFeedbackLayout` event to the Stream Deck application to dynamically change the current Stream Deck + touch display layout.
@@ -211,9 +237,11 @@ public extension Action {
 	func setFeedbackLayout(_ layout: LayoutName) {
 		let payload: [String: Any] = ["layout": layout.id]
 		
-		PluginCommunication.shared.sendEvent(.setFeedbackLayout,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setFeedbackLayout,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Sets the trigger descriptions associated with an encoder (touch display + dial) action instance.
@@ -224,8 +252,10 @@ public extension Action {
 	/// To reset the descriptions to the default values defined within the manifest, an empty payload can be sent as part of the event.
 	/// - Parameter triggerDescription: The new `TriggerDescription` or `nil` to reset.
 	func setTriggerDescription(_ triggerDescription: TriggerDescription?) {
-		PluginCommunication.shared.sendEvent(.setTriggerDescription,
-										  context: context,
-										  payload: triggerDescription)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setTriggerDescription,
+													   context: context,
+													   payload: triggerDescription)
+		}
 	}
 }
