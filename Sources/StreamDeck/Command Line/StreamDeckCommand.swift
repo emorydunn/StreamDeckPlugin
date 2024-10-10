@@ -47,19 +47,14 @@ struct StreamDeckCommand: AsyncParsableCommand {
 
 		// Create the plugin to handle communication
 		PluginCommunication.shared = PluginCommunication(port: port, uuid: uuid, event: event, info: pluginInfo)
-		
+
+		// Send the registration event
+		try await PluginCommunication.shared.registerPlugin(pluginType)
+
+		log.log("Plugin started. Monitoring socket.")
+
 		// Begin monitoring the socket
-		Task.detached {
-			await PluginCommunication.shared.monitorSocket()
-		}
-
-		Task {
-			// Send the registration event
-			try await PluginCommunication.shared.registerPlugin(pluginType)
-		}
-
-		log.log("Plugin started. Entering run loop.")
-		RunLoop.current.run()
+		await PluginCommunication.shared.monitorSocket()
 
 	}
 
