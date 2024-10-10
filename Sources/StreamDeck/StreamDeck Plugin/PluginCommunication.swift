@@ -11,7 +11,7 @@ import OSLog
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "PluginCommunication")
 
 /// An object that manages a plugins’s main event loop.
-public final class PluginCommunication {
+public final actor PluginCommunication {
 
 	/// The shared plugin.
 	public static var shared: PluginCommunication!
@@ -132,7 +132,7 @@ public final class PluginCommunication {
 			// want to kick that off and get back to receiving messages
 			// as soon as possible.
 			Task(priority: .userInitiated) {
-				parseMessage(message)
+				await parseMessage(message)
 			}
 			
 			webSocketErrorCount = 0
@@ -179,7 +179,7 @@ public final class PluginCommunication {
 		}
 	}
 
-	func parseMessage(_ message: URLSessionWebSocketTask.Message) {
+	func parseMessage(_ message: URLSessionWebSocketTask.Message) async {
 		guard let data = readMessage(message) else {
 			log.warning("WebSocket sent empty message")
 			return
@@ -188,7 +188,7 @@ public final class PluginCommunication {
 		do {
 			// Decode the event from the data
 			let eventKey = try decoder.decode(ReceivableEvent.self, from: data)
-			try parseEvent(event: eventKey.event, context: eventKey.context, data: data)
+			try await parseEvent(event: eventKey.event, context: eventKey.context, data: data)
 		} catch {
 			// Pass the error onto the plugin
 			log.error("Failed to decode and parse the event received")
@@ -216,7 +216,7 @@ public final class PluginCommunication {
 	/// Complete the registration handshake with the server.
 	/// - Parameter properties: The properties provided by the Stream Deck application.
 	/// - Throws: Errors while encoding the data to JSON.
-	func registerPlugin() throws {
+	func registerPlugin(_ plugin: any Plugin.Type) throws {
 		let registrationEvent: [String: Any] = [
 			"event": event,
 			"uuid": uuid
@@ -230,6 +230,9 @@ public final class PluginCommunication {
 
 		log.log("Sending registration event")
 		send(data, eventType: event)
+
+		// Create the plugin instance
+		self.plugin = plugin.init()
 //		send(URLSessionWebSocketTask.Message.data(data)) { error in
 //			if let error = error {
 //				log.error("Failed to send \(self.event) event.\n\(error.localizedDescription)")
@@ -323,12 +326,12 @@ public final class PluginCommunication {
 	/// - Parameters:
 	///   - event: The event key.
 	///   - data: The JSON data.
-	func parseEvent(event: ReceivableEvent.EventKey, context: String?, data: Data) throws {
+	func parseEvent(event: ReceivableEvent.EventKey, context: String?, data: Data) async throws {
 
 		if shouldLoadSettings {
 			log.log("Received first event, requesting global settings")
 			// Get the initial global settings
-			PluginCommunication.shared.sendEvent(.getGlobalSettings,
+			await PluginCommunication.shared.sendEvent(.getGlobalSettings,
 											  context: PluginCommunication.shared.uuid,
 											  payload: nil)
 			shouldLoadSettings = false
