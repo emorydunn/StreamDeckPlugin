@@ -296,6 +296,23 @@ OPTIONS:
   -h, --help              Show help information.
 ```
 
+If you're building a universal binary there appears to be an issue with the macro which prevents compiling for multiple architectures at once. A workaround is to compile each separately and then combine with with `lipo`.
+
+```shell
+# Build each architecture separately and then combine
+echo "Building ARM binary"
+swift build -c release --arch arm64
+
+echo "Building Intel binary"
+swift build -c release --arch x86_64
+
+echo "Creating universal binary"
+lipo -create \
+  .build/arm64-apple-macosx/counter-plugin \
+  .build/x86_64-apple-macosx/counter-plugin \
+  -output counter-plugin
+```
+
 ## Adding `StreamDeck` as a Dependency
 
 To use the `StreamDeck` library in a SwiftPM project,

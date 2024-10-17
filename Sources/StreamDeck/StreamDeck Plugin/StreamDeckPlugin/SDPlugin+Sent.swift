@@ -22,9 +22,11 @@ public extension Plugin {
 	///   - settings: A json object which is persistently saved for the action's instance.
 	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(in context: String, to settings: [String: Any]) {
-		PluginCommunication.shared.sendEvent(.setSettings,
-										  context: context,
-										  payload: settings)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setSettings,
+													   context: context,
+													   payload: settings)
+		}
 	}
 	
 	/// Save data persistently for the action's instance.
@@ -32,17 +34,21 @@ public extension Plugin {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings<P: Encodable>(in context: String, to settings: P) {
-		PluginCommunication.shared.sendEvent(.setSettings,
-										  context: context,
-										  payload: settings)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setSettings,
+													   context: context,
+													   payload: settings)
+		}
 	}
 	
 	/// Request the persistent data for the action's instance.
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	func getSettings(in context: String) {
-		PluginCommunication.shared.sendEvent(.getSettings,
-										  context: context,
-										  payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.getSettings,
+													   context: context,
+													   payload: nil)
+		}
 	}
 	
 	/// Save data securely and globally for the plugin.
@@ -50,32 +56,40 @@ public extension Plugin {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved globally.
 	func setGlobalSettings(_ settings: [String: Any]) {
-		PluginCommunication.shared.sendEvent(.setGlobalSettings,
-										  context: PluginCommunication.shared.uuid,
-										  payload: settings)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setGlobalSettings,
+													   context: PluginCommunication.shared.uuid,
+													   payload: settings)
+		}
 	}
 	
 	/// Request the global persistent data.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func getGlobalSettings() {
-		PluginCommunication.shared.sendEvent(.getGlobalSettings,
-										  context: PluginCommunication.shared.uuid,
-										  payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.getGlobalSettings,
+													   context: PluginCommunication.shared.uuid,
+													   payload: nil)
+		}
 	}
 	
 	/// Open an URL in the default browser.
 	/// - Parameter url: The URL to open
 	func openURL(_ url: URL) {
-		PluginCommunication.shared.sendEvent(.openURL,
-										  context: nil,
-										  payload: ["url": url.path])
+		Task {
+			await PluginCommunication.shared.sendEvent(.openURL,
+													   context: nil,
+													   payload: ["url": url.path])
+		}
 	}
 	
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
-		log.log("EVENT: Sending log message: \(message)")
-		PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+		Task {
+			log.log("EVENT: Sending log message: \(message)")
+			await PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
+		}
 	}
 	
 	/// Write a debug log to the logs file.
@@ -103,9 +117,11 @@ public extension Plugin {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		PluginCommunication.shared.sendEvent(.setTitle,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setTitle,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Dynamically change the image displayed by an instance of an action.
@@ -124,9 +140,11 @@ public extension Plugin {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		PluginCommunication.shared.sendEvent(.setImage,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setImage,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Dynamically change the image displayed by an instance of an action.
@@ -173,9 +191,11 @@ public extension Plugin {
 		payload["target"] = target?.rawValue
 		payload["state"] = state
 		
-		PluginCommunication.shared.sendEvent(.setImage,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setImage,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	//    func setTitle(to string: String, target: Target? = nil, state: Int? = nil) throws {
@@ -187,13 +207,17 @@ public extension Plugin {
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert(in context: String) {
-		PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
+		}
 	}
 	
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk(in context: String) {
-		PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
+		Task {
+			await PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
+		}
 	}
 	
 	/// Change the state of the action's instance supporting multiple states.
@@ -203,9 +227,11 @@ public extension Plugin {
 	func setState(in context: String, to state: Int) {
 		let payload: [String: Any] = ["state": state]
 		
-		PluginCommunication.shared.sendEvent(.setState,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.setState,
+													   context: context,
+													   payload: payload)
+		}
 	}
 	
 	/// Switch to one of the preconfigured read-only profiles.
@@ -214,9 +240,11 @@ public extension Plugin {
 		let payload: [String: Any] = ["profile": name]
 		// FIXME: Add Device
 		
-		PluginCommunication.shared.sendEvent(.switchToProfile,
-										  context: PluginCommunication.shared.uuid,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.switchToProfile,
+													   context: PluginCommunication.shared.uuid,
+													   payload: payload)
+		}
 	}
 	
 	/// Send a payload to the Property Inspector.
@@ -225,9 +253,11 @@ public extension Plugin {
 	///   - action: The action unique identifier.
 	///   - payload: A json object that will be received by the Property Inspector.
 	func sendToPropertyInspector(in context: String, action: String, payload: [String: Any]) {
-		PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
-										  action: action,
-										  context: context,
-										  payload: payload)
+		Task {
+			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
+													   action: action,
+													   context: context,
+													   payload: payload)
+		}
 	}
 }
