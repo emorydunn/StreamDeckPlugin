@@ -8,7 +8,7 @@
 import Foundation
 import ArgumentParser
 
-extension URL: @retroactive ExpressibleByArgument {
+extension URL: ExpressibleByArgument {
 
 	/// Create a URL from a command line argument.
 	///

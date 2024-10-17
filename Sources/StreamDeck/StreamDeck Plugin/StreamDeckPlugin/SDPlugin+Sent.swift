@@ -1,6 +1,6 @@
 //
 //  Delegate+Sent.swift
-//  
+//
 //
 //  Created by Emory Dunn on 11/30/22.
 //
@@ -13,9 +13,9 @@ import OSLog
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "PluginDelegate")
 
 public extension Plugin {
-	
+
 	// MARK: Sent
-	
+
 	/// Save data persistently for the action's instance.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -28,7 +28,7 @@ public extension Plugin {
 													   payload: settings)
 		}
 	}
-	
+
 	/// Save data persistently for the action's instance.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -40,7 +40,7 @@ public extension Plugin {
 													   payload: settings)
 		}
 	}
-	
+
 	/// Request the persistent data for the action's instance.
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	func getSettings(in context: String) {
@@ -50,7 +50,7 @@ public extension Plugin {
 													   payload: nil)
 		}
 	}
-	
+
 	/// Save data securely and globally for the plugin.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -62,7 +62,7 @@ public extension Plugin {
 													   payload: settings)
 		}
 	}
-	
+
 	/// Request the global persistent data.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func getGlobalSettings() {
@@ -72,7 +72,7 @@ public extension Plugin {
 													   payload: nil)
 		}
 	}
-	
+
 	/// Open an URL in the default browser.
 	/// - Parameter url: The URL to open
 	func openURL(_ url: URL) {
@@ -82,7 +82,7 @@ public extension Plugin {
 													   payload: ["url": url.path])
 		}
 	}
-	
+
 	/// Write a debug log to the logs file.
 	/// - Parameter message: A string to write to the logs file.
 	func logMessage(_ message: String) {
@@ -91,7 +91,7 @@ public extension Plugin {
 			await PluginCommunication.shared.sendEvent(.logMessage, context: nil, payload: ["message": message])
 		}
 	}
-	
+
 	/// Write a debug log to the logs file.
 	/// - Parameters:
 	///   - items: Zero or more items to print.
@@ -100,10 +100,10 @@ public extension Plugin {
 		let message = items.map {
 			String(describing: $0)
 		}.joined(separator: separator)
-		
+
 		logMessage(message)
 	}
-	
+
 	/// Dynamically change the title of an instance of an action.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
@@ -111,19 +111,20 @@ public extension Plugin {
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setTitle(in context: String, to title: String?, target: Target? = nil, state: Int? = nil) {
-		var payload: [String: Any] = [:]
-		
-		payload["title"] = title
-		payload["target"] = target?.rawValue
-		payload["state"] = state
-		
 		Task {
+			var payload: [String: Any] = [:]
+
+			payload["title"] = title
+			payload["target"] = target?.rawValue
+			payload["state"] = state
+
+
 			await PluginCommunication.shared.sendEvent(.setTitle,
 													   context: context,
 													   payload: payload)
 		}
 	}
-	
+
 	/// Dynamically change the image displayed by an instance of an action.
 	///
 	/// The image is automatically encoded to a prefixed base64 string.
@@ -134,19 +135,20 @@ public extension Plugin {
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(in context: String, to image: NSImage?, target: Target? = nil, state: Int? = nil) {
-		var payload: [String: Any] = [:]
-		
-		payload["image"] = image?.base64String
-		payload["target"] = target?.rawValue
-		payload["state"] = state
-		
 		Task {
+			var payload: [String: Any] = [:]
+
+			payload["image"] = image?.base64String
+			payload["target"] = target?.rawValue
+			payload["state"] = state
+
+
 			await PluginCommunication.shared.sendEvent(.setImage,
 													   context: context,
 													   payload: payload)
 		}
 	}
-	
+
 	/// Dynamically change the image displayed by an instance of an action.
 	///
 	/// The image is automatically encoded to a prefixed base64 string.
@@ -165,13 +167,13 @@ public extension Plugin {
 			logMessage("Could not find \(image ?? "unnamed").\(ext)")
 			return
 		}
-		
+
 		let image = NSImage(contentsOf: imageURL)
-		
+
 		setImage(in: context, to: image)
 	}
-	
-	
+
+
 	/// Dynamically change the image displayed by an instance of an action.
 	///
 	/// The image is automatically encoded to a prefixed base64 string.
@@ -182,28 +184,28 @@ public extension Plugin {
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(in context: String, toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
-		var payload: [String: Any] = [:]
-		
-		if let svg = svg {
-			payload["image"] = "data:image/svg+xml;charset=utf8,\(svg)"
-		}
-		
-		payload["target"] = target?.rawValue
-		payload["state"] = state
-		
 		Task {
+			var payload: [String: Any] = [:]
+
+			if let svg = svg {
+				payload["image"] = "data:image/svg+xml;charset=utf8,\(svg)"
+			}
+
+			payload["target"] = target?.rawValue
+			payload["state"] = state
+
 			await PluginCommunication.shared.sendEvent(.setImage,
 													   context: context,
 													   payload: payload)
 		}
 	}
-	
+
 	//    func setTitle(to string: String, target: Target? = nil, state: Int? = nil) throws {
 	//        try knownContexts.forEach { context in
 	//            try setTitle(to: string, in: context, target: target, state: state)
 	//        }
 	//    }
-	
+
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert(in context: String) {
@@ -211,7 +213,7 @@ public extension Plugin {
 			await PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
 		}
 	}
-	
+
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
 	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk(in context: String) {
@@ -219,34 +221,34 @@ public extension Plugin {
 			await PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
 		}
 	}
-	
+
 	/// Change the state of the action's instance supporting multiple states.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setState(in context: String, to state: Int) {
-		let payload: [String: Any] = ["state": state]
-		
 		Task {
+			let payload: [String: Any] = ["state": state]
+
 			await PluginCommunication.shared.sendEvent(.setState,
 													   context: context,
 													   payload: payload)
 		}
 	}
-	
+
 	/// Switch to one of the preconfigured read-only profiles.
 	/// - Parameter name: The name of the profile to switch to. The name should be identical to the name provided in the manifest.json file.
 	func switchToProfile(named name: String) {
-		let payload: [String: Any] = ["profile": name]
-		// FIXME: Add Device
-		
 		Task {
+			let payload: [String: Any] = ["profile": name]
+			// FIXME: Add Device
+
 			await PluginCommunication.shared.sendEvent(.switchToProfile,
 													   context: PluginCommunication.shared.uuid,
 													   payload: payload)
 		}
 	}
-	
+
 	/// Send a payload to the Property Inspector.
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
