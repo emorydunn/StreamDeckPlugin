@@ -135,10 +135,13 @@ public extension Plugin {
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(in context: String, to image: NSImage?, target: Target? = nil, state: Int? = nil) {
+
+		let encodedImage = image?.base64String
+
 		Task {
 			var payload: [String: Any] = [:]
 
-			payload["image"] = image?.base64String
+			payload["image"] = encodedImage
 			payload["target"] = target?.rawValue
 			payload["state"] = state
 
