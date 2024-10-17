@@ -42,7 +42,7 @@ final class PluginManifestTests: XCTestCase {
 					tooltip: "Decrement the count.")
 			])
 		
-		let generator = ExportCommand()
+//		let generator = ExportCommand()
 		XCTAssertNoThrow(try ExportCommand.manifestEncoder.encode(manifest))
 		
 	}

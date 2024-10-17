@@ -54,6 +54,17 @@ public final actor PluginCommunication {
 	/// The Stream Deck application information and devices information.
 	public let info: PluginRegistrationInfo
 
+	init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo, plugin: any Plugin) {
+		self.port = port
+		self.uuid = uuid
+		self.event = event
+		self.info = info
+		self.plugin = plugin
+
+		let url = URL(string: "ws://localhost:\(port)")!
+		self.task = URLSession.shared.webSocketTask(with: url)
+	}
+
 	init(port: Int32, uuid: String, event: String, info: PluginRegistrationInfo) {
 		self.port = port
 		self.uuid = uuid
@@ -62,7 +73,6 @@ public final actor PluginCommunication {
 
 		let url = URL(string: "ws://localhost:\(port)")!
 		self.task = URLSession.shared.webSocketTask(with: url)
-
 	}
 
 	// MARK: - InstanceManager
@@ -158,7 +168,8 @@ public final actor PluginCommunication {
 	///   - message: The WebSocket message to send to the other endpoint.
 	///   - completionHandler: A closure that receives an NSError that indicates an error encountered while sending, or nil if no error occurred.
 	func send(_ message: URLSessionWebSocketTask.Message, completionHandler: @escaping (Error?) -> Void) {
-		task.send(message, completionHandler: completionHandler)
+//		task.send(message, completionHandler: completionHandler)
+		log.warning("Use async WebSocket send. This method is a no-op.")
 	}
 
 	/// Sends a WebSocket message, receiving the result in a completion handler.

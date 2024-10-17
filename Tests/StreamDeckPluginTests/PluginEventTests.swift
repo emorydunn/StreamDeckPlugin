@@ -17,19 +17,19 @@ final class PluginEventTests: XCTestCase {
 		devicePixelRatio: 2,
 		colors: [:])
 
-	func wait(for event: ReceivableEvent.EventKey, data: Data, delegate: TestPlugin) {
-		let plugin = PluginCommunication(port: 42, uuid: "", event: "", info: info)
-		plugin.plugin = delegate
-		PluginCommunication.shared = plugin
+	func fulfillment(of event: ReceivableEvent.EventKey, data: Data, plugin: TestPlugin) async {
+
+		let comm = PluginCommunication(port: 42, uuid: "", event: "", info: info, plugin: plugin)
+		PluginCommunication.shared = comm
 
 
 		do {
-			try plugin.parseEvent(event: event, context: nil, data: data)
+			try await comm.parseEvent(event: event, context: nil, data: data)
 		} catch {
 			print(error)
 		}
 
-		wait(for: [delegate.eventExp], timeout: 1)
+		await fulfillment(of: [plugin.eventExp], timeout: 1)
 	}
 
 	//    func testDidReceiveSettings() {
@@ -50,7 +50,7 @@ final class PluginEventTests: XCTestCase {
 	//
 	//    }
 
-	func testDidReceiveGlobalSettings() {
+	func testDidReceiveGlobalSettings() async {
 		class EventTestPlugin: TestPlugin {
 			override func didReceiveGlobalSettings() {
 				eventExp.fulfill()
@@ -61,11 +61,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.didReceiveGlobalSettings
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
-	func testDidReceiveDeepLink() {
+	func testDidReceiveDeepLink() async {
 		class EventTestPlugin: TestPlugin {
 			override func didReceiveDeepLink(_ url: URL) {
 				eventExp.fulfill()
@@ -76,7 +76,7 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.didReceiveDeepLink
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 	}
 
 	//    func testKeyDown() {
@@ -162,7 +162,7 @@ final class PluginEventTests: XCTestCase {
 	//
 	//    }
 
-	func testDeviceDidConnect() {
+	func testDeviceDidConnect() async {
 		class EventTestPlugin: TestPlugin {
 			override func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) {
 				XCTAssertEqual(device, "deviceDidConnect")
@@ -175,11 +175,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.deviceDidConnect
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
-	func testDeviceDidDisconnect() {
+	func testDeviceDidDisconnect() async {
 		class EventTestPlugin: TestPlugin {
 			override func deviceDidDisconnect(_ device: String) {
 				XCTAssertEqual(device, "deviceDidDisconnect")
@@ -192,11 +192,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.deviceDidDisconnect
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
-	func testSystemDidWakeUp() {
+	func testSystemDidWakeUp() async {
 		class EventTestPlugin: TestPlugin {
 			override func systemDidWakeUp() {
 				eventExp.fulfill()
@@ -208,11 +208,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.systemDidWakeUp
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
-	func testApplicationDidLaunch() {
+	func testApplicationDidLaunch() async {
 		class EventTestPlugin: TestPlugin {
 			override func applicationDidLaunch(_ application: String) {
 				XCTAssertEqual(application, "com.test.launch")
@@ -225,11 +225,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.applicationDidLaunch
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
-	func testApplicationDidTerminate() {
+	func testApplicationDidTerminate() async {
 		class EventTestPlugin: TestPlugin {
 			override func applicationDidTerminate(_ application: String) {
 				XCTAssertEqual(application, "com.test.terminate")
@@ -242,11 +242,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.applicationDidTerminate
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
-	func testPropertyInspectorDidAppear() {
+	func testPropertyInspectorDidAppear() async {
 		class EventTestPlugin: TestPlugin {
 			override func propertyInspectorDidAppear(action: String, context: String, device: String) {
 				XCTAssertEqual(action, "com.elgato.example.propertyInspectorDidAppear")
@@ -259,11 +259,11 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.propertyInspectorDidAppear
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 		
 	}
 
-	func testPropertyInspectorDidDisappear() {
+	func testPropertyInspectorDidDisappear() async {
 		class EventTestPlugin: TestPlugin {
 			override func propertyInspectorDidDisappear(action: String, context: String, device: String) {
 				XCTAssertEqual(action, "com.elgato.example.propertyInspectorDidDisappear")
@@ -276,7 +276,7 @@ final class PluginEventTests: XCTestCase {
 		let data = TestEvent.propertyInspectorDidDisappear
 
 		let delegate = EventTestPlugin(expectation(description: #function))
-		wait(for: event, data: data, delegate: delegate)
+		await fulfillment(of: event, data: data, plugin: delegate)
 
 	}
 
