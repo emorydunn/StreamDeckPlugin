@@ -35,5 +35,4 @@ public struct Bar: BarLayoutItem {
 		self.range = BarRange(min: range.lowerBound, max: range.upperBound)
 	}
 
-	
 }

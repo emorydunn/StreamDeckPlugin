@@ -235,10 +235,10 @@ public extension Action {
 
 	/// The plugin can send a `setFeedbackLayout` event to the Stream Deck application to dynamically change the current Stream Deck + touch display layout.
 	///
-	/// `setFeedbackLayout` can use the `id` of a built-in layout or a relative path to a custom layout JSON file.
+	/// `setFeedbackLayout` can use the `id` of a built-in layout or the `id` of a custom layout..
 	/// - Parameter layout: The layout to set.
 	func setFeedbackLayout(_ layout: LayoutName) {
-		let payload: [String: Any] = ["layout": layout.id]
+		let payload: [String: Any] = ["layout": layout.path]
 
 		Task {
 			await PluginCommunication.shared.sendEvent(.setFeedbackLayout,

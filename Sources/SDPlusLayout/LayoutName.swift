@@ -16,22 +16,40 @@ public struct LayoutName: Codable, ExpressibleByStringLiteral, Identifiable, Has
 
 	public var id: String
 
+	let builtIn: Bool
+
 	public var description: String {
 		id
 	}
 
+	public var path: String {
+		if builtIn {
+			id
+		} else {
+			"Layouts/\(id).json"
+		}
+	}
+
 	public init(_ layoutName: String) {
 		self.id = layoutName
+		self.builtIn = false
 	}
-	
+
+	private init(builtIn layoutName: String) {
+		self.id = layoutName
+		self.builtIn = true
+	}
+
 	public init(stringLiteral value: String) {
 		self.id = value
+		self.builtIn = false
 	}
 	
 	public init(from decoder: Decoder) throws {
 		let container = try decoder.singleValueContainer()
 		
 		self.id = try container.decode(String.self)
+		self.builtIn = false
 	}
 	
 	public func encode(to encoder: Encoder) throws {
@@ -41,21 +59,21 @@ public struct LayoutName: Codable, ExpressibleByStringLiteral, Identifiable, Has
 	}
 	
 	/// The default layout.
-	public static let icon: LayoutName = "$X1"
-	
+	public static let icon = LayoutName(builtIn: "$X1")
+
 	/// The layout best suited for custom images with a title.
-	public static let canvas: LayoutName = "$A0"
-	
+	public static let canvas = LayoutName(builtIn: "$A0")
+
 	/// The layout best suited for representing a single value.
-	public static let value: LayoutName = "$A1"
-	
+	public static let value = LayoutName(builtIn: "$A1")
+
 	/// The layout best suited for representing a single value range.
-	public static let indicator: LayoutName = "$B1"
-	
+	public static let indicator = LayoutName(builtIn: "$B1")
+
 	/// The layout best suited for representing a single value range, where the data can be further explained using color.
-	public static let gradient: LayoutName = "$B2"
-	
+	public static let gradient = LayoutName(builtIn: "$B2")
+
 	/// The layout best suited for representing two value ranges.
-	public static let doubleIndicator: LayoutName = "$C1"
-	
+	public static let doubleIndicator = LayoutName(builtIn: "$C1")
+
 }
