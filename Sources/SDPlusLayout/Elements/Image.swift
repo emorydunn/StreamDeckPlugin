@@ -20,6 +20,14 @@ public struct Image: LayoutItemProtocol {
 
 	public var opacity: Double?
 	public var background: String?
+	
+	/// Create a default `Image` for user-defined icons.
+	///
+	/// This image will be use the path provided, but will be overridden with a user-defined icon.
+	public init(path: String? = nil) {
+		self.key = "icon"
+		self.value = path ?? ""
+	}
 
 	public init(key: String, path: String) {
 		self.key = key
