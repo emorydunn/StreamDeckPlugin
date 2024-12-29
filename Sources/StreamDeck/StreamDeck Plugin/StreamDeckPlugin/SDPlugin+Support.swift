@@ -54,7 +54,9 @@ public extension Plugin {
 	static var codePathMac: String? { nil }
 	
 	static var codePathWin: String? { nil }
-	
+
+	static var profiles: [PluginProfile] { [] }
+
 }
 
 extension Plugin {

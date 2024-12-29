@@ -93,6 +93,8 @@ public protocol Plugin {
 	@LayoutBuilder
 	static var layouts: [Layout] { get }
 
+	static var profiles: [PluginProfile] { get }
+
 	init()
 	
 	// MARK: Events Received

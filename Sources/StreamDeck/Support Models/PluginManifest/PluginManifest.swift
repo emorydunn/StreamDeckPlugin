@@ -87,6 +87,8 @@ struct PluginManifest: Codable {
 	/// For example the Game Capture plugin has 6 actions: Scene, Record, Screenshot, Flashback Recording, Stream, Live Commentary.
 	var actions: [PluginAction]
 
+	var profiles: [PluginProfile]
+
 	/// Initialize a new manifest.
 	/// - Parameters:
 	///   - name: The name of the plugin.
@@ -120,7 +122,8 @@ struct PluginManifest: Codable {
 		 codePath: String = PluginManifest.executableName,
 		 codePathMac: String? = nil,
 		 codePathWin: String? = nil,
-		 actions: [PluginAction]) {
+		 actions: [PluginAction],
+		 profiles: [PluginProfile]) {
 		self.name = name
 		self.description = description
 		self.category = category
@@ -137,6 +140,7 @@ struct PluginManifest: Codable {
 		self.codePathMac = codePathMac
 		self.codePathWin = codePathWin
 		self.actions = actions
+		self.profiles = profiles
 	}
 
 	/// Initialize a new manifest.
@@ -172,7 +176,8 @@ struct PluginManifest: Codable {
 		 codePath: String = PluginManifest.executableName,
 		 codePathMac: String? = nil,
 		 codePathWin: String? = nil,
-		 actions: PluginAction...) {
+		 actions: PluginAction...,
+		 profiles: PluginProfile...) {
 		self.name = name
 		self.description = description
 		self.category = category
@@ -189,6 +194,7 @@ struct PluginManifest: Codable {
 		self.codePathMac = codePathMac
 		self.codePathWin = codePathWin
 		self.actions = actions
+		self.profiles = profiles
 	}
 
 	init(plugin: any Plugin.Type) {
@@ -208,6 +214,7 @@ struct PluginManifest: Codable {
 		self.codePathMac = plugin.codePathMac
 		self.codePathWin = plugin.codePathWin
 		self.actions = plugin.actions.map { PluginAction(action: $0) }
+		self.profiles = plugin.profiles
 	}
 
 }
