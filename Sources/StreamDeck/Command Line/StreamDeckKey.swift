@@ -27,6 +27,8 @@ struct StreamDeckKey: CodingKey {
 			self.stringValue = stringValue
 		case "mac", "windows":
 			self.stringValue = stringValue
+		case "readOnly":
+			self.stringValue = "Readonly"
 		default:
 			let firstLetter = stringValue.first!.uppercased()
 			self.stringValue = firstLetter + stringValue.dropFirst()
