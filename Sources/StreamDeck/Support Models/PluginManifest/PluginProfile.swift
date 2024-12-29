@@ -21,14 +21,27 @@ public struct PluginProfile: Codable {
 
 	/// Boolean to prevent Stream Deck from automatically switching to this profile when installed. False by default.
 	public let dontAutoSwitchWhenInstalled: Bool?
+	
+	/// Determines whether the profile should be automatically installed when the plugin is installed.
+	///
+	/// When `false`, the profile will be installed the first time the plugin attempts to switch to it. Default is `true`.
+	public let autoInstall: Bool?
 
 	public init(name: String,
 				deviceType: DeviceType,
 				readOnly: Bool? = nil,
-				dontAutoSwitchWhenInstalled: Bool? = nil) {
+				autoInstall: Bool? = nil,
+				autoSwitchWhenInstalled: Bool? = nil) {
 		self.name = name
 		self.deviceType = deviceType
 		self.readOnly = readOnly
-		self.dontAutoSwitchWhenInstalled = dontAutoSwitchWhenInstalled
+		self.autoInstall = autoInstall
+
+		if let autoSwitchWhenInstalled {
+			self.dontAutoSwitchWhenInstalled = !autoSwitchWhenInstalled
+		} else {
+			self.dontAutoSwitchWhenInstalled = nil
+		}
+
 	}
 }
