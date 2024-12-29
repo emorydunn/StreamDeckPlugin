@@ -41,25 +41,31 @@ public enum DeviceType: Int, Codable, CustomStringConvertible {
 	case pedal = 5
 	case corsairVoyager = 6
 	case plus = 7
-	
+	case scufController = 8
+	case streamDeckNeo = 9
+
 	public var description: String {
 		switch self {
 		case .streamDeck:
-			return "Elgato StreamDeck"
+			"Elgato StreamDeck"
 		case .mini:
-			return "Elgato StreamDeck Mini"
+			"Elgato StreamDeck Mini"
 		case .xl:
-			return "Elgato StreamDeck XL"
+			"Elgato StreamDeck XL"
 		case .mobile:
-			return "Elgato StreamDeck Mobile"
+			"Elgato StreamDeck Mobile"
 		case .corsairGKeys:
-			return "Corsair GKeys"
+			"Corsair GKeys"
 		case .pedal:
-			return "Elgato StreamDeck Pedal"
+			"Elgato StreamDeck Pedal"
 		case .corsairVoyager:
-			return "Corsair Voyager"
+			"Corsair Voyager"
 		case .plus:
-			return "Elgato StreamDeck+"
+			"Elgato StreamDeck+"
+		case .scufController:
+			"SCUF Controller"
+		case .streamDeckNeo:
+			"Stream Deck Neo"
 		}
 	}
 	
