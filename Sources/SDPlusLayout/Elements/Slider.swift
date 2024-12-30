@@ -31,7 +31,14 @@ public struct Slider: BarLayoutItem {
 
 	public var bar_h: Int?
 
+	@available(*, deprecated, message: "Use a closed range instead.")
 	public init(key: String, value: Int, range: Range<Int> = 0..<100) {
+		self.key = key
+		self.value = value
+		self.range = BarRange(min: range.lowerBound, max: range.upperBound)
+	}
+
+	public init(key: String, value: Int, range: ClosedRange<Int> = 0...100) {
 		self.key = key
 		self.value = value
 		self.range = BarRange(min: range.lowerBound, max: range.upperBound)
