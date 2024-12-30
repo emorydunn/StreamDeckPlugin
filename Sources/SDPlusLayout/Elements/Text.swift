@@ -34,8 +34,55 @@ public struct Text: LayoutItemProtocol {
 		self.key = "title"
 		self.value = title
 	}
-
 }
+
+public struct TextLayoutSettings: LayoutSettings {
+	public var value: String?
+
+	public var enabled: Bool?
+
+	public var opacity: Double?
+	public var background: String?
+
+	public var alignment: TextAlignment?
+	public var textOverflow: TextOverflow?
+	public var font: Font?
+
+	public init(value: String? = nil,
+				enabled: Bool? = nil,
+				opacity: Double? = nil,
+				background: String? = nil,
+				alignment: TextAlignment? = nil,
+				textOverflow: TextOverflow? = nil,
+				font: Font? = nil) {
+		self.value = value
+		self.enabled = enabled
+		self.opacity = opacity
+		self.background = background
+		self.alignment = alignment
+		self.textOverflow = textOverflow
+		self.font = font
+	}
+}
+
+extension TextLayoutSettings: LosslessStringConvertible, ExpressibleByNilLiteral, ExpressibleByStringLiteral {
+	public init(_ description: String) {
+		self.init(value: description)
+	}
+
+	public init(stringLiteral value: String) {
+		self.init(value: value)
+	}
+
+	public init(nilLiteral: ()) {
+		self.init()
+	}
+
+	public var description: String {
+		value ?? ""
+	}
+}
+
 
 extension Text {
 	public func textAlignment(_ alignment: TextAlignment) -> Text {

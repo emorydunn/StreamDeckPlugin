@@ -43,3 +43,82 @@ public struct Bar: BarLayoutItem {
 	}
 
 }
+
+public struct BarLayoutSettings: LayoutSettings {
+	public var value: Double?
+	public var range: BarRange?
+
+	public var subtype: BarStyle?
+
+	public var enabled: Bool?
+
+	public var opacity: Double?
+	public var background: String?
+
+	public var border_w: Int?
+	public var bar_bg_c: ColorStyle?
+	public var bar_border_c: Color?
+	public var bar_fill_c: Color?
+
+	public init(value: Double? = nil,
+				range: BarRange? = nil,
+				subtype: BarStyle? = nil,
+				enabled: Bool? = nil,
+				opacity: Double? = nil,
+				background: String? = nil,
+				border_w: Int? = nil,
+				bar_bg_c: ColorStyle? = nil,
+				bar_border_c: Color? = nil,
+				bar_fill_c: Color? = nil) {
+		self.value = value
+		self.range = range
+		self.subtype = subtype
+		self.enabled = enabled
+		self.opacity = opacity
+		self.background = background
+		self.border_w = border_w
+		self.bar_bg_c = bar_bg_c
+		self.bar_border_c = bar_border_c
+		self.bar_fill_c = bar_fill_c
+	}
+
+	@_disfavoredOverload
+	public init(value: Double? = nil,
+				range: BarRange? = nil,
+				subtype: BarStyle? = nil,
+				enabled: Bool? = nil,
+				opacity: Double? = nil,
+				background: String? = nil,
+				border_w: Int? = nil,
+				bar_bg_c: Color? = nil,
+				bar_border_c: Color? = nil,
+				bar_fill_c: Color? = nil) {
+		self.value = value
+		self.range = range
+		self.subtype = subtype
+		self.enabled = enabled
+		self.opacity = opacity
+		self.background = background
+		self.border_w = border_w
+		if let bar_bg_c {
+			self.bar_bg_c = .color(bar_bg_c)
+		}
+		self.bar_border_c = bar_border_c
+		self.bar_fill_c = bar_fill_c
+	}
+}
+
+extension BarLayoutSettings: ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral, ExpressibleByNilLiteral {
+	public init(integerLiteral value: Int) {
+		self.init(value: Double(value))
+	}
+
+	public init(floatLiteral value: Double) {
+		self.init(value: value)
+	}
+
+	public init(nilLiteral: ()) {
+		self.init()
+	}
+
+}

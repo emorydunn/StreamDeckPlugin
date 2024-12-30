@@ -52,7 +52,8 @@ public struct Rect: Encodable {
 
 		try container.encode([x, y, width, height])
 	}
-
+	
+	/// A rectangle which fills the whole layout. 
 	static var standard = Rect(x: 0, y: 0, width: 200, height: 100)
 }
 
@@ -64,4 +65,9 @@ public struct Font: Encodable {
 public struct BarRange: Encodable {
 	public var min: Int
 	public var max: Int
+
+	public init(min: Int, max: Int) {
+		self.min = min
+		self.max = max
+	}
 }
