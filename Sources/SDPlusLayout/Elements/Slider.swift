@@ -31,6 +31,7 @@ public struct Slider: BarLayoutItem {
 
 	public var bar_h: Int?
 
+	@_disfavoredOverload
 	@available(*, deprecated, message: "Use a closed range instead.")
 	public init(key: LayoutItemKey, value: Int, range: Range<Int> = 0..<100) {
 		self.key = key
