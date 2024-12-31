@@ -42,7 +42,7 @@ final class LayoutTests: XCTestCase {
 
 		let string = try JSONEncoder().json(color)
 
-		XCTAssertEqual(string, "\"#8A2BE2\"")
+		XCTAssertEqual(string, ##""#8A2BE2""##)
 	}
 
 	func testEncodeGradient() throws {
@@ -50,7 +50,7 @@ final class LayoutTests: XCTestCase {
 
 		let string = try JSONEncoder().json(gradient)
 
-		XCTAssertEqual(string, "\"0: #FF0000, 0.5: #008000, 1: #0000FF\"")
+		XCTAssertEqual(string, ##""0: #FF0000, 0.5: #008000, 1: #0000FF""##)
 	}
 
 	func testEncodeColorStyle() throws {
@@ -58,7 +58,7 @@ final class LayoutTests: XCTestCase {
 
 		let string = try JSONEncoder().json(color)
 
-		XCTAssertEqual(string, "\"#8A2BE2\"")
+		XCTAssertEqual(string, ##""#8A2BE2""##)
 	}
 }
 
