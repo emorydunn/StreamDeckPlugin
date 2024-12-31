@@ -40,8 +40,9 @@ final class PluginManifestTests: XCTestCase {
 					uuid: "photo.lostcause.counter.decrement",
 					icon: "Icons/minus",
 					tooltip: "Decrement the count.")
-			])
-		
+			],
+			profiles: [])
+
 //		let generator = ExportCommand()
 		XCTAssertNoThrow(try ExportCommand.manifestEncoder.encode(manifest))
 		
