@@ -10,8 +10,10 @@ import Foundation
 public protocol LayoutItem: Encodable { }
 
 public protocol LayoutItemProtocol: LayoutItem {
-	var key: String { get }
+
 	var type: LayoutElement { get }
+
+	var key: LayoutItemKey { get }
 
 	var enabled: Bool? { get set }
 

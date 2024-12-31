@@ -7,8 +7,12 @@
 
 import Foundation
 
+/// Text layout item used to render text within a layout.
+///
+/// When adding a text item to the layout's JSON definition, setting the `key` to the `"title"` keyword
+/// will enable the user to specify the font's settings via the property inspector, and will cause `setTitle` to update this item.
 public struct Text: LayoutItemProtocol {
-	public let key: String
+	public let key: LayoutItemKey
 	public let type: LayoutElement = .text
 
 	public var value: String
@@ -24,14 +28,22 @@ public struct Text: LayoutItemProtocol {
 	public var alignment: TextAlignment?
 	public var textOverflow: TextOverflow?
 	public var font: Font?
-
-	public init(key: String, value: String) {
+	
+	/// Create a `Text` layout item.
+	/// - Parameters:
+	///   - key: Unique name used to identify the layout item.
+	///   - value: Text to be displayed.
+	public init(key: LayoutItemKey, value: String) {
 		self.key = key
 		self.value = value
 	}
 
-	public init(title: String) {
-		self.key = "title"
+	/// Create a default title `Text` layout item.
+	///
+	/// - Parameters:
+	///   - value: Text to be displayed.
+	public init(title: String = "") {
+		self.key = .title
 		self.value = title
 	}
 }
