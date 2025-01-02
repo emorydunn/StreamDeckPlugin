@@ -23,7 +23,7 @@ public protocol LayoutItemProtocol: LayoutItem {
 
 	var opacity: Double? { get set }
 
-	var background: String? { get set }
+	var background: ColorStyle? { get set }
 
 }
 
@@ -60,9 +60,29 @@ public extension LayoutItem {
 		}
 	}
 
+	@_disfavoredOverload
+	@available(*, deprecated, message: "Use the Color type instead")
 	func background(_ color: String) -> some LayoutItem {
 		ModifiedItem(modifying: self) { copy in
+			copy.background = .color(Color(hexString: color))
+		}
+	}
+
+	func background(_ color: ColorStyle) -> some LayoutItem {
+		ModifiedItem(modifying: self) { copy in
 			copy.background = color
+		}
+	}
+
+	func background(_ color: Color) -> some LayoutItem {
+		ModifiedItem(modifying: self) { copy in
+			copy.background = .color(color)
+		}
+	}
+
+	func background(_ gradient: Gradient) -> some LayoutItem {
+		ModifiedItem(modifying: self) { copy in
+			copy.background = .gradient(gradient)
 		}
 	}
 

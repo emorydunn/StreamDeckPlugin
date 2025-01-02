@@ -22,7 +22,7 @@ public struct Slider: BarLayoutItem {
 	public var zOrder: Int?
 
 	public var opacity: Double?
-	public var background: String?
+	public var background: ColorStyle?
 
 	public var border_w: Int?
 	public var bar_bg_c: ColorStyle?
@@ -68,7 +68,7 @@ public struct SliderLayoutSettings: LayoutSettings {
 	public var zOrder: Int?
 
 	public var opacity: Double?
-	public var background: String?
+	public var background: ColorStyle?
 
 	public var border_w: Int?
 	public var bar_bg_c: ColorStyle?

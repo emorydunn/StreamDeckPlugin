@@ -29,12 +29,11 @@ public struct Image: LayoutItemProtocol {
 
 	public var opacity: Double?
 
-
 	/// Background color represented as a named color, hexadecimal value, or gradient.
 	///
 	/// Gradients can be defined by specifying multiple color-stops separated by commas, in the following format `[{offset}:{color}[,]]`.
-	public var background: String?
-	
+	public var background: ColorStyle?
+
 	/// Create a default icon `Image` for user-defined icons.
 	///
 	/// This image will be use the path provided, but will be overridden with a user-defined icon.
@@ -59,5 +58,52 @@ public struct Image: LayoutItemProtocol {
 	public init(key: LayoutItemKey, base64 image: String) {
 		self.key = key
 		self.value = image
+	}
+}
+
+public struct ImageLayoutSettings: LayoutSettings {
+	public var value: String?
+
+	public var enabled: Bool?
+
+	public var rect: Rect?
+
+	public var zOrder: Int?
+
+	public var opacity: Double?
+
+	public var background: ColorStyle?
+
+	public init(value: String? = nil,
+				enabled: Bool? = nil,
+				rect: Rect? = nil,
+				zOrder: Int? = nil,
+				background: ColorStyle? = nil,
+				opacity: Double? = nil) {
+		self.value = value
+		self.enabled = enabled
+		self.rect = rect
+		self.zOrder = zOrder
+		self.background = background
+		self.opacity = opacity
+	}
+
+}
+
+extension ImageLayoutSettings: LosslessStringConvertible, ExpressibleByNilLiteral, ExpressibleByStringLiteral {
+	public init(_ description: String) {
+		self.init(value: description)
+	}
+
+	public init(stringLiteral value: String) {
+		self.init(value: value)
+	}
+
+	public init(nilLiteral: ()) {
+		self.init()
+	}
+
+	public var description: String {
+		value ?? ""
 	}
 }

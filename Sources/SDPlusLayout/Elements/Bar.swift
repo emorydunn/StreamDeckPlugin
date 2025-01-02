@@ -22,7 +22,7 @@ public struct Bar: BarLayoutItem {
 	public var zOrder: Int?
 
 	public var opacity: Double?
-	public var background: String?
+	public var background: ColorStyle?
 
 	public var border_w: Int?
 	public var bar_bg_c: ColorStyle?
@@ -54,7 +54,7 @@ public struct BarLayoutSettings: LayoutSettings {
 	public var enabled: Bool?
 
 	public var opacity: Double?
-	public var background: String?
+	public var background: ColorStyle?
 
 	public var border_w: Int?
 	public var bar_bg_c: ColorStyle?
@@ -66,7 +66,7 @@ public struct BarLayoutSettings: LayoutSettings {
 				subtype: BarStyle? = nil,
 				enabled: Bool? = nil,
 				opacity: Double? = nil,
-				background: String? = nil,
+				background: ColorStyle? = nil,
 				border_w: Int? = nil,
 				bar_bg_c: ColorStyle? = nil,
 				bar_border_c: Color? = nil,
@@ -89,7 +89,7 @@ public struct BarLayoutSettings: LayoutSettings {
 				subtype: BarStyle? = nil,
 				enabled: Bool? = nil,
 				opacity: Double? = nil,
-				background: String? = nil,
+				background: ColorStyle? = nil,
 				border_w: Int? = nil,
 				bar_bg_c: Color? = nil,
 				bar_border_c: Color? = nil,
