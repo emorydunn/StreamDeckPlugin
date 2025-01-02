@@ -98,7 +98,7 @@ public final actor PluginCommunication {
 		}
 
 		// Register the controller type
-		ActionControllerRegistry.shared.store(event.context, controller: event.payload.controller)
+		ActionControllerRegistry.shared.store(event.context, controller: event.payload.controller, device: event.device)
 
 		// Initialize a new instance
 		instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
@@ -121,6 +121,16 @@ public final actor PluginCommunication {
 	public subscript (context: String?) -> (any Action)? {
 		guard let context else { return nil }
 		return instances[context]
+	}
+
+	public func actions<A: Action>(of action: A.Type, on device: String) -> [A] {
+		// Find all actions on the device
+		guard let actions = ActionControllerRegistry.shared.devices[device] else { return [] }
+
+		return actions.compactMap { context in
+			instances[context] as? A
+		}
+
 	}
 
 
@@ -405,9 +415,11 @@ public final actor PluginCommunication {
 
 			try self[context]?.decodeTouchTap(data, using: decoder)
 
+#if DEBUG
 			if let json = String(data: data, encoding: .utf8) {
-				log.debug("\(json)")
+				log.debug("\(json, privacy: .public)")
 			}
+#endif
 
 		case .willAppear:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
