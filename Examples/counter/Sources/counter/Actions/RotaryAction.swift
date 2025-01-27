@@ -18,7 +18,7 @@ class RotaryAction: EncoderAction {
 
 	static var icon: String = "Icons/actionIcon"
 
-	static var encoder: RotaryEncoder? = RotaryEncoder(layout: "Layouts/counter.json",
+	static var encoder: RotaryEncoder? = RotaryEncoder(layout: .counter,
 													   stackColor: "#f1184c",
 													   icon: "Icons/stopwatch",
 													   rotate: "Count",
@@ -70,10 +70,10 @@ class RotaryAction: EncoderAction {
 			bgColor = .white
 		}
 
-		setFeedback([
-					 "count-text": count.formatted(),
-					 "count-bar" : ["value": count, "bar_fill_c": bgColor.formatted(.hex)],
-					])
+		let feedback = CounterSettings(countText: TextLayoutSettings(value: count.formatted()),
+						countBar: BarLayoutSettings(bar_fill_c: bgColor))
+
+		setFeedback(feedback)
 	}
 
 }
