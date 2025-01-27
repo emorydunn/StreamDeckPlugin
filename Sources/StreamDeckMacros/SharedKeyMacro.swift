@@ -11,12 +11,26 @@ import SwiftSyntax
 import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
-public enum MacroError: String, Error {
+public enum MacroError: Error, CustomStringConvertible {
 	case invalidCount
 	case invalidName
-	case invalidType
 	case invalidDefaultValue
+	case invalidExtension
+
+	public var description: String {
+		switch self {
+		case .invalidCount:
+			"Macro must have exactly three arguments"
+		case .invalidName:
+			"First argument in the macro must be a string literal"
+		case .invalidDefaultValue:
+			"Macro requires an initilizer"
+		case .invalidExtension:
+			"Macro must be applied to GlobalSettings or EnvironmentValues"
+		}
+	}
 }
+
 
 public protocol SharedKeyMacro: DeclarationMacro {
 
