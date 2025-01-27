@@ -70,8 +70,7 @@ class RotaryAction: EncoderAction {
 			bgColor = .white
 		}
 
-		let feedback = CounterSettings(countText: TextLayoutSettings(value: count.formatted()),
-						countBar: BarLayoutSettings(bar_fill_c: bgColor))
+		let feedback = CounterSettings(count: count, bgColor: bgColor)
 
 		setFeedback(feedback)
 	}

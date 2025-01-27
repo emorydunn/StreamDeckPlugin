@@ -232,7 +232,12 @@ In the above example, `setTitle` is an event that an action can send. In this ca
 Designing [custom layouts][plus_layout] for the Stream Deck Plus is accomplished with using a result builder. Each `Layout` is built from components, such as `Text`, `Image`, etc. The layout is defined in the plugin manifest. For instance, to build a custom bar layout from the example `counter` plugin:
 
 ```swift
-Layout(id: "counter") {
+
+extension LayoutName {
+  static let counter: LayoutName = "counter"
+}
+
+Layout(id: .counter) {
   // The title of the layout
   Text(title: "Current Count")
     .textAlignment(.center)
@@ -240,31 +245,40 @@ Layout(id: "counter") {
     .position(x: (200 - 180) / 2, y: 10)
 
   // A large counter label
-  Text(key: "count-text", value: "0")
+  Text(key: "countText", value: "0")
     .textAlignment(.center)
     .font(size: 16, weight: 600)
     .frame(width: 180, height: 24)
     .position(x: (200 - 180) / 2, y: 30)
 
   // A bar that shows the current count
-  Bar(key: "count-bar", value: 0, range: -50..<50)
+  Bar(key: "countBar", value: 0, range: -50...50)
     .frame(width: 180, height: 20)
     .position(x: (200 - 180) / 2, y: 60)
     .barBackground(.black)
     .barStyle(.doubleTrapezoid)
     .barBorder("#943E93")
 }
+
+struct CounterSettings: LayoutSettings {
+  var countText: TextLayoutSettings
+  var countBar: BarLayoutSettings
+
+  init(count: Int, bgColor: Color) {
+    self.countText = TextLayoutSettings(value: count.formatted())
+    self.countBar = BarLayoutSettings(value: Double(count), bar_fill_c: bgColor)
+  }
+}
 ```
 
 The layout is saved into the Layouts folder in the same directory as the manifest. In order to use the layout on a rotary action set the layout property of the encoder to the folder and id of the layout, e.g. `Layouts/counter.json`.
 
-At the moment updating the values in the layout still requires manually specifying keys from the components. In our example above the counter and bar can be updated like so:
+The layout can be updated with a struct which conforms to `LayoutSettings`, like `CounterSettings` above.
 
 ```swift
-setFeedback([
- "count-text": count.formatted(),
- "count-bar" : ["value": count],
-])
+let feedback = CounterSettings(count: count, bgColor: .red)
+
+setFeedback(feedback)
 ```
 
 Any editable property can be updated this way. Please refer to the [documentation](https://docs.elgato.com/sdk/plugins/layouts-sd+#items) for more details.

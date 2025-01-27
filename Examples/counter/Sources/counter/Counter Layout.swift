@@ -38,4 +38,14 @@ extension Layout {
 struct CounterSettings: LayoutSettings {
 	var countText: TextLayoutSettings
 	var countBar: BarLayoutSettings
+
+	init(countText: TextLayoutSettings = nil, countBar: BarLayoutSettings = nil) {
+		self.countText = countText
+		self.countBar = countBar
+	}
+
+	init(count: Int, bgColor: Color) {
+		self.countText = TextLayoutSettings(value: count.formatted())
+		self.countBar = BarLayoutSettings(value: Double(count), bar_fill_c: bgColor)
+	}
 }

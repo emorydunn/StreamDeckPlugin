@@ -24,7 +24,7 @@ public enum MacroError: Error, CustomStringConvertible {
 		case .invalidName:
 			"First argument in the macro must be a string literal"
 		case .invalidDefaultValue:
-			"Macro requires an initilizer"
+			"Macro requires an initializer"
 		case .invalidExtension:
 			"Macro must be applied to GlobalSettings or EnvironmentValues"
 		}
