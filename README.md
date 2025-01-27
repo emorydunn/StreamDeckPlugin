@@ -127,15 +127,15 @@ The value can be read and updated from inside an action callback.
 
 #### Macros
 
-Starting in Swift 5.9 two new macros will be available to make declaring environmental values and global settings easier. The macro handles generating both the struct and variable for the key path. The key specified in the macro is used as the key of the setting.
+Additionally, instead of manually declaring the keys, you can use the `@Entry` macro. The macro handles generating both the struct and variable for the key path. By default the name is auto-generated based on the property name, but a custom key can be provided.
 
 ```swift
 extension EnvironmentValues {
-    #environmentKey("count", defaultValue: 0, ofType: Int.self)
+    @Entry var count = 42
 }
 
 extension GlobalSettings {
-    #globalSetting("count", defaultValue: 0, ofType: Int.self)
+    @Entry("CountDracula") var theCount = 42
 }
 ```
 
