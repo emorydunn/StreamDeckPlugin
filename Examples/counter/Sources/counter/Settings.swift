@@ -11,5 +11,6 @@ import StreamDeck
 extension GlobalSettings {
 
 	/// A macro to define the `GlobalSettingsKey` and property used for the key path. 
-	#globalSetting("count", defaultValue: 0, ofType: Int.self)
+	@Entry var count = 42
+
 }
