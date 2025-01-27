@@ -17,6 +17,6 @@ public macro globalSetting<T>(_ name: String, defaultValue value: T, ofType: T.T
 public macro environmentKey<T>(_ name: String, defaultValue value: T, ofType: T.Type) = #externalMacro(module: "StreamDeckMacros", type: "EnvironmentMacro")
 
 @attached(accessor)
-@attached(peer, names: prefixed(__Key_))
-public macro Entry() = #externalMacro(module: "StreamDeckMacros", type: "EntryMacro")
+@attached(peer, names: arbitrary)
+public macro Entry(_ name: String? = nil) = #externalMacro(module: "StreamDeckMacros", type: "EntryMacro")
 #endif
