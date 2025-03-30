@@ -107,7 +107,10 @@ public protocol Action {
 	
 	/// The duration a button needs to be held down in order to be considered a long press. 
 	var longPressDuration: TimeInterval { get }
-	
+
+	/// Whether or not the action allows long presses.
+	var enableLongPress: Bool { get }
+
 	/// Create a new instance with the specified context and coordinates.
 	init(context: String, coordinates: Coordinates?)
 	

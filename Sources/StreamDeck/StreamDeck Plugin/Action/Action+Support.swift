@@ -70,6 +70,8 @@ extension Action {
 
 	public static var disableAutomaticStates: Bool? { nil }
 
+	public var enableLongPress: Bool { true }
+
 	/// The Action's UUID.
 	public var uuid: String {
 		type(of: self).uuid
@@ -94,10 +96,13 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeKeyDown(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
-		
-		// Begin a long-press timer
-		TimerKeeper.shared.beginTimer(for: self, event: action)
-		
+
+		// If the action has opted out of long press behavior don't start the timer.
+		if enableLongPress {
+			// Begin a long-press timer
+			TimerKeeper.shared.beginTimer(for: self, event: action)
+		}
+
 		keyDown(device: action.device, payload: action.payload)
 	
 	}
@@ -108,7 +113,13 @@ extension Action {
 	///   - decoder: The decoder to use
 	func decodeKeyUp(_ data: Data, using decoder: JSONDecoder) throws {
 		let action = try decoder.decode(ActionEvent<KeyEvent<Settings>>.self, from: data)
-		
+
+		// If the action has opted out of long press behavior just send the key up event.
+		guard enableLongPress else {
+			keyUp(device: action.device, payload: action.payload)
+			return
+		}
+
 		// Cancel the long-press timer
 		let longPress = TimerKeeper.shared.invalidateTimer(for: self)
 		
