@@ -8,7 +8,7 @@
 import Foundation
 
 /// The coordinates of the action triggered.
-public struct Coordinates: Decodable, Hashable {
+public struct Coordinates: Decodable, Hashable, Sendable {
 	
 	/// The column.
 	public let column: Int
