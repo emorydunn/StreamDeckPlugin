@@ -55,7 +55,7 @@ public struct LayoutName: Codable, ExpressibleByStringLiteral, Identifiable, Has
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.singleValueContainer()
 		
-		try container.encode(id)
+		try container.encode(path)
 	}
 	
 	/// The default layout.

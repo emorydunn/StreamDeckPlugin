@@ -69,6 +69,4 @@ public struct RotaryEncoder: Codable {
 		self.triggerDescription = triggerDescription
 	}
 	
-	
-	
 }
