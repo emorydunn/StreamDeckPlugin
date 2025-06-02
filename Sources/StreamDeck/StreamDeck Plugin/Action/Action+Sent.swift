@@ -223,6 +223,20 @@ public extension Action {
 		}
 	}
 
+	/// Send a payload to the Property Inspector.
+	/// - Parameters:
+	///   - context: An opaque value identifying the instance's action or Property Inspector.
+	///   - action: The action unique identifier.
+	///   - payload: A json object that will be received by the Property Inspector.
+	func sendToPropertyInspector(_ payload: DataSourcePayload) {
+		Task {
+			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
+													   action: uuid,
+													   context: context,
+													   payload: payload)
+		}
+	}
+
 
 	/// The plugin can send a `setFeedback` event to the Stream Deck application to dynamically change properties of items on the Stream Deck + touch display layout.
 	func setFeedback(_ payload: [String: Any]) {
