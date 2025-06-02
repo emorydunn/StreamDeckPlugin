@@ -85,4 +85,9 @@ public extension Action {
 	/// - Parameters:
 	///   - payload: A json object that will be received by the plugin.
 	func sentToPlugin(payload: [String: String]) { }
+
+	/// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+	/// - Parameters:
+	///   - payload: A json object that will be received by the plugin.
+	func sentToPlugin(payload: DataSourcePayload) { }
 }

@@ -261,4 +261,11 @@ public protocol Action {
 	/// - Parameters:
 	///   - payload: A json object that will be received by the plugin.
 	func sentToPlugin(payload: [String: String])
+
+	/// The plugin will receive a `sendToPlugin` event when the Property Inspector sends a `sendToPlugin` event.
+	///
+	/// - Note: This method will be called if the payload includes an `event` key.
+	/// - Parameters:
+	///   - payload: A json object that will be received by the plugin.
+	func sentToPlugin(payload: DataSourcePayload)
 }
