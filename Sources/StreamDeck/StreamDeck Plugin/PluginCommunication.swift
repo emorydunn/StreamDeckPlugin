@@ -358,6 +358,13 @@ public final actor PluginCommunication {
 			shouldLoadSettings = false
 		}
 
+
+#if DEBUG
+		if let json = String(data: data, encoding: .utf8) {
+			log.debug("\(json, privacy: .public)")
+		}
+#endif
+
 		switch event {
 
 		case .didReceiveSettings:
@@ -414,12 +421,6 @@ public final actor PluginCommunication {
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
 
 			try self[context]?.decodeTouchTap(data, using: decoder)
-
-#if DEBUG
-			if let json = String(data: data, encoding: .utf8) {
-				log.debug("\(json, privacy: .public)")
-			}
-#endif
 
 		case .willAppear:
 			log.info("Forwarding \(event, privacy: .public) to \(context ?? "no context", privacy: .public)")
