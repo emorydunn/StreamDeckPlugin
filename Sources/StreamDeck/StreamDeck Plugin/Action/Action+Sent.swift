@@ -211,8 +211,6 @@ public extension Action {
 
 	/// Send a payload to the Property Inspector.
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - action: The action unique identifier.
 	///   - payload: A json object that will be received by the Property Inspector.
 	func sendToPropertyInspector(payload: [String: Any]) {
 		Task {
@@ -223,11 +221,12 @@ public extension Action {
 		}
 	}
 
-	/// Send a payload to the Property Inspector.
+	/// Send an SPDI payload to the Property Inspector.
+	///
+	/// Send [dynamic data](https://sdpi-components.dev/docs/helpers/data-source) to the Property Inspector to update SPDI item.
+	///
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - action: The action unique identifier.
-	///   - payload: A json object that will be received by the Property Inspector.
+	///   - payload: The datasource information used to update items in the Property Inspector.
 	func sendToPropertyInspector(_ payload: DataSourcePayload) {
 		Task {
 			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,

@@ -34,7 +34,6 @@ public struct DatasourceItemGroup: SPDIItem {
 
 }
 
-
 /// The nested payload sent to the property inspector, from the plugin, via `sendToPropertyInspector`.
 public struct DataSourcePayload {
 
