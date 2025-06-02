@@ -223,14 +223,17 @@ extension Action {
 		titleParametersDidChange(device: action.device, info: action.payload)
 	}
 
-    /// Decode and deliver a sent to plugin event.
-    /// - Parameters:
-    ///   - data: Event data
-    ///   - decoder: The decoder to use
-    func decodeSentToPlugin(_ data: Data, using decoder: JSONDecoder) throws {
-        let action = try decoder.decode(SendToPluginEvent.self, from: data)
-        sentToPlugin(payload: action.payload)
-    }
+	/// Decode and deliver a sent to plugin event.
+	/// - Parameters:
+	///   - data: Event data
+	///   - decoder: The decoder to use
+	func decodeSentToPlugin(_ data: Data, using decoder: JSONDecoder) throws {
+		do {
+			let action = try decoder.decode(SendToPluginSPDIEvent.self, from: data)
+			sentToPlugin(payload: action.payload)
+		} catch {
+			let action = try decoder.decode(SendToPluginEvent.self, from: data)
+			sentToPlugin(payload: action.payload)
+		}
+	}
 }
-
-

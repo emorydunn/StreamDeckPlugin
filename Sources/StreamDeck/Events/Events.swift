@@ -312,6 +312,17 @@ public struct SendToPluginEvent: Decodable {
 	public let payload: [String: String]
 }
 
+public struct SendToPluginSPDIEvent: Decodable {
+	/// The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
+	public let action: String
+
+	/// An opaque value identifying the instance's action.
+	public let context: String
+
+	/// The payload sent from the Property Inspector.
+	public let payload: DataSourcePayload
+}
+
 // MARK: Application Events
 
 /// Basic type for application events.
