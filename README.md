@@ -195,6 +195,38 @@ struct ChooseAction: KeyAction {
 }
 ```
 
+#### Working with SPDI Components
+
+If you define your Property Inspectors using [SPDI Components][SPDI] your plugin can both send dynamic properties natively.
+
+For example if you have an `spdi-select`:
+
+```HTML
+<sdpi-item label="Recipe">
+  <sdpi-select
+    id="recipeSelect"
+    setting="processRecipe"
+    placeholder="Choose a process recipe"
+    datasource="getRecipes"
+    loading="Loading process recipes..."
+  >
+  </sdpi-select>
+</sdpi-item>
+
+```
+
+Your plugin can easily provide values for it using `DataSourcePayload`. The `event` sent by the plugin matches the `datasource` in the component and the initializer provides a convenient map function.
+
+```swift
+let recipeNames = listProcessRecipes() // Returns an array of strings
+
+let response = DataSourcePayload(event: "getRecipes", items: recipeNames) { recipeName in
+  DatasourceItem(label: recipeName)
+}
+
+sendToPropertyInspector(response)
+```
+
 ### Events
 
 Your action can both [receive events][er] from the app and [send events][es] to the app. Most of the events will be from user interaction, key presses and dial rotation, but also from system events such as the action appearing on a Stream Deck or the property inspector appearing.
@@ -359,3 +391,4 @@ let package = Package(
 [er]: https://docs.elgato.com/sdk/plugins/events-received
 [es]: https://docs.elgato.com/sdk/plugins/events-sent
 [plus_layout]: https://docs.elgato.com/sdk/plugins/layouts-sd+
+[spdi]: https://sdpi-components.dev
