@@ -15,9 +15,35 @@ public struct DatasourceItem: SPDIItem {
 	public var value: String
 	public var disabled: Bool?
 
-	public init(label: String? = nil, value: String, disabled: Bool? = nil) {
+	/// Create a new DataSource Item with an optional label and value.
+	/// - Parameters:
+	///   - label: The label displayed in the Property Inspector.
+	///   - value: The value returned as a setting.
+	///   - disabled: Whether the item is disabled.
+	public init(label: String?, value: String, disabled: Bool?) {
 		self.label = label
 		self.value = value
+		self.disabled = disabled
+	}
+
+	/// Create a new DataSource Item with a separate label and value.
+	/// - Parameters:
+	///   - label: The label displayed in the Property Inspector.
+	///   - value: The value returned as a setting.
+	///   - disabled: Whether the item is disabled.
+	public init(label: String, value: String, disabled: Bool = false) {
+		self.label = label
+		self.value = value
+		self.disabled = disabled
+	}
+
+	/// Create a new DataSource Item with a shared label and value. 
+	/// - Parameters:
+	///   - label: The label displayed in the Property Inspector.
+	///   - disabled: Whether the item is disabled.
+	public init(label: String, disabled: Bool = false) {
+		self.label = label
+		self.value = label
 		self.disabled = disabled
 	}
 }
