@@ -151,8 +151,8 @@ public final actor PluginCommunication {
 			// if an AppleEvent takes longer than expected, so we
 			// want to kick that off and get back to receiving messages
 			// as soon as possible.
-			Task(priority: .userInitiated) {
-				await parseMessage(message)
+			Task.detached(priority: .userInitiated) {
+				await self.parseMessage(message)
 			}
 			
 			webSocketErrorCount = 0
