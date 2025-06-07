@@ -84,7 +84,7 @@ public final actor PluginCommunication {
 		type(of: plugin).actions.first { $0.uuid == uuid }
 	}
 
-	public func registerInstance(_ event:  ActionEvent<InstanceAppearEvent>) {
+	public func registerInstance(_ event: ActionEvent<InstanceAppearEvent>) {
 		// Check if the instance already exists
 		guard instances[event.context] == nil else {
 			log.log("This instance has already been registered.")
@@ -97,11 +97,11 @@ public final actor PluginCommunication {
 			return
 		}
 
-		// Register the controller type
-		ActionControllerRegistry.shared.store(event.context, controller: event.payload.controller, device: event.device)
+		// Register the action metadata
+		ActionControllerRegistry.shared.store(event: event)
 
 		// Initialize a new instance
-		instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
+		instances[event.context] = actionType.init(context: event.context)
 
 		log.log("Initialized a new instance of '\(actionType.uuid, privacy: .public)'")
 	}
@@ -127,12 +127,10 @@ public final actor PluginCommunication {
 		// Find all actions on the device
 		guard let actions = ActionControllerRegistry.shared.devices[device] else { return [] }
 
-		return actions.compactMap { context in
-			instances[context] as? A
+		return actions.compactMap { info in
+			instances[info.context] as? A
 		}
-
 	}
-
 
 	// MARK: - WebSocket Methods
 	/// Continually receive messages from the socket.
@@ -149,8 +147,8 @@ public final actor PluginCommunication {
 			// Parse the message outside of the WebSocket loop.
 			// An action may take a long time to respond, especially
 			// if an AppleEvent takes longer than expected, so we
-			// want to kick that off and get back to receiving messages
-			// as soon as possible.
+			// want to kick that off and get back to receiving
+			// messages as soon as possible.
 			Task.detached(priority: .userInitiated) {
 				await self.parseMessage(message)
 			}
@@ -353,11 +351,10 @@ public final actor PluginCommunication {
 			log.log("Received first event, requesting global settings")
 			// Get the initial global settings
 			await PluginCommunication.shared.sendEvent(.getGlobalSettings,
-											  context: PluginCommunication.shared.uuid,
-											  payload: nil)
+													   context: PluginCommunication.shared.uuid,
+													   payload: nil)
 			shouldLoadSettings = false
 		}
-
 
 #if DEBUG
 		if let json = String(data: data, encoding: .utf8) {
