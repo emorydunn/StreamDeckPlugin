@@ -101,10 +101,7 @@ public protocol Action {
 	
 	/// The context value for the instance.
 	var context: String { get }
-	
-	/// The coordinates of the instance.
-	var coordinates: Coordinates? { get }
-	
+
 	/// The duration a button needs to be held down in order to be considered a long press. 
 	var longPressDuration: TimeInterval { get }
 
@@ -112,8 +109,8 @@ public protocol Action {
 	var enableLongPress: Bool { get }
 
 	/// Create a new instance with the specified context and coordinates.
-	init(context: String, coordinates: Coordinates?)
-	
+	init(context: String)
+
 	// MARK: - Events
 	func didReceiveGlobalSettings()
 	
