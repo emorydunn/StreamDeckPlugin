@@ -24,17 +24,14 @@ class RotaryAction: EncoderAction {
 													   rotate: "Count",
 													   push: "Reset")
 
-	var context: String
-
-	var coordinates: StreamDeck.Coordinates?
-
 	static var userTitleEnabled: Bool? = false
+
+	let context: String
 
 	@GlobalSetting(\.count) var count: Int
 
-	required init(context: String, coordinates: StreamDeck.Coordinates?) {
+	required init(context: String) {
 		self.context = context
-		self.coordinates = coordinates
 	}
 
 	func willAppear(device: String, payload: AppearEvent<Settings>) {

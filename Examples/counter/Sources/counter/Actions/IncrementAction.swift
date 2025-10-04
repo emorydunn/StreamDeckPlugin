@@ -27,15 +27,12 @@ class IncrementAction: KeyAction {
 
 	static var userTitleEnabled: Bool? = false
 
-	var context: String
-	
-	var coordinates: StreamDeck.Coordinates?
+	let context: String
 
 	@GlobalSetting(\.count) var count
 
-	required init(context: String, coordinates: StreamDeck.Coordinates?) {
+	required init(context: String) {
 		self.context = context
-		self.coordinates = coordinates
 	}
 
 	func willAppear(device: String, payload: AppearEvent<Settings>) {
