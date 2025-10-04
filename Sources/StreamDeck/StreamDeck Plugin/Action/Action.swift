@@ -108,8 +108,8 @@ public protocol Action {
 	/// Whether or not the action allows long presses.
 	var enableLongPress: Bool { get }
 
-	/// Create a new instance with the specified context.
-	init(context: String)
+	/// Create a new instance with the specified context and coordinates.
+	init(context: String, coordinates: Coordinates?)
 
 	// MARK: - Events
 	func didReceiveGlobalSettings()

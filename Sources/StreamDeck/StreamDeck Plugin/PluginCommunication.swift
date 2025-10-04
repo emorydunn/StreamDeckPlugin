@@ -101,7 +101,7 @@ public final actor PluginCommunication {
 		ActionControllerRegistry.shared.store(event: event)
 
 		// Initialize a new instance
-		instances[event.context] = actionType.init(context: event.context)
+		instances[event.context] = actionType.init(context: event.context, coordinates: event.payload.coordinates)
 
 		log.log("Initialized a new instance of '\(actionType.uuid, privacy: .public)'")
 	}
