@@ -108,7 +108,7 @@ public protocol Action {
 	/// Whether or not the action allows long presses.
 	var enableLongPress: Bool { get }
 
-	/// Create a new instance with the specified context and coordinates.
+	/// Create a new instance with the specified context.
 	init(context: String)
 
 	// MARK: - Events
