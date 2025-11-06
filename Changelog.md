@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.6.0 / 2025-11-06
+
+## Added
+
+- Build custom Stream Deck + layouts with result builders!
+- The plugin manages more information about action instances, including:
+  - `controllerType`
+  - `coordinates`
+  - `device`
+- Use the `@Entry` macro for easily setting environment values
+- Optionally disable default long press behavior
+- Action settings now fully support [SPDI Components](https://sdpi-components.dev)
+
+## 0.5.1 / 2024-10-16
+
+## Changed
+
+- Plugin backend has moved more code to use concurrency
+
 ## 0.5.0 / 2024-09-19
 
 ## Added
