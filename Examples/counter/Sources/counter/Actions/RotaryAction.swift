@@ -30,7 +30,7 @@ class RotaryAction: EncoderAction {
 
 	@GlobalSetting(\.count) var count: Int
 
-	required init(context: String) {
+	required init(context: String, coordinates: Coordinates?) {
 		self.context = context
 	}
 

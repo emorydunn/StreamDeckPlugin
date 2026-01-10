@@ -174,7 +174,7 @@ struct IncrementAction: KeyAction {
 
     @GlobalSetting(\.count) var count
 
-    required init(context: String, coordinates: StreamDeck.Coordinates?) {
+    required init(context: String, coordinates: Coordinates?) {
         self.context = context
         self.coordinates = coordinates
     }
