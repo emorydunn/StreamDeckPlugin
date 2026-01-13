@@ -15,7 +15,9 @@ fileprivate let log = Logger(subsystem: "Counter Plugin", category: "Main Plugin
 class CounterPlugin: Plugin {
 
 	// MARK: Manifest
+	static var uuid: String = "com.example.counter"
 	static var name: String = "Counter"
+    static var category: String? = "Counter"
 
 	static var description: String = "Count things. On your Stream Deck!"
 
@@ -25,9 +27,11 @@ class CounterPlugin: Plugin {
 
 	static var url: URL? = URL(string: "https://github.com/emorydunn/StreamDeckPlugin")
 
-	static var version: String = "0.5"
+	static var version: String = "0.5.0.0"
 
 	static var os: [PluginOS] = [.macOS(.v11)]
+	
+    static var software: PluginSoftware = .minimumVersion("6.4")
 
 	@ActionBuilder
 	static var actions: [any Action.Type] {

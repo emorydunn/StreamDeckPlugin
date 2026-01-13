@@ -17,7 +17,7 @@ class IncrementAction: KeyAction {
 
 	static var name: String = "Increment"
 
-	static var uuid: String = "counter.increment"
+	static var uuid: String = "com.example.counter.increment"
 
 	static var icon: String = "Icons/actionIcon"
 
