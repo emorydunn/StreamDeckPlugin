@@ -18,6 +18,7 @@ class CounterPlugin: Plugin {
 	static var uuid: String = "com.example.counter"
 	static var name: String = "Counter"
     static var category: String? = "Counter"
+    static var categoryIcon: String? = "Icons/category-icon"
 
 	static var description: String = "Count things. On your Stream Deck!"
 
