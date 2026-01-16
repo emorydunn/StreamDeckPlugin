@@ -9,7 +9,7 @@ import Foundation
 
 /// The manifest file providing plugin details.
 ///
-/// See the [SDK documentation](https://developer.elgato.com/documentation/stream-deck/sdk/manifest/) for more information.
+/// See the [SDK documentation](https://docs.elgato.com/streamdeck/sdk/references/manifest) for more information.
 struct PluginManifest: Codable {
 
 	/// The name of the plugin.
