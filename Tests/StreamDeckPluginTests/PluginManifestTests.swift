@@ -24,7 +24,7 @@ final class PluginManifestTests: XCTestCase {
 			],
 			applicationsToMonitor: ApplicationsToMonitor(mac: ["com.test.app"]),
 			software: .minimumVersion("4.1"),
-			sdkVersion: 2,
+			sdkVersion: 3,
 			codePath: "counter-plugin",
 			actions: [
 				PluginAction(

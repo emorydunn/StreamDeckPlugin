@@ -68,7 +68,7 @@ struct PluginManifest: Codable {
 	/// Indicates which version of the Stream Deck application is required to install the plugin.
 	var software: PluginSoftware
 
-	/// This value should be set to 2.
+	/// This value should be set to 3.
 	var sdkVersion: Int
 
 	/// The relative path to the HTML/binary file containing the code of the plugin.
@@ -102,7 +102,7 @@ struct PluginManifest: Codable {
 	///   - os: The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.
 	///   - applicationsToMonitor: List of application identifiers to monitor (applications launched or terminated).
 	///   - software: Indicates which version of the Stream Deck application is required to install the plugin.
-	///   - sdkVersion: This value should be set to 2.
+	///   - sdkVersion: This value should be set to 3.
 	///   - codePath: The relative path to the HTML/binary file containing the code of the plugin. Defaults to the executable name.
 	///   - codePathMac: Override CodePath for macOS.
 	///   - codePathWin: Override CodePath for Windows.
@@ -118,7 +118,7 @@ struct PluginManifest: Codable {
 		 os: [PluginOS],
 		 applicationsToMonitor: ApplicationsToMonitor? = nil,
 		 software: PluginSoftware,
-		 sdkVersion: Int = 2,
+		 sdkVersion: Int = 3,
 		 codePath: String = PluginManifest.executableName,
 		 codePathMac: String? = nil,
 		 codePathWin: String? = nil,
@@ -156,7 +156,7 @@ struct PluginManifest: Codable {
 	///   - os: The list of operating systems supported by the plugin as well as the minimum supported version of the operating system.
 	///   - applicationsToMonitor: List of application identifiers to monitor (applications launched or terminated).
 	///   - software: Indicates which version of the Stream Deck application is required to install the plugin.
-	///   - sdkVersion: This value should be set to 2.
+	///   - sdkVersion: This value should be set to 3.
 	///   - codePath: The relative path to the HTML/binary file containing the code of the plugin. Defaults to the executable name.
 	///   - codePathMac: Override CodePath for macOS.
 	///   - codePathWin: Override CodePath for Windows.
@@ -172,7 +172,7 @@ struct PluginManifest: Codable {
 		 os: [PluginOS],
 		 applicationsToMonitor: ApplicationsToMonitor? = nil,
 		 software: PluginSoftware,
-		 sdkVersion: Int = 2,
+		 sdkVersion: Int = 3,
 		 codePath: String = PluginManifest.executableName,
 		 codePathMac: String? = nil,
 		 codePathWin: String? = nil,

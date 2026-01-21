@@ -75,7 +75,7 @@ public protocol Plugin {
 	/// Indicates which version of the Stream Deck application is required to install the plugin.
 	static var software: PluginSoftware { get }
 	
-	/// This value should be set to 2.
+	/// This value should be set to 3.
 	static var sdkVersion: Int { get }
 	
 	/// The relative path to the HTML/binary file containing the code of the plugin.
