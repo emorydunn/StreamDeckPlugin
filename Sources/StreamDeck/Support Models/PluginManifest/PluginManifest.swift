@@ -12,6 +12,12 @@ import Foundation
 /// See the [SDK documentation](https://docs.elgato.com/streamdeck/sdk/references/manifest) for more information.
 struct PluginManifest: Codable {
 
+	/// Unique identifier of the plugin, represented in reverse-DNS format
+	///
+	/// This is a required field and must be unique for all plug-ins
+	var uuid: String?
+	
+	
 	/// The name of the plugin.
 	///
 	/// This string is displayed to the user in the Stream Deck store.
@@ -198,6 +204,7 @@ struct PluginManifest: Codable {
 	}
 
 	init(plugin: any Plugin.Type) {
+		self.uuid = plugin.uuid
 		self.name = plugin.name
 		self.description = plugin.description
 		self.category = plugin.category

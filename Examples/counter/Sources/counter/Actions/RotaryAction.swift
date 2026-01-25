@@ -14,7 +14,7 @@ class RotaryAction: EncoderAction {
 
 	static var name: String = "Count"
 
-	static var uuid: String = "counter.rotary"
+	static var uuid: String = "com.example.counter.rotary"
 
 	static var icon: String = "Icons/actionIcon"
 
