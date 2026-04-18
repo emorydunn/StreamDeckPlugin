@@ -15,9 +15,8 @@ struct PluginManifest: Codable {
 	/// Unique identifier of the plugin, represented in reverse-DNS format
 	///
 	/// This is a required field and must be unique for all plug-ins
-	var uuid: String?
-	
-	
+	var uuid: String
+
 	/// The name of the plugin.
 	///
 	/// This string is displayed to the user in the Stream Deck store.
@@ -114,6 +113,7 @@ struct PluginManifest: Codable {
 	///   - codePathWin: Override CodePath for Windows.
 	///   - actions: Specifies an array of actions.
 	init(name: String,
+		 uuid: String,
 		 description: String,
 		 category: String? = nil,
 		 categoryIcon: String? = nil,
@@ -131,6 +131,7 @@ struct PluginManifest: Codable {
 		 actions: [PluginAction],
 		 profiles: [PluginProfile]) {
 		self.name = name
+		self.uuid = uuid
 		self.description = description
 		self.category = category
 		self.categoryIcon = categoryIcon
@@ -168,6 +169,7 @@ struct PluginManifest: Codable {
 	///   - codePathWin: Override CodePath for Windows.
 	///   - actions: Specifies an array of actions.
 	init(name: String,
+		 uuid: String,
 		 description: String,
 		 category: String? = nil,
 		 categoryIcon: String? = nil,
@@ -185,6 +187,7 @@ struct PluginManifest: Codable {
 		 actions: PluginAction...,
 		 profiles: PluginProfile...) {
 		self.name = name
+		self.uuid = uuid
 		self.description = description
 		self.category = category
 		self.categoryIcon = categoryIcon
@@ -227,7 +230,6 @@ struct PluginManifest: Codable {
 }
 
 extension PluginManifest {
-
 	/// Determine the CodePath for the plugin based on the bundles executable's name.
 	public static var executableName: String {
 		Bundle.main.executableURL!.lastPathComponent

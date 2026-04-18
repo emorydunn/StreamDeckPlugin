@@ -82,7 +82,9 @@ class TestPlugin: Plugin {
 	
 	// MARK: Manifest
 	static var name: String = "Test Plugin"
-	
+
+	static var uuid: String = "com.example.testplugin"
+
 	static var description: String = "A plugin for testing."
 	
 	static var category: String? = nil
@@ -128,7 +130,7 @@ class TestPlugin: Plugin {
 	}
 	
 	required init() {
-		fatalError("init(port:uuid:event:info:) has not been implemented")
+		fatalError("init() has not been implemented")
 	}
 	
 	func didReceiveGlobalSettings() {}

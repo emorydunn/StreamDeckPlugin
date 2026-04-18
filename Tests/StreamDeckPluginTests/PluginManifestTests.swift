@@ -13,6 +13,7 @@ final class PluginManifestTests: XCTestCase {
 	func testEncode() {
 		let manifest = PluginManifest(
 			name: "Counter",
+			uuid: "com.example.testplugin",
 			description: "Count things. On your Stream Deck!",
 			category: "Counting Actions",
 			author: "Emory Dunn",
