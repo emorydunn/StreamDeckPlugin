@@ -19,6 +19,11 @@ public protocol Plugin {
 
 	// MARK: Manifest
 	
+	/// The uuid of the plugin.
+	///
+	/// This string must be unique among all the plugins.
+	static var uuid: String { get }
+
 	/// The name of the plugin.
 	///
 	/// This string is displayed to the user in the Stream Deck store.
