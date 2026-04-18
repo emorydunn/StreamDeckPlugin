@@ -1,6 +1,6 @@
 //
 //  CounterPlugin.swift
-//  
+//
 //
 //  Created by Emory Dunn on 10/12/21.
 //
@@ -13,12 +13,14 @@ fileprivate let log = Logger(subsystem: "Counter Plugin", category: "Main Plugin
 
 @main
 class CounterPlugin: Plugin {
-
 	// MARK: Manifest
 	static var uuid: String = "com.example.counter"
+	
 	static var name: String = "Counter"
-    static var category: String? = "Counter"
-    static var categoryIcon: String? = "Icons/category-icon"
+
+	static var category: String? = "Counter"
+
+	static var categoryIcon: String? = "Icons/category-icon"
 
 	static var description: String = "Count things. On your Stream Deck!"
 
@@ -31,8 +33,8 @@ class CounterPlugin: Plugin {
 	static var version: String = "0.6.0"
 
 	static var os: [PluginOS] = [.macOS(.v11)]
-	
-    static var software: PluginSoftware = .minimumVersion("6.4")
+
+	static var software: PluginSoftware = .minimumVersion("6.4")
 
 	@ActionBuilder
 	static var actions: [any Action.Type] {
@@ -59,5 +61,4 @@ class CounterPlugin: Plugin {
 			log.error("Could not convert deep link '\(url.lastPathComponent)' to integer")
 		}
 	}
-
 }

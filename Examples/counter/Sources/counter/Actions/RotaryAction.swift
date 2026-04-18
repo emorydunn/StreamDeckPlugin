@@ -9,7 +9,6 @@ import Foundation
 import StreamDeck
 
 class RotaryAction: EncoderAction {
-
 	typealias Settings = NoSettings
 
 	static var name: String = "Count"
