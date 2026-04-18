@@ -16,7 +16,6 @@ public enum Target: Int, Encodable {
 
 /// Information received about the Stream Deck device.
 public struct DeviceInfo: Decodable {
-	
 	/// An opaque value identifying the device.
 	public let id: String?
 	
@@ -28,7 +27,6 @@ public struct DeviceInfo: Decodable {
 	
 	/// The number of columns and rows of keys that the device owns.
 	public let size: Size
-	
 }
 
 /// The available Stream Deck devices.
@@ -43,37 +41,33 @@ public enum DeviceType: Int, Codable, CustomStringConvertible {
 	case plus = 7
 	case scufController = 8
 	case streamDeckNeo = 9
+	case studio = 10
+	case virtual = 11
+	case galleon100 = 12
+	case plusXL = 13
 
 	public var description: String {
 		switch self {
-		case .streamDeck:
-			"Elgato StreamDeck"
-		case .mini:
-			"Elgato StreamDeck Mini"
-		case .xl:
-			"Elgato StreamDeck XL"
-		case .mobile:
-			"Elgato StreamDeck Mobile"
-		case .corsairGKeys:
-			"Corsair GKeys"
-		case .pedal:
-			"Elgato StreamDeck Pedal"
-		case .corsairVoyager:
-			"Corsair Voyager"
-		case .plus:
-			"Elgato StreamDeck+"
-		case .scufController:
-			"SCUF Controller"
-		case .streamDeckNeo:
-			"Stream Deck Neo"
+		case .streamDeck: "Stream Deck"
+		case .mini: "Stream Deck Mini"
+		case .xl: "Stream Deck XL"
+		case .mobile: "Stream Deck Mobile"
+		case .corsairGKeys: "Corsair GKeys"
+		case .pedal: "Stream Deck Pedal"
+		case .corsairVoyager: "Corsair Voyager"
+		case .plus: "Stream Deck +"
+		case .scufController: "SCUF Controller"
+		case .streamDeckNeo: "Stream Deck Neo"
+		case .studio: "Stream Deck Studio"
+		case .virtual: "Virtual Stream Deck"
+		case .galleon100: "Galleon 100 SD"
+		case .plusXL: "Stream Deck + XL"
 		}
 	}
-	
 }
 
 /// The size of a device.
 public struct Size: Decodable {
-	
 	/// Number of columns a device has.
 	public let columns: Int
 	
@@ -83,7 +77,6 @@ public struct Size: Decodable {
 
 /// The available controller types.
 public enum ControllerType: String, Codable, CustomStringConvertible {
-	
 	case keypad = "Keypad"
 	case encoder = "Encoder"
 	
