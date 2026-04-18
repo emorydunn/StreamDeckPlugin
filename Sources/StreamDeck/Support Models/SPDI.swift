@@ -10,7 +10,6 @@ import Foundation
 public protocol SPDIItem: Codable { }
 
 public struct DatasourceItem: SPDIItem {
-
 	public var label: String?
 	public var value: String
 	public var disabled: Bool?
@@ -137,10 +136,9 @@ struct PayloadItem: Codable {
 	}
 
 	var item: (any SPDIItem)? {
-
 		// If the item has a value it's a standard item
 		if let value {
-			DatasourceItem(label: label, value: value, disabled: disabled)
+			return DatasourceItem(label: label, value: value, disabled: disabled)
 		}
 
 		// If the item has children it's a group
@@ -151,7 +149,7 @@ struct PayloadItem: Codable {
 				item.item as? DatasourceItem
 			}
 
-			DatasourceItemGroup(label: label, children: items)
+			return DatasourceItemGroup(label: label, children: items)
 		}
 
 		// If it has neither marker toss it back into the digital ocean

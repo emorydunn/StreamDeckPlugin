@@ -12,7 +12,6 @@ import SwiftSyntaxBuilder
 import SwiftSyntaxMacros
 
 struct EntryMacro {
-
 	enum KeyType: String {
 		case global = "GlobalSettings"
 		case environment = "EnvironmentValues"

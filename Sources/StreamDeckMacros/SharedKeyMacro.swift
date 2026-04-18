@@ -33,21 +33,18 @@ public enum MacroError: Error, CustomStringConvertible {
 
 
 public protocol SharedKeyMacro: DeclarationMacro {
-
 	static var inheritedType: TypeSyntax { get }
-
 }
 
 extension SharedKeyMacro {
 	public static func expansion(of node: some FreestandingMacroExpansionSyntax, in context: some MacroExpansionContext) throws -> [DeclSyntax] {
-
 		// Check we have the requisite number of arguments
-		guard node.argumentList.count == 3 else {
+		guard node.arguments.count == 3 else {
 			throw MacroError.invalidCount
 		}
 
 		// Create an array so we can access the args by index
-		let argumentList = node.argumentList.map { $0 }
+		let argumentList = node.arguments.map { $0 }
 
 		// Get the name from the first argument
 		guard
@@ -99,6 +96,5 @@ extension SharedKeyMacro {
 			DeclSyntax(fromProtocol: settingStruct),
 			DeclSyntax(fromProtocol: keyPathExt)
 		]
-
 	}
 }
