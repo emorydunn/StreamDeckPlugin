@@ -1,8 +1,20 @@
 # Changelog
 
+## 0.7.0 / 2026-04-18
+
+### Added
+
+- New Hardware types
+- Plugin UUID as part of the manifest
+
+### Changed
+
+- Export command no longer requires a URI argument
+- Default SDK version is now version 3
+
 ## 0.6.0 / 2025-11-06
 
-## Added
+### Added
 
 - Build custom Stream Deck + layouts with result builders!
 - The plugin manages more information about action instances, including:
@@ -15,13 +27,13 @@
 
 ## 0.5.1 / 2024-10-16
 
-## Changed
+### Changed
 
 - Plugin backend has moved more code to use concurrency
 
 ## 0.5.0 / 2024-09-19
 
-## Added
+### Added
 
 - Create custom SD+ layouts using result builders
 - Initial deep link support
@@ -30,14 +42,14 @@
 - Global Long Press support for actions
 - Dial events include a `clockwise` property
 
-## Changed
+### Changed
 
 - Action UUIDs are checked that they are a uniform type identifier
 - WebSocket code has been migrated to async
 
 ## 0.4.0 / 2024-01-08
 
-## Added
+### Added
 
 - The new `globalSetting` and `environmentKey` macros
 - Support for `dialDown` and `dialUp` events (`dialPress` is now deprecated)
@@ -48,7 +60,7 @@
 - `@State` for action-specific state
 - New `sortName` property on `Action` to allow sorting actions
 
-## Changed
+### Changed
 
 - Use `OSLog` for nicer logs
 - Example plugin uses a relative path to the plugin
@@ -64,7 +76,7 @@
 
 ## 0.3.0 / 2023-03-03
 
-## Added
+### Added
 
 - This changelog
 - Additional error logging
@@ -72,20 +84,20 @@
 - Support for decoding new StreamDeck hardware
 - `Settings API`
 
-## Fixed
+### Fixed
 
 - Target and state are correctly passed when setting an image in the bundle
 - A bug where the will appear decode method would fail if the instance hadn't been previously registered
 
 ## 0.2.0 / 2022-06-19
 
-## Added
+### Added
 
 - Automatic event routing
 - An environment for sharing values across actions
 - 100% documentation
 
-## Fixed
+### Fixed
 
 - The plugin extension is added automatically if needed
 
