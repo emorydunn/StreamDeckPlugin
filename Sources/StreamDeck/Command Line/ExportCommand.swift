@@ -13,6 +13,11 @@ import ArgumentParser
 /// The `export` command generates the plugin's manifest and copies the binary to the Plugins Folder.
 struct ExportCommand: ParsableCommand {
 
+	enum ExportError: Error {
+		case missingPlugin
+		case invalidExecutable
+	}
+
 	/// Export command configuration.
 	public static var configuration = CommandConfiguration(
 		commandName: "export",
@@ -25,9 +30,9 @@ struct ExportCommand: ParsableCommand {
 		case previewManifest
 	}
 
-	@Argument(help: "The URI for your plugin")
+	@Argument(help: "The URI for your plugin. Defaults to your plugin's UUID.")
 	/// The URI for your plugin
-	var uri: String
+	var uri: String?
 
 	@Option(name: .shortAndLong,
 			help: "The folder in which to create the plugin's directory. (default: ~/Library/Application Support/com.elgato.StreamDeck/Plugins)",
@@ -97,9 +102,11 @@ struct ExportCommand: ParsableCommand {
 
 	/// Run the command.
 	func run() throws {
+		let plugin = try sdPlugin()
+		let uuid = uri ?? plugin.uuid
 
 		// Determine the root folder for the plugin
-		var root = try pluginsDir().appendingPathComponent(uri)
+		var root = try pluginsDir().appendingPathComponent(uuid)
 
 		// Add the plugin extension if needed
 		if root.pathExtension != "sdPlugin" {
@@ -111,19 +118,26 @@ struct ExportCommand: ParsableCommand {
 
 		try generateManifestFile(in: root)
 		try copyExecutable(to: root)
+	}
 
+	func sdPlugin() throws -> any Plugin.Type {
+		guard let plugin = PluginCommand.plugin else {
+			print("Call `PluginManager.main(plugin:manifest:)` with a PluginManifest.")
+			throw ExportError.missingPlugin
+		}
+
+		return plugin
 	}
 
 	/// Copy the current executable to the plugin folder.
 	/// - Parameter folder: The folder in which to copy the executable.
 	func copyExecutable(to folder: URL) throws {
-
 		guard copyExecutable else { return }
 
 		// Get the current executable
 		guard let exePath = Bundle.main.executableURL else {
 			print("ERROR: Could not determine the current executable's path.")
-			return
+			throw ExportError.invalidExecutable
 		}
 
 		let newName: String
@@ -144,11 +158,7 @@ struct ExportCommand: ParsableCommand {
 	/// Generate the plugin manifest file.
 	/// - Parameter folder: The folder in which to write the manifest.
 	func generateManifestFile(in folder: URL) throws {
-
-		guard let plugin = PluginCommand.plugin else {
-			print("Call `PluginManager.main(plugin:manifest:)` with a PluginManifest.")
-			return
-		}
+		let plugin = try sdPlugin()
 
 		// Check actions for duplicate UUIDs
 		let actionIDs = Dictionary(grouping: plugin.actions) { $0.uuid }
@@ -191,7 +201,5 @@ struct ExportCommand: ParsableCommand {
 		case nil:
 			break
 		}
-
 	}
-
 }
