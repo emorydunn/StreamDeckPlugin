@@ -28,7 +28,7 @@ class CounterPlugin: Plugin {
 
 	static var url: URL? = URL(string: "https://github.com/emorydunn/StreamDeckPlugin")
 
-	static var version: String = "0.5.0.0"
+	static var version: String = "0.6.0"
 
 	static var os: [PluginOS] = [.macOS(.v11)]
 	
