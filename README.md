@@ -14,6 +14,8 @@ class CounterPlugin: Plugin {
 
     static var name: String = "Counter"
 
+    static var uuid: String = "com.example.counter"
+
     static var description: String = "Count things. On your Stream Deck!"
 
     static var author: String = "Emory Dunn"
