@@ -326,13 +326,14 @@ OVERVIEW: Conveniently export the plugin.
 
 Automatically generate the manifest and copy the executable to the Plugins folder.
 
-USAGE: plugin-command export <uri> [--output <output>] [--generate-manifest] [--preview-manifest] [--manifest-name <manifest-name>] [--copy-executable] [--executable-name <executable-name>]
+USAGE: plugin-command export [<uri>] [--output <output>] [--generate-manifest] [--preview-manifest] [--manifest-name <manifest-name>] [--copy-executable] [--executable-name <executable-name>]
 
 ARGUMENTS:
-  <uri>                   The URI for your plugin
+  <uri>                   The URI for your plugin. Defaults to your plugin's UUID.
 
 OPTIONS:
-  -o, --output <output>   The folder in which to create the plugin's directory. (default: ~/Library/Application Support/com.elgato.StreamDeck/Plugins)
+  -o, --output <output>   The folder in which to create the plugin's directory. (default: ~/Library/Application
+                          Support/com.elgato.StreamDeck/Plugins)
   --generate-manifest/--preview-manifest
                           Encode the manifest for the plugin and either save or preview it.
   -m, --manifest-name <manifest-name>
@@ -377,7 +378,7 @@ let package = Package(
     // name, products, etc.
     platforms: [.macOS(.v11)],
     dependencies: [
-        .package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", from: "0.6.0"),
+        .package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", from: "0.7.0"),
         // other dependencies
     ],
     targets: [
