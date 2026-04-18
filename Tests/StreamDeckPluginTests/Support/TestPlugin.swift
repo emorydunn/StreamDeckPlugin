@@ -103,7 +103,7 @@ class TestPlugin: Plugin {
 	
 	static var software: PluginSoftware = .minimumVersion("4.1")
 	
-	static var sdkVersion: Int = 2
+	static var sdkVersion: Int = 3
 	
 	static var codePath: String = TestPlugin.executableName
 	
