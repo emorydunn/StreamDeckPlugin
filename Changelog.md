@@ -6,6 +6,10 @@
 
 - New Hardware types
 - Plugin UUID as part of the manifest
+- Added `DeviceDidChange` event support
+- `SupportedInKeyLogicActions` added to `Actions`
+- `SupportURL` property added for actions and plugins
+
 
 ### Changed
 
