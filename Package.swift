@@ -41,7 +41,6 @@ var package = Package(
 			resources: [.copy("Support/Test Events")]),
 
 		// MARK: Components
-
 		.target(name: "SDPlusLayout"),
 		.testTarget(name: "SDPlusLayoutTests", dependencies: ["SDPlusLayout"]),
 
