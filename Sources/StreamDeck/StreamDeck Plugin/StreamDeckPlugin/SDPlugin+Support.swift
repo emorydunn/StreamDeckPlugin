@@ -43,6 +43,8 @@ public extension Plugin {
 
 	static var url: URL? { nil }
 
+	static var supportURL: String? { nil }
+
 	static var sdkVersion: Int { 3 }
 	
 	static var software: StreamDeck.PluginSoftware { .minimumVersion("5.0") }

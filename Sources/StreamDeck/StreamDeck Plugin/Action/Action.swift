@@ -80,6 +80,11 @@ public protocol Action {
 	///
 	/// True by default.
 	static var supportedInMultiActions: Bool? { get }
+	
+	/// Determines whether the action is available to users when they are creating key logic actions. Default is `true`.
+	///
+	/// - Note: Available from Stream Deck 7.0.
+	static var supportedInKeyLogicActions: Bool? { get }
 
 	/// The string displayed as tooltip when the user leaves the mouse over your action in the actions list.
 	static var tooltip: String? { get }
@@ -96,6 +101,11 @@ public protocol Action {
 	///
 	/// Default is `false`.
 	static var disableAutomaticStates: Bool? { get }
+	
+	/// Link to the actions's support website.
+	///
+	/// - Note: Available from Stream Deck 6.9.
+	static var supportURL: String? { get }
 
 	// MARK: - Instance Properties
 	

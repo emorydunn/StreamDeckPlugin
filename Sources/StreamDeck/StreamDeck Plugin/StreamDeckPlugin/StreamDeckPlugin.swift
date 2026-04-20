@@ -60,7 +60,12 @@ public protocol Plugin {
 	
 	/// A URL displayed to the user if he wants to get more info about the plugin.
 	static var url: URL? { get }
-	
+
+	/// Link to the actions's support website.
+	///
+	/// - Note: Available from Stream Deck 6.9.
+	static var supportURL: String? { get }
+
 	/// The version of the plugin which can only contain digits and periods.
 	///
 	/// This is used for the software update mechanism.
@@ -119,6 +124,12 @@ public protocol Plugin {
 	///   - device: An opaque value identifying the device.
 	func deviceDidDisconnect(_ device: String)
 	
+	/// Occurs when a Stream Deck device is disconnected.
+	/// - Parameters:
+	///   - device: Unique identifier of the Stream Deck device that this event is associated with.
+	///   - deviceInfo: Information about the device that changed.
+	func deviceDidChange(_ device: String, deviceInfo: DeviceInfo)
+
 	/// A plugin can request in its manifest.json to be notified when some applications are launched or terminated.
 	///
 	/// In order to do so, the manifest.json should contain an `ApplicationsToMonitor` object specifying the list of application identifiers to monitor.
