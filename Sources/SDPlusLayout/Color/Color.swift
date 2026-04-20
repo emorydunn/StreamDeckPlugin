@@ -33,10 +33,10 @@ public struct Color: Equatable, Hashable, Codable {
     /// /// This method expects color values between `0` and `1`
     ///
     /// - Parameters:
-    ///   - r: Red value
-    ///   - g: Green value
-    ///   - b: Blue value
-    ///   - a: Alpha value
+    ///   - red: Red value
+    ///   - green: Green value
+    ///   - blue: Blue value
+    ///   - alpha: Alpha value
     public init(red: Double, green: Double, blue: Double, alpha: Double = 1) {
         self.red = red.clamped(to: 0...1)
         self.green = green.clamped(to: 0...1)
@@ -49,10 +49,10 @@ public struct Color: Equatable, Hashable, Codable {
     /// This method expects color values between `0` and `255`
     ///
     /// - Parameters:
-    ///   - r: Red value
-    ///   - g: Green value
-    ///   - b: Blue value
-    ///   - a: Alpha value
+	///   - red: Red value
+	///   - green: Green value
+	///   - blue: Blue value
+	///   - alpha: Alpha value
     public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Double = 1) {
         self.init(
             red: Double(red) / 255,
@@ -65,7 +65,7 @@ public struct Color: Equatable, Hashable, Codable {
     /// Create a grey
     /// - Parameters:
     ///   - grey: Decimal grey value
-    ///   - a: Alpha value, from 0 to 1
+    ///   - alpha: Alpha value, from 0 to 1
     public init(grey: Double, _ alpha: Double = 1) {
         self.init(red: grey, green: grey, blue: grey, alpha: alpha)
     }

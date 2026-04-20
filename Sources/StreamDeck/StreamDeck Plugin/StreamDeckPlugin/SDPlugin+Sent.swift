@@ -53,7 +53,6 @@ public extension Plugin {
 
 	/// Save data securely and globally for the plugin.
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved globally.
 	func setGlobalSettings(_ settings: [String: Any]) {
 		Task {
@@ -64,7 +63,6 @@ public extension Plugin {
 	}
 
 	/// Request the global persistent data.
-	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func getGlobalSettings() {
 		Task {
 			await PluginCommunication.shared.sendEvent(.getGlobalSettings,
@@ -183,7 +181,7 @@ public extension Plugin {
 	///
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - image: The SVG to display.
+	///   - svg: The SVG to display.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(in context: String, toSVG svg: String?, target: Target? = nil, state: Int? = nil) {

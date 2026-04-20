@@ -18,7 +18,6 @@ public extension Action {
 
 	/// Save data persistently for the action's instance.
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	@available(*, deprecated, message: "Use the Settings API.")
 	func setSettings(to settings: [String: Any]) {
@@ -31,7 +30,6 @@ public extension Action {
 
 	/// Save data persistently for the action's instance.
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
 	func setSettings(to settings: Settings) {
 		Task {
@@ -84,7 +82,6 @@ public extension Action {
 
 	/// Dynamically change the title of an instance of an action.
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - title: The title to display. If there is no title parameter, the title is reset to the title set by the user.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
@@ -107,7 +104,6 @@ public extension Action {
 	/// The image is automatically encoded to a prefixed base64 string.
 	///
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - image: An image to display.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the image is set to all states.
@@ -131,7 +127,6 @@ public extension Action {
 	/// The image is automatically encoded to a prefixed base64 string.
 	///
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - image: The name of an image to display.
 	///   - ext: The filename extension of the file to locate.
 	///   - subpath: The subdirectory in the plugin bundle in which to search for images.
@@ -157,8 +152,7 @@ public extension Action {
 	/// The image is automatically encoded to a prefixed base64 string.
 	///
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
-	///   - image: The SVG to display.
+	///   - svg: The SVG to display.
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the image is set to all states.
 	func setImage(toSVG svg: String?, target: Target? = nil, state: Int? = nil) {
@@ -180,7 +174,6 @@ public extension Action {
 	}
 
 	/// Temporarily show an alert icon on the image displayed by an instance of an action.
-	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showAlert() {
 		Task {
 			await PluginCommunication.shared.sendEvent(.showAlert, context: context, payload: nil)
@@ -188,7 +181,6 @@ public extension Action {
 	}
 
 	/// Temporarily show an OK checkmark icon on the image displayed by an instance of an action.
-	/// - Parameter context: An opaque value identifying the instance's action or Property Inspector.
 	func showOk() {
 		Task {
 			await PluginCommunication.shared.sendEvent(.showOK, context: context, payload: nil)
@@ -197,7 +189,6 @@ public extension Action {
 
 	/// Change the state of the action's instance supporting multiple states.
 	/// - Parameters:
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - state: A 0-based integer value representing the state of an action with multiple states.
 	func setState(to state: Int) {
 		let payload: [String: Any] = ["state": state]
@@ -235,7 +226,6 @@ public extension Action {
 													   payload: payload)
 		}
 	}
-
 
 	/// The plugin can send a `setFeedback` event to the Stream Deck application to dynamically change properties of items on the Stream Deck + touch display layout.
 	func setFeedback(_ payload: [String: Any]) {

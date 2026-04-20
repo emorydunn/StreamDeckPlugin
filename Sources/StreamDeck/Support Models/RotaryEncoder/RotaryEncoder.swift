@@ -37,6 +37,7 @@ public struct RotaryEncoder: Codable {
 	///   - layout: The layout for the screen above the encoder.
 	///   - stackColor: A color of some sort
 	///   - icon: The icon on screen. Do not include the file extension.
+	///   - background: The default background image for the encoders touch display slot.
 	///   - rotate: The action description for rotating the dial.
 	///   - push: The action description for pressing the dial.
 	///   - touch: The action description for tapping the touch screen.

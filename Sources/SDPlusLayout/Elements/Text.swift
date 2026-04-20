@@ -42,7 +42,7 @@ public struct Text: LayoutItemProtocol {
 	/// Create a default title `Text` layout item.
 	///
 	/// - Parameters:
-	///   - value: Text to be displayed.
+	///   - title: Text to be displayed.
 	public init(title: String = "") {
 		self.key = .title
 		self.value = title

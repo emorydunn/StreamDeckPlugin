@@ -68,7 +68,7 @@ public extension Action {
 	/// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
+	///   - info: The updated title parameters.
 	func titleParametersDidChange(device: String, info: TitleInfo<Settings>) { }
 	
 	/// The plugin will receive a `propertyInspectorDidAppear` event when the Property Inspector appears.

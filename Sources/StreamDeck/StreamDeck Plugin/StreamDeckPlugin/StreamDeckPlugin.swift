@@ -110,10 +110,8 @@ public protocol Plugin {
 
 	/// When a device is plugged to the computer, the plugin will receive a `deviceDidConnect` event.
 	/// - Parameters:
-	///   - action: The action's unique identifier. If your plugin supports multiple actions, you should use this value to see which action was triggered.
-	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
+	///   - deviceInfo: Information about the newly connected device. 
 	func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo)
 	
 	/// When a device is unplugged from the computer, the plugin will receive a `deviceDidDisconnect` event.

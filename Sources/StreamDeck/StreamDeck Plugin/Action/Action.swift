@@ -221,6 +221,7 @@ public protocol Action {
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
 	///   - payload: The event payload sent by the server.
+	///   - longPress: Whether or not the key was held down once release
 	func dialUp(device: String, payload: EncoderPressEvent<Settings>, longPress: Bool)
 	
 	/// When the user holds a dial down.
@@ -241,7 +242,7 @@ public protocol Action {
 	/// When the user changes the title or title parameters of the instance of an action, the plugin will receive a `titleParametersDidChange` event.
 	/// - Parameters:
 	///   - device: An opaque value identifying the device.
-	///   - payload: The event payload sent by the server.
+	///   - info: The updated title parameters.
 	func titleParametersDidChange(device: String, info: TitleInfo<Settings>)
 	
 	/// The plugin will receive a `propertyInspectorDidAppear` event when the Property Inspector appears.
