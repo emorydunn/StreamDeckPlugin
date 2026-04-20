@@ -21,7 +21,9 @@ public extension Plugin {
 	func deviceDidConnect(_ device: String, deviceInfo: DeviceInfo) { }
 	
 	func deviceDidDisconnect(_ device: String) { }
-	
+
+	func deviceDidChange(_ device: String, deviceInfo: DeviceInfo) { }
+
 	func applicationDidLaunch(_ application: String) { }
 	
 	func applicationDidTerminate(_ application: String) { }

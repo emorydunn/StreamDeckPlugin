@@ -68,6 +68,7 @@ extension ReceivableEvent {
 		case titleParametersDidChange
 		case deviceDidConnect
 		case deviceDidDisconnect
+		case deviceDidChange
 		case applicationDidLaunch
 		case applicationDidTerminate
 		case systemDidWakeUp
@@ -116,6 +117,16 @@ public struct DeviceConnectionEvent: Decodable {
 	
 	/// The payload of the event.
 	public let deviceInfo: DeviceInfo?
+}
+
+/// Device connection events sent by the server.
+public struct DeviceChangeEvent: Decodable {
+
+	/// An opaque value identifying the device.
+	public let device: String
+
+	/// The payload of the event.
+	public let deviceInfo: DeviceInfo
 }
 
 

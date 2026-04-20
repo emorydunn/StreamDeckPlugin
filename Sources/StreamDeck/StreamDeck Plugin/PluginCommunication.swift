@@ -451,6 +451,12 @@ public final actor PluginCommunication {
 			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
 			plugin.deviceDidDisconnect(action.device)
 
+		case .deviceDidChange:
+			let action = try decoder.decode(DeviceChangeEvent.self, from: data)
+
+			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
+			plugin.deviceDidChange(action.device, deviceInfo: action.deviceInfo)
+
 		case .systemDidWakeUp:
 
 			log.info("Forwarding \(event, privacy: .public) to PluginDelegate")
