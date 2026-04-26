@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.7.0 / 2026-04-18
+## 0.7.0 / 2026-04-25
 
 ### Added
 
@@ -9,7 +9,6 @@
 - Added `DeviceDidChange` event support
 - `SupportedInKeyLogicActions` added to `Actions`
 - `SupportURL` property added for actions and plugins
-
 
 ### Changed
 
