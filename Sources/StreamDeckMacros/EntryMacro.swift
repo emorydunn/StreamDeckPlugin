@@ -38,7 +38,7 @@ struct EntryMacro {
 	/// Return the identifier of a declaration.
 	static func identifier(of declaration: some DeclSyntaxProtocol) throws -> String {
 		guard let variableDecl = declaration.as(VariableDeclSyntax.self),
-			  let patternBinding = variableDecl.bindings.as(PatternBindingListSyntax.self)?.first?.as(PatternBindingSyntax.self),
+			  let patternBinding = variableDecl.bindings.first,
 			  let identifier = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text
 		else {
 			throw MacroError.invalidName
@@ -50,8 +50,8 @@ struct EntryMacro {
 	/// Return the initializer of a declaration.
 	static func initializer(of declaration: some DeclSyntaxProtocol) throws -> InitializerClauseSyntax {
 		guard let variableDecl = declaration.as(VariableDeclSyntax.self),
-			  let patternBinding = variableDecl.bindings.as(PatternBindingListSyntax.self)?.first?.as(PatternBindingSyntax.self),
-			  let identifier = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text,
+			  let patternBinding = variableDecl.bindings.first,
+//			  let identifier = patternBinding.pattern.as(IdentifierPatternSyntax.self)?.identifier.text,
 			  let initializer = patternBinding.initializer
 		else {
 			throw MacroError.invalidDefaultValue
@@ -88,7 +88,6 @@ struct EntryMacro {
 
 		return stringExpr.representedLiteralValue
 	}
-
 }
 
 extension EntryMacro: AccessorMacro {
@@ -107,7 +106,6 @@ extension EntryMacro: AccessorMacro {
 }
 
 extension EntryMacro: PeerMacro {
-
 	static func expansion(of node: AttributeSyntax, providingPeersOf declaration: some DeclSyntaxProtocol, in context: some MacroExpansionContext) throws -> [DeclSyntax] {
 
 		let keyIdentifier = try identifier(of: node, or: declaration)

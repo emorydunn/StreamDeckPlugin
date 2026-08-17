@@ -31,7 +31,6 @@ public enum MacroError: Error, CustomStringConvertible {
 	}
 }
 
-
 public protocol SharedKeyMacro: DeclarationMacro {
 	static var inheritedType: TypeSyntax { get }
 }

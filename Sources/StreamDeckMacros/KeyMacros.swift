@@ -13,14 +13,9 @@ import SwiftSyntaxMacros
 
 
 public struct GlobalSettingsMacro: SharedKeyMacro {
-
 	public static let inheritedType = TypeSyntax("GlobalSettingKey")
-
 }
 
 public struct EnvironmentMacro: SharedKeyMacro {
-
 	public static let inheritedType = TypeSyntax("EnvironmentKey")
-
 }
-
