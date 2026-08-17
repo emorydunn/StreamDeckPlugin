@@ -16,6 +16,7 @@ struct ExportCommand: ParsableCommand {
 	enum ExportError: Error {
 		case missingPlugin
 		case invalidExecutable
+		case missingBundleResources
 	}
 
 	/// Export command configuration.
@@ -59,6 +60,12 @@ struct ExportCommand: ParsableCommand {
 	@Option(name: .shortAndLong, help: "The name of the executable file.")
 	/// The name of the executable file.
 	var executableName: String?
+
+	@Option(help: "Copy a file to the plugin's directory.")
+	var copyFile: [String] = []
+
+	@Option(help: "Copy a Bundle resource file to the plugin's directory.")
+	var copyResource: [String] = []
 
 	static var manifestEncoder: JSONEncoder = {
 		let encoder = JSONEncoder()
@@ -122,6 +129,7 @@ struct ExportCommand: ParsableCommand {
 
 		try generateManifestFile(in: root)
 		try copyExecutable(to: root)
+		try copyResources(to: root)
 	}
 
 	func sdPlugin() throws -> any Plugin.Type {
@@ -210,6 +218,33 @@ struct ExportCommand: ParsableCommand {
 			print(String(decoding: data, as: UTF8.self))
 		case nil:
 			break
+		}
+	}
+
+	func copyResources(to folder: URL) throws {
+		for resource in copyFile {
+			let source = URL(fileURLWithPath: resource).standardizedFileURL
+			let destination = folder.appendingPathComponent(source.lastPathComponent)
+
+			try? FileManager.default.removeItem(at: destination)
+
+			try FileManager.default.copyItem(at: source, to: destination)
+			print("Copied \(source.lastPathComponent) -> \(destination.path)")
+		}
+
+		if copyResource.isEmpty { return }
+		guard let resourcesURL = Bundle.main.resourceURL else {
+			throw ExportError.missingBundleResources
+		}
+
+		for resource in copyResource {
+			let source = resourcesURL.appendingPathComponent(resource)
+			let destination = folder.appendingPathComponent(resource)
+
+			try? FileManager.default.removeItem(at: destination)
+
+			try FileManager.default.copyItem(at: source, to: destination)
+			print("Copied bundle resource \(source.lastPathComponent) -> \(destination.path)")
 		}
 	}
 }
