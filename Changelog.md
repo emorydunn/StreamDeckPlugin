@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.7.1 / Unreleased
+
+### Added
+
+- `--link-executable` command to symlink the binary
+- `--copy-file` and `--copy-resource` for copying files into the plugin folder
+
+### Fixed
+
+- `switchToProfile` action now includes the device and page number in payload.
+
 ## 0.7.0 / 2026-04-25
 
 ### Added
