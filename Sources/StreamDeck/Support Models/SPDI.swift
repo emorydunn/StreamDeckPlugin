@@ -48,7 +48,6 @@ public struct DatasourceItem: SPDIItem {
 }
 
 public struct DatasourceItemGroup: SPDIItem {
-
 	public var label: String?
 	public var children: [DatasourceItem]
 
@@ -56,7 +55,6 @@ public struct DatasourceItemGroup: SPDIItem {
 		self.label = label
 		self.children = children
 	}
-
 }
 
 /// The nested payload sent to the property inspector, from the plugin, via `sendToPropertyInspector`.
@@ -76,10 +74,32 @@ public struct DataSourcePayload {
 		self.event = event
 		self.items = items
 	}
-
-	public init<C>(event: String, items: C, map: (C.Element) -> any SPDIItem) where C: Collection{
+	/// Create a Datasource Payload for the given event and dictionary of items.
+	/// - Parameters:
+	///   - event: The event name.
+	///   - items: A array of items to map to `DatasourceItems`.
+	///   - map: A function to transform each item into a `DatasourceItem`.
+	public init<C>(event: String, items: C, map: (C.Element) -> any SPDIItem) where C: Collection {
 		self.event = event
 		self.items = items.map(map)
+	}
+
+	/// Create a Datasource Payload for the given event and dictionary of items.
+	/// - Parameters:
+	///   - event: The event name.
+	///   - items: A array of strings which will be used as both the label and value.
+	public init<C>(event: String, items: C) where C: Collection, C.Element == String {
+		self.event = event
+		self.items = items.map { DatasourceItem(label: $0) }
+	}
+	
+	/// Create a Datasource Payload for the given event and dictionary of items.
+	/// - Parameters:
+	///   - event: The event name.
+	///   - items: A dictionary of items to use as labels and values.
+	public init(event: String, items: [String: String]) {
+		self.event = event
+		self.items = items.map { DatasourceItem(label: $0, value: $1) }
 	}
 
 }
