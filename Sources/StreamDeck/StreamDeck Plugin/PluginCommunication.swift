@@ -268,7 +268,7 @@ public final actor PluginCommunication {
 	///   - context: The context token.
 	///   - payload: The payload for the action.
 	/// - Throws: Errors while encoding the data to JSON.
-	public func sendEvent(_ eventType: SendableEventKey, action: String? = nil, context: String?, payload: [String: Any]?) {
+	public func sendEvent(_ eventType: SendableEventKey, action: String? = nil, context: String?, device: String? = nil, payload: [String: Any]?) {
 
 		var event: [String: Any] = [
 			"event": eventType.rawValue
@@ -276,6 +276,7 @@ public final actor PluginCommunication {
 
 		event["action"] = action
 		event["context"] = context
+		event["device"] = device
 		event["payload"] = payload
 
 		guard JSONSerialization.isValidJSONObject(event) else {
@@ -290,7 +291,6 @@ public final actor PluginCommunication {
 		} catch {
 			log.error("\(error.localizedDescription, privacy: .public).")
 		}
-
 	}
 
 	/// Send raw events over the the socket.
@@ -301,12 +301,13 @@ public final actor PluginCommunication {
 	///   - context: The context token.
 	///   - payload: The payload for the action.
 	/// - Throws: Errors while encoding the data to JSON.
-	public func sendEvent<P: Encodable>(_ eventType: SendableEventKey, action: String? = nil, context: String?, payload: P?) {
+	public func sendEvent<P: Encodable>(_ eventType: SendableEventKey, action: String? = nil, device: String? = nil, context: String?, payload: P?) {
 
 		// Construct the event to serialize and send
 		let event = SendableEvent(event: eventType,
 								  action: action,
 								  context: context,
+								  device: device,
 								  payload: payload)
 
 		do {
@@ -318,7 +319,6 @@ public final actor PluginCommunication {
 		} catch {
 			log.error("\(error.localizedDescription).")
 		}
-
 	}
 
 	/// Send raw events over the the socket.
@@ -354,6 +354,7 @@ public final actor PluginCommunication {
 			// Get the initial global settings
 			await PluginCommunication.shared.sendEvent(.getGlobalSettings,
 													   context: PluginCommunication.shared.uuid,
+													   device: nil,
 													   payload: nil)
 			shouldLoadSettings = false
 		}

@@ -133,7 +133,6 @@ public extension Plugin {
 	///   - target: Specify if you want to display the title on hardware, software, or both.
 	///   - state: A 0-based integer value representing the state of an action with multiple states. This is an optional parameter. If not specified, the title is set to all states.
 	func setImage(in context: String, to image: NSImage?, target: Target? = nil, state: Int? = nil) {
-
 		let encodedImage = image?.base64String
 
 		Task {
@@ -142,7 +141,6 @@ public extension Plugin {
 			payload["image"] = encodedImage
 			payload["target"] = target?.rawValue
 			payload["state"] = state
-
 
 			await PluginCommunication.shared.sendEvent(.setImage,
 													   context: context,
@@ -239,13 +237,14 @@ public extension Plugin {
 
 	/// Switch to one of the preconfigured read-only profiles.
 	/// - Parameter name: The name of the profile to switch to. The name should be identical to the name provided in the manifest.json file.
-	func switchToProfile(named name: String) {
+	func switchToProfile(named name: String, on device: String) {
 		Task {
 			let payload: [String: Any] = ["profile": name]
-			// FIXME: Add Device
 
+			// FIXME: Add Device
 			await PluginCommunication.shared.sendEvent(.switchToProfile,
 													   context: PluginCommunication.shared.uuid,
+													   device: device,
 													   payload: payload)
 		}
 	}

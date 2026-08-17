@@ -34,6 +34,7 @@ struct SendableEvent<P: Encodable>: Encodable {
 	let event: SendableEventKey
 	let action: String?
 	let context: String?
+	let device: String?
 	let payload: P?
 }
 
