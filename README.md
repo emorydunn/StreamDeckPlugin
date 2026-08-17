@@ -97,40 +97,6 @@ There are two ways to share a global state amongst actions:
 
 In use they're very similar, only differing by a couple of protocols. The important difference is that environmental values aren't persisted whereas global settings are stored and will be consistent across launches of the Stream Deck app.
 
-There are two ways to declare environmental values and global settings.
-
-Start with a struct that conforms to `EnvironmentKey` or `GlobalSettingKey`. This defines the default value and how the value will be accessed:
-
-```swift
-struct Count: EnvironmentKey {
-    static let defaultValue: Int = 0
-}
-```
-
-Next add an extension to either `EnvironmentValues` or `GlobalSettings`:
-
-```swift
-extension EnvironmentValues {
-    var count: Int {
-        get { self[Count.self] }
-        set { self[Count.self] = newValue }
-    }
-}
-```
-
-To use the value in your actions use the corresponding property wrapper:
-
-```swift
-@Environment(\.count) var count // For an environment key
-@GlobalSetting(\.count) var count // For a global settings key
-```
-
-The value can be read and updated from inside an action callback.
-
-#### Macros
-
-Additionally, instead of manually declaring the keys, you can use the `@Entry` macro. The macro handles generating both the struct and variable for the key path. By default the name is auto-generated based on the property name, but a custom key can be provided.
-
 ```swift
 extension EnvironmentValues {
     @Entry var count = 42
@@ -140,6 +106,15 @@ extension GlobalSettings {
     @Entry("CountDracula") var theCount = 42
 }
 ```
+
+To use the value in your actions use the corresponding property wrapper:
+
+```swift
+@Environment(\.count) var count // For an environment key
+@GlobalSetting(\.theCount) var count // For a global settings key
+```
+
+The value can be read and updated from inside an action callback.
 
 ## Creating Actions
 
@@ -174,7 +149,7 @@ struct IncrementAction: KeyAction {
 
     var coordinates: StreamDeck.Coordinates?
 
-    @GlobalSetting(\.count) var count
+    @GlobalSetting(\.theCount) var count
 
     required init(context: String, coordinates: Coordinates?) {
         self.context = context
@@ -360,9 +335,9 @@ The plugin's manifest file, which includes the plugin, action, and layout defini
 
 There are two commands which will copy files into the plugin folder.
 
-The first, `--copy-file` copies arbitrary files, which may be images, property inspector HTML, etc. Everything is coped into the root of the folder.
+The first, `--copy-file` copies arbitrary files, which may be images, property inspector HTML, etc. Everything is copied into the root of the plugin folder.
 
-The second, `--copy-resource` is a special version for copying bundle resources for use by your code at runtime, not necessarily the Stream Deck app.
+The second, `--copy-resource` is a special version for copying bundle resources for use by your code at runtime, not necessarily the Stream Deck app. For example if your plugin includes a package dependency which defines resources in its `Package.swift` file.
 
 ### Known Issues
 
