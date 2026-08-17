@@ -30,6 +30,11 @@ struct ExportCommand: ParsableCommand {
 		case previewManifest
 	}
 
+	enum ExecutableAction: String, EnumerableFlag, ExpressibleByArgument {
+		case copyExecutable
+		case linkExecutable
+	}
+
 	@Argument(help: "The URI for your plugin. Defaults to your plugin's UUID.")
 	/// The URI for your plugin
 	var uri: String?
@@ -48,9 +53,8 @@ struct ExportCommand: ParsableCommand {
 	/// The name of the manifest file.
 	var manifestName: String = "manifest.json"
 
-	@Flag(name: .shortAndLong, help: "Copy the executable file.")
-	/// Copy the executable file.
-	var copyExecutable: Bool = false
+	@Flag(exclusivity: FlagExclusivity.exclusive, help: "Whether to copy or link the binary.")
+	var executableAction: ExecutableAction?
 
 	@Option(name: .shortAndLong, help: "The name of the executable file.")
 	/// The name of the executable file.
@@ -132,7 +136,7 @@ struct ExportCommand: ParsableCommand {
 	/// Copy the current executable to the plugin folder.
 	/// - Parameter folder: The folder in which to copy the executable.
 	func copyExecutable(to folder: URL) throws {
-		guard copyExecutable else { return }
+		guard let executableAction else { return }
 
 		// Get the current executable
 		guard let exePath = Bundle.main.executableURL else {
@@ -150,9 +154,15 @@ struct ExportCommand: ParsableCommand {
 		let newPath = folder.appendingPathComponent(newName)
 
 		try? FileManager.default.removeItem(at: newPath)
-		try FileManager.default.copyItem(at: exePath, to: newPath)
 
-		print("Copied \(exePath.lastPathComponent) -> \(newPath.path)")
+		switch executableAction {
+		case .copyExecutable:
+			try FileManager.default.copyItem(at: exePath, to: newPath)
+			print("Copied \(exePath.lastPathComponent) -> \(newPath.path)")
+		case .linkExecutable:
+			try FileManager.default.createSymbolicLink(at: newPath, withDestinationURL: exePath)
+			print("Linked \(exePath.lastPathComponent) -> \(newPath.path)")
+		}
 	}
 
 	/// Generate the plugin manifest file.
