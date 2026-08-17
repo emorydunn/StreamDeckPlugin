@@ -319,31 +319,52 @@ Any editable property can be updated this way. Please refer to the [documentatio
 
 ## Exporting Your Plugin
 
-Your plugin executable ships with an automatic way to generate the plugin's `manifest.json` file in a type-safe manor. Use the provided `export` command on your plugin binary to export the manifest and copy the binary itself. You will still need to use Elgato's `DistributionTool` for final packaging.
+Your plugin executable ships with command line interface which helps export everything needed for the plugin to run. By default all steps export to `~/Library/Application Support/com.elgato.StreamDeck/Plugins`.
 
-```bash
+```shell
 OVERVIEW: Conveniently export the plugin.
 
 Automatically generate the manifest and copy the executable to the Plugins folder.
 
-USAGE: plugin-command export [<uri>] [--output <output>] [--generate-manifest] [--preview-manifest] [--manifest-name <manifest-name>] [--copy-executable] [--executable-name <executable-name>]
+USAGE: plugin-command export [<uri>] [--output <output>] [--generate-manifest] [--preview-manifest] [--manifest-name <manifest-name>] [--copy-executable] [--link-executable] [--executable-name <executable-name>] [--copy-file <copy-file> ...] [--copy-resource <copy-resource> ...]
 
 ARGUMENTS:
   <uri>                   The URI for your plugin. Defaults to your plugin's UUID.
 
 OPTIONS:
-  -o, --output <output>   The folder in which to create the plugin's directory. (default: ~/Library/Application
-                          Support/com.elgato.StreamDeck/Plugins)
+  -o, --output <output>   The folder in which to create the plugin's directory. (default: ~/Library/Application Support/com.elgato.StreamDeck/Plugins)
   --generate-manifest/--preview-manifest
                           Encode the manifest for the plugin and either save or preview it.
   -m, --manifest-name <manifest-name>
                           The name of the manifest file. (default: manifest.json)
-  -c, --copy-executable   Copy the executable file.
+  --copy-executable/--link-executable
+                          Whether to copy or link the binary.
   -e, --executable-name <executable-name>
                           The name of the executable file.
+  --copy-file <copy-file> Copy a file to the plugin's directory.
+  --copy-resource <copy-resource>
+                          Copy a Bundle resource file to the plugin's directory.
   --version               Show the version.
   -h, --help              Show help information.
 ```
+
+### Copying the Executable
+
+The binary can copy or symlink itself into the plugin folder using `--copy-executable` or `--link-executable`. The latter is useful for debugging with Xcode as you can link the compiled plugin directly from the Derived Data directory.
+
+### Generating the Manifest
+
+The plugin's manifest file, which includes the plugin, action, and layout definitions can be exported with `--generate-manifest`. If your plugin includes custom Stream Deck + layouts those will be saved into a `Layouts` subdirectory.
+
+### Copying Resources
+
+There are two commands which will copy files into the plugin folder.
+
+The first, `--copy-file` copies arbitrary files, which may be images, property inspector HTML, etc. Everything is coped into the root of the folder.
+
+The second, `--copy-resource` is a special version for copying bundle resources for use by your code at runtime, not necessarily the Stream Deck app.
+
+### Known Issues
 
 If you're building a universal binary there appears to be an issue with the macro which prevents compiling for multiple architectures at once. A workaround is to compile each separately and then combine with with `lipo`.
 
@@ -368,7 +389,7 @@ To use the `StreamDeck` library in a SwiftPM project,
 add the following line to the dependencies in your `Package.swift` file:
 
 ```swift
-.package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", from: "0.6.0"),
+.package(url: "https://github.com/emorydunn/StreamDeckPlugin.git", from: "0.7.0"),
 ```
 
 Finally, include `"StreamDeck"` as a dependency for your executable target:
