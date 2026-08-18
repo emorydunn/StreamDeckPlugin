@@ -294,7 +294,7 @@ public extension Action {
 			let payload = ProfilePage(profile: name, page: page)
 
 			await PluginCommunication.shared.sendEvent(.switchToProfile,
-													   context: PluginCommunication.shared.uuid,
+													   context: context,
 													   device: device ?? self.device,
 													   payload: payload)
 		}
