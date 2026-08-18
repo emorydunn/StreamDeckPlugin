@@ -13,7 +13,6 @@ import OSLog
 fileprivate let log = Logger(subsystem: "StreamDeckPlugin", category: "Action")
 
 public extension Action {
-
 	// MARK: Sent
 
 	/// Save data persistently for the action's instance.
@@ -115,7 +114,6 @@ public extension Action {
 			payload["target"] = target?.rawValue
 			payload["state"] = state
 
-
 			await PluginCommunication.shared.sendEvent(.setImage,
 													   context: context,
 													   payload: payload)
@@ -166,7 +164,6 @@ public extension Action {
 			payload["target"] = target?.rawValue
 			payload["state"] = state
 
-
 			await PluginCommunication.shared.sendEvent(.setImage,
 													   context: context,
 													   payload: payload)
@@ -204,6 +201,18 @@ public extension Action {
 	/// - Parameters:
 	///   - payload: A json object that will be received by the Property Inspector.
 	func sendToPropertyInspector(payload: [String: Any]) {
+		Task {
+			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
+													   action: uuid,
+													   context: context,
+													   payload: payload)
+		}
+	}
+
+	/// Send a payload to the Property Inspector.
+	/// - Parameters:
+	///   - payload: A json object that will be received by the Property Inspector.
+	func sendToPropertyInspector<P: Encodable>(payload: P) {
 		Task {
 			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
 													   action: uuid,

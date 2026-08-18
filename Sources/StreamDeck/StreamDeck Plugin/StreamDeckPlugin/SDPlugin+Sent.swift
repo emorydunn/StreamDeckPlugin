@@ -265,4 +265,18 @@ public extension Plugin {
 													   payload: payload)
 		}
 	}
+
+	/// Send a payload to the Property Inspector.
+	/// - Parameters:
+	///   - context: An opaque value identifying the instance's action or Property Inspector.
+	///   - action: The action unique identifier.
+	///   - payload: A json object that will be received by the Property Inspector.
+	func sendToPropertyInspector<P: Encodable>(in context: String, action: String, payload: P) {
+		Task {
+			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
+													   action: action,
+													   context: context,
+													   payload: payload)
+		}
+	}
 }
