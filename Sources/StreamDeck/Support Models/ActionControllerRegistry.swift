@@ -55,12 +55,12 @@ extension Action {
 		ActionControllerRegistry.shared[self]!.controllerType
 	}
 
-	/// The type of controller the action instance was instantiated on.
+	/// The coordinates at which this instance is located.
 	public var coordinates: Coordinates? {
 		ActionControllerRegistry.shared[self]!.coordinates
 	}
 
-	/// The type of controller the action instance was instantiated on.
+	/// The identifier of the device on which this instance is located.
 	public var device: String {
 		ActionControllerRegistry.shared[self]!.device
 	}
