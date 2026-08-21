@@ -192,13 +192,22 @@ For example if you have an `spdi-select`:
 
 ```
 
-Your plugin can easily provide values for it using `DataSourcePayload`. The `event` sent by the plugin matches the `datasource` in the component and the initializer provides a convenient map function.
+Your plugin can easily provide values for it using `DataSourcePayload`. The `event` sent by the plugin matches the `datasource` in the component and the initializer provides a convenient option for transforming arrays and dictionaries.
 
 ```swift
 let recipeNames = listProcessRecipes() // Returns an array of strings
+let response = DataSourcePayload(event: "getRecipes", items: recipeNames)
 
-let response = DataSourcePayload(event: "getRecipes", items: recipeNames) { recipeName in
-  DatasourceItem(label: recipeName)
+sendToPropertyInspector(response)
+```
+
+If you need more control over the items you can use the map version:
+
+```swift
+let recipeNames = listProcessRecipes() // Returns an array of structs
+
+let response = DataSourcePayload(event: "getRecipes", items: recipeNames) { recipe in
+  DatasourceItem(label: recipe.name, value: recipe.id, disabled: !recipe.enabled)
 }
 
 sendToPropertyInspector(response)
