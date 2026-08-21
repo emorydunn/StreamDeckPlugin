@@ -7,6 +7,11 @@
 - `--link-executable` command to symlink the binary
 - `--copy-file` and `--copy-resource` for copying files into the plugin folder
 
+## Changed
+
+- Action `Settings` must now conform to `Sendable`
+- Example plugin has been expanded with more library features
+
 ### Fixed
 
 - `switchToProfile` action now includes the device and page number in payload.
