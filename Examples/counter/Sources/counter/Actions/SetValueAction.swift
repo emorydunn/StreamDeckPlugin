@@ -13,7 +13,15 @@ fileprivate let log = Logger(subsystem: "Counter Plugin", category: "Decrement")
 
 class SetValueAction: KeyAction {
 	struct Settings: Codable, Hashable {
-		var value: Int?
+		var newCount: Int?
+
+		init(from decoder: any Decoder) throws {
+			let container: KeyedDecodingContainer<CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
+
+			// The Property Inspector text field returns a string, so we need to handle the conversion
+			let htmlValue = try container.decode(String.self, forKey: CodingKeys.newCount)
+			self.newCount = Int(htmlValue)
+		}
 	}
 
 	static var name: String = "Set Value"
@@ -21,6 +29,8 @@ class SetValueAction: KeyAction {
 	static var uuid: String = "com.example.counter.set-value"
 
 	static var icon: String = "Icons/actionIcon"
+
+	static var propertyInspectorPath: String? = "Inspectors/Counter.html"
 
 	static var states: [PluginActionState]? = [
 		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
@@ -42,7 +52,7 @@ class SetValueAction: KeyAction {
 	}
 
 	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool) {
-		guard let newCount = payload.settings.value else {
+		guard let newCount = payload.settings.newCount else {
 			showAlert()
 			return
 		}
