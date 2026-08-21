@@ -30,22 +30,28 @@ class CounterPlugin: Plugin {
 
 	static var url: URL? = URL(string: "https://github.com/emorydunn/StreamDeckPlugin")
 
-	static var version: String = "0.6.0"
+	static var version: String = "0.7.0"
 
 	static var os: [PluginOS] = [.macOS(.v11)]
 
 	static var software: PluginSoftware = .minimumVersion("6.4")
 
-	@ActionBuilder
-	static var actions: [any Action.Type] {
-		IncrementAction.self
-		DecrementAction.self
-		RotaryAction.self
-	}
+	static var actions: [any Action.Type] = [
+		IncrementAction.self,
+		DecrementAction.self,
+		ResetAction.self,
+		SetValueAction.self,
+		RotaryAction.self,
+		ProfileAction.self
+	]
 
 	static var layouts: [Layout] {
 		Layout.counter
 	}
+
+	static var profiles = [
+		PluginProfile(name: "Profiles/Counter Example", deviceType: .mini)
+	]
 
 	@GlobalSetting(\.count) var count
 
