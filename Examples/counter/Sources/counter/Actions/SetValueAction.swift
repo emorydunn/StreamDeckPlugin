@@ -33,7 +33,7 @@ class SetValueAction: KeyAction {
 	static var propertyInspectorPath: String? = "Inspectors/Counter.html"
 
 	static var states: [PluginActionState]? = [
-		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
+		PluginActionState(image: "Icons/set-value", titleAlignment: .middle)
 	]
 
 	static var userTitleEnabled: Bool? = false
@@ -47,8 +47,21 @@ class SetValueAction: KeyAction {
 	}
 
 	func willAppear(device: String, payload: AppearEvent<Settings>) {
-		log.log("Action appeared, setting title to \(self.count)")
-		setTitle(to: "\(count)", target: nil, state: nil)
+		guard let newCount = payload.settings.newCount else {
+			showAlert()
+			return
+		}
+
+		setTitle(to: "\(newCount)", target: nil, state: nil)
+	}
+
+	func didReceiveSettings(device: String, payload: SettingsEvent<Settings>.Payload) {
+		guard let newCount = payload.settings.newCount else {
+			showAlert()
+			return
+		}
+
+		setTitle(to: "\(newCount)", target: nil, state: nil)
 	}
 
 	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool) {
@@ -56,12 +69,7 @@ class SetValueAction: KeyAction {
 			showAlert()
 			return
 		}
-		count = newCount
-		log.log("Setting count to \(self.count)")
-	}
 
-	func didReceiveGlobalSettings() {
-		log.log("Global settings changed, updating title with \(self.count)")
-		setTitle(to: "\(count)", target: nil, state: nil)
+		count = newCount
 	}
 }

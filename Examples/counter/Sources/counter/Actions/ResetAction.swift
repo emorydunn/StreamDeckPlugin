@@ -21,7 +21,7 @@ class ResetAction: KeyAction {
 	static var icon: String = "Icons/actionIcon"
 
 	static var states: [PluginActionState]? = [
-		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
+		PluginActionState(image: "Icons/counter-reset", titleAlignment: .middle)
 	]
 
 	static var userTitleEnabled: Bool? = false
@@ -36,7 +36,6 @@ class ResetAction: KeyAction {
 
 	func willAppear(device: String, payload: AppearEvent<Settings>) {
 		log.log("Action appeared, setting title to \(self.count)")
-		setTitle(to: "\(count)", target: nil, state: nil)
 	}
 
 	func keyUp(device: String, payload: KeyEvent<Settings>, longPress: Bool) {
@@ -46,6 +45,5 @@ class ResetAction: KeyAction {
 
 	func didReceiveGlobalSettings() {
 		log.log("Global settings changed, updating title with \(self.count)")
-		setTitle(to: "\(count)", target: nil, state: nil)
 	}
 }

@@ -21,7 +21,7 @@ class DecrementAction: KeyAction {
 	static var icon: String = "Icons/actionIcon"
 
 	static var states: [PluginActionState]? = [
-		PluginActionState(image: "Icons/actionDefaultImage", titleAlignment: .middle)
+		PluginActionState(image: "Icons/decrement", titleAlignment: .top)
 	]
 
 	static var userTitleEnabled: Bool? = false
