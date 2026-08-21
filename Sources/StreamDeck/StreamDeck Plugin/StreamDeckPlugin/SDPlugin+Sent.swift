@@ -242,12 +242,12 @@ public extension Plugin {
 	/// - Parameter name: The name of the profile to switch to. The name should be identical to the name provided in the manifest.json file.
 	/// - Parameter page: Optional page to show when switching to the profile, indexed from `0`. When undefined, the page that was previously visible (when switching away from the profile will be made visible.
 	/// - Parameter device: Unique identifier of the device where the profile should be set.
-	func switchToProfile(in context: String, named name: String, page: Int? = nil, on device: String) {
+	func switchToProfile(named name: String, page: Int? = nil, on device: String) {
 		Task {
 			let payload = ProfilePage(profile: name, page: page)
 
 			await PluginCommunication.shared.sendEvent(.switchToProfile,
-													   context: context,
+													   context: PluginCommunication.shared.uuid,
 													   device: device,
 													   payload: payload)
 		}
