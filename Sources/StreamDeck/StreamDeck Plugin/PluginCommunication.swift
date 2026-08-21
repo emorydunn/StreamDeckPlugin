@@ -301,7 +301,7 @@ public final actor PluginCommunication {
 	///   - context: The context token.
 	///   - payload: The payload for the action.
 	/// - Throws: Errors while encoding the data to JSON.
-	public func sendEvent<P: Encodable>(_ eventType: SendableEventKey, action: String? = nil, context: String?, device: String? = nil, payload: P?) {
+	public func sendEvent<P: Encodable & Sendable>(_ eventType: SendableEventKey, action: String? = nil, context: String?, device: String? = nil, payload: P?) {
 
 		// Construct the event to serialize and send
 		let event = SendableEvent(event: eventType,

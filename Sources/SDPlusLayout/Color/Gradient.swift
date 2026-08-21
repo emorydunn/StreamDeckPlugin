@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Gradient: Encodable {
+public struct Gradient: Encodable, Sendable {
 	public let stops: [Stop]
 
 	public init(stops: [Stop]) {
@@ -34,7 +34,7 @@ public struct Gradient: Encodable {
 		}
 	}
 
-	public struct Stop: Encodable, Comparable {
+	public struct Stop: Encodable, Comparable, Sendable {
 
 		public let color: Color
 		public let position: Double

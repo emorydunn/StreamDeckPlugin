@@ -16,7 +16,7 @@ public protocol Action {
 	/// Settings returned by the Stream Deck application.
 	///
 	/// If your action does not use settings, simply use `NoSettings`.
-	associatedtype Settings: Codable & Hashable
+	associatedtype Settings: Codable & Hashable & Sendable
 	
 	// MARK: - Action Properties
 	

@@ -212,7 +212,7 @@ public extension Action {
 	/// Send a payload to the Property Inspector.
 	/// - Parameters:
 	///   - payload: A json object that will be received by the Property Inspector.
-	func sendToPropertyInspector<P: Encodable>(payload: P) {
+	func sendToPropertyInspector<P: Encodable & Sendable>(payload: P) {
 		Task {
 			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
 													   action: uuid,

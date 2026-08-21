@@ -33,7 +33,7 @@ public extension Plugin {
 	/// - Parameters:
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - settings: A json object which is persistently saved for the action's instance.
-	func setSettings<P: Encodable>(in context: String, to settings: P) {
+	func setSettings<P: Encodable & Sendable>(in context: String, to settings: P) {
 		Task {
 			await PluginCommunication.shared.sendEvent(.setSettings,
 													   context: context,
@@ -272,7 +272,7 @@ public extension Plugin {
 	///   - context: An opaque value identifying the instance's action or Property Inspector.
 	///   - action: The action unique identifier.
 	///   - payload: A json object that will be received by the Property Inspector.
-	func sendToPropertyInspector<P: Encodable>(in context: String, action: String, payload: P) {
+	func sendToPropertyInspector<P: Encodable & Sendable>(in context: String, action: String, payload: P) {
 		Task {
 			await PluginCommunication.shared.sendEvent(.sendToPropertyInspector,
 													   action: action,

@@ -7,7 +7,7 @@
 
 
 
-public protocol LayoutSettings: Encodable { }
+public protocol LayoutSettings: Encodable, Sendable { }
 
 public struct IndicatorSettings: LayoutSettings {
 	public var title: TextLayoutSettings

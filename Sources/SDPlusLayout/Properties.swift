@@ -7,28 +7,28 @@
 
 import Foundation
 
-public enum LayoutElement: String, Encodable {
+public enum LayoutElement: String, Encodable, Sendable {
 	case image = "pixmap"
 	case bar
 	case slider = "gbar"
 	case text
 }
 
-public enum BarStyle: Int, Encodable {
+public enum BarStyle: Int, Encodable, Sendable {
 	case rectangle, doubleRectangle, trapezoid, doubleTrapezoid, groove
 }
 
-public enum TextOverflow: String, Encodable {
+public enum TextOverflow: String, Encodable, Sendable {
 	case truncate = "ellipsis"
 	case clip
 	case fade
 }
 
-public enum TextAlignment: String, Encodable {
+public enum TextAlignment: String, Encodable, Sendable {
 	case left, center, right
 }
 
-public struct Rect: Encodable {
+public struct Rect: Encodable, Sendable {
 	public var x: Int
 	public var y: Int
 	public var width: Int
@@ -57,12 +57,12 @@ public struct Rect: Encodable {
 	static var standard = Rect(x: 0, y: 0, width: 200, height: 100)
 }
 
-public struct Font: Encodable {
+public struct Font: Encodable, Sendable {
 	public var size: Int?
 	public var weight: Int?
 }
 
-public struct BarRange: Encodable {
+public struct BarRange: Encodable, Sendable {
 	public var min: Int
 	public var max: Int
 
