@@ -1,6 +1,6 @@
 # StreamDeck
 
-![Swift](https://github.com/emorydunn/StreamDeckPlugin/workflows/Swift/badge.svg) ![Documentation badge](https://emorydunn.github.io/StreamDeckPlugin/badge.svg)
+![Swift](https://github.com/emorydunn/StreamDeckPlugin/workflows/Swift/badge.svg) ![Documentation badge](https://emorydunn.github.io/StreamDeckPlugin/badge.svg)[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Femorydunn%2FStreamDeckPlugin%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/emorydunn/StreamDeckPlugin) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Femorydunn%2FStreamDeckPlugin%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/emorydunn/StreamDeckPlugin)
 
 A library for creating Stream Deck plugins in Swift.
 
