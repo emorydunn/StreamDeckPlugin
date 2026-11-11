@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum ColorStyle: Encodable, Sendable, Sendable {
+public enum ColorStyle: Encodable, Sendable {
 	case color(Color)
 	case gradient(Gradient)
 
